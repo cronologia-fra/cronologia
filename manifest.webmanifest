@@ -1,0 +1,32 @@
+{
+ "name": "Cronologia universale",
+ "short_name": "Cronologia",
+ "lang": "it",
+ "description": "Consultazione della cronologia universale, con l'archivio conservato sul telefono.",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#E8EDF0",
+ "theme_color": "#1D2A36",
+ "icons": [
+  {
+   "src": "icona-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icona-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icona-maschera-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
