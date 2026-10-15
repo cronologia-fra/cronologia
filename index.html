@@ -142,10 +142,10 @@ mark{background:var(--evid);color:inherit;padding:0 1px;border-radius:2px}
 .vuoto{padding:30px;background:var(--carta);border:1px dashed var(--riga);border-radius:8px;color:var(--tenue)}
 
 /* maschera di modifica e inserimento */
-dialog#maschera{width:min(880px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-dialog#maschera[open]{display:flex;flex-direction:column}
-dialog#maschera::backdrop{background:rgba(10,16,22,.55)}
-#mForm{display:flex;flex-direction:column;min-height:0;flex:1}
+dialog#maschera,dialog#annota{width:min(880px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+dialog#maschera[open],dialog#annota[open]{display:flex;flex-direction:column}
+dialog#maschera::backdrop,dialog#annota::backdrop{background:rgba(10,16,22,.55)}
+#mForm,#aForm{display:flex;flex-direction:column;min-height:0;flex:1}
 .m-testa{padding:16px 22px 12px;border-bottom:1px solid var(--riga)}
 .m-testa h2{margin:0;font-size:20px;letter-spacing:-.01em}
 .m-testa p{margin:4px 0 0;color:var(--tenue);font-size:13.5px}
@@ -159,7 +159,7 @@ dialog#maschera::backdrop{background:rgba(10,16,22,.55)}
 .facolt{font-weight:400;color:var(--tenue)}
 .m-corpo input[type=text],.m-corpo input[type=url],.m-corpo input[type=number],.m-corpo textarea,.m-corpo select{width:100%;padding:9px 11px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit}
 .m-corpo textarea{font-family:var(--serif);font-size:16px;line-height:1.55;resize:vertical}
-#mData{font-size:16px;font-weight:600}
+#mData,#aData{font-size:16px;font-weight:600}
 .lettura{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:6px;font-size:13.5px;line-height:1.55}
 .lettura .titolo{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);font-weight:600}
 .lettura .avv{display:block;color:var(--ci);margin-top:3px}
@@ -200,9 +200,9 @@ dialog#vista::backdrop{background:rgba(0,0,0,.75)}
 .m-agg .secondario{margin:0;padding:6px 12px}
 #mImmaginiBox.sopra{outline:2px dashed var(--mo);outline-offset:4px;border-radius:6px}
 #avvisoBreve button{margin-left:12px;background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:2px 10px;font-size:13px}
-dialog#cestino{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-dialog#cestino[open]{display:flex;flex-direction:column}
-dialog#cestino::backdrop{background:rgba(10,16,22,.55)}
+dialog#cestino,dialog#appunti{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+dialog#cestino[open],dialog#appunti[open]{display:flex;flex-direction:column}
+dialog#cestino::backdrop,dialog#appunti::backdrop{background:rgba(10,16,22,.55)}
 .c-elenco{overflow:auto;flex:1;padding:8px 22px}
 .c-voce{border-bottom:1px solid var(--riga);padding:10px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:start}
 .c-voce .d{font-weight:600;font-size:13.5px}
@@ -214,6 +214,9 @@ dialog#cestino::backdrop{background:rgba(10,16,22,.55)}
 #avvisoBreve{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:min(560px,calc(100vw - 32px));background:var(--inchiostro);color:var(--carta);padding:10px 16px;border-radius:6px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:10}
 
 body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.telefono #bandaScelta{display:none!important}
+.conflitto{display:block;margin-top:8px;padding:8px 10px;background:#FFF1CC;color:#1D2A36;border-radius:6px;max-height:38vh;overflow:auto;white-space:pre-wrap}
+.scheda .bollo.app{background:var(--mo)}
+#apElenco h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--tenue);margin:18px 0 4px}
 .imm-nota{color:var(--tenue);font-size:13px;margin-top:8px}
 #telInfo{color:var(--inchiostro)}
 
@@ -246,15 +249,15 @@ body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.t
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 1: ricerca per data, inizio della cronologia e fine del presente.</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 2 del 15 ottobre: appunti dal telefono (aggiornamento 1: ricerca per data, inizio della cronologia e fine del presente).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
 <header>
   <h1>Cronologia universale</h1>
   <p id="statoGen"></p>
-  <p class="aiuto" id="telStato" hidden><button id="telAggiorna" class="azzera" type="button" style="font-size:13px">Carica una copia più recente</button> · <button id="telTogli2" class="azzera" type="button" style="font-size:13px">Togli la copia dal telefono</button></p>
-  <div id="barra"><span id="barraTesto"></span><button id="soloMod" type="button" class="azzera" hidden></button><button id="bRif" type="button" class="azzera" hidden></button><button id="bCestino" type="button" class="azzera" hidden></button><button id="bExcel" type="button" class="secondario">Esporta in Excel</button><button id="bProva" type="button" class="secondario" hidden>Crea la copia di prova</button><button id="bSalva" type="button" class="primario" hidden>Salva</button><span id="barraErrore" role="alert"></span></div>
+  <p class="aiuto" id="telStato" hidden><span id="telAppBox" hidden><button id="telAppunti" class="azzera" type="button" style="font-size:13px;font-weight:600"></button> · </span><button id="telAggiorna" class="azzera" type="button" style="font-size:13px">Carica una copia più recente</button> · <button id="telTogli2" class="azzera" type="button" style="font-size:13px">Togli la copia dal telefono</button></p>
+  <div id="barra"><span id="barraTesto"></span><button id="soloMod" type="button" class="azzera" hidden></button><button id="bRif" type="button" class="azzera" hidden></button><button id="bCestino" type="button" class="azzera" hidden></button><button id="bAppunti" type="button" class="secondario">Importa appunti</button><button id="bExcel" type="button" class="secondario">Esporta in Excel</button><button id="bProva" type="button" class="secondario" hidden>Crea la copia di prova</button><button id="bSalva" type="button" class="primario" hidden>Salva</button><span id="barraErrore" role="alert"></span></div>
   <div class="cerca">
     <input id="q" type="search" placeholder="Cerca nei fatti e negli approfondimenti, es. Dongo" aria-label="Cerca" disabled>
     <span class="nota" id="notaRicerca">Preparazione della ricerca…</span>
@@ -377,6 +380,36 @@ body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.t
   <div id="vImg"></div>
   <div class="v-piede"><span id="vDida"></span><span id="vConta"></span><button type="button" id="vPrec">‹ Precedente</button><button type="button" id="vSucc">Successiva ›</button><button type="button" id="vApri">Apri a parte</button><button type="button" id="vChiudi">Chiudi</button></div>
 </dialog>
+<dialog id="annota" aria-labelledby="aTitolo">
+  <form id="aForm" novalidate>
+    <div class="m-testa"><h2 id="aTitolo">Appunto</h2><p id="aRif"></p></div>
+    <div class="m-corpo">
+      <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
+      <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div></fieldset>
+      <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5"></textarea></div>
+      <div class="campo"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><textarea id="aAppr" rows="5"></textarea></div>
+      <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
+    </div>
+    <div class="m-piede">
+      <span class="m-errore" id="aErrore" role="alert"></span>
+      <span class="m-nota">L'appunto resta sul telefono: nell'archivio entra solo quando lo applichi sul computer.</span>
+      <button type="button" class="secondario" id="aAnnulla">Annulla</button>
+      <button type="button" class="primario" id="aConserva">Conserva</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="appunti" aria-labelledby="apTitolo">
+  <div class="m-testa"><h2 id="apTitolo">Appunti</h2><p id="apSpiega"></p></div>
+  <div class="c-elenco" id="apElenco"></div>
+  <div class="m-piede">
+    <span class="m-nota" id="apNota" role="status"></span>
+    <button type="button" class="secondario" id="apImporta" hidden>Importa un file di appunti</button>
+    <button type="button" class="secondario" id="apSalvaFile" hidden>Salva come file</button>
+    <button type="button" class="secondario" id="apEsporta" hidden>Esporta gli appunti</button>
+    <button type="button" class="primario" id="apChiudi">Chiudi</button>
+  </div>
+</dialog>
+<input id="fileAppunti" type="file" accept=".txt,.json,text/plain,application/json" hidden>
 <div id="avvisoBreve" role="status" hidden></div>
 
 <script>
@@ -1000,7 +1033,8 @@ const ARCHIVIO = "cronologia.sqlite", PROVA = "cronologia-prova.sqlite", CARTELL
 const TELEFONO = true;   /* versione per il telefono (sola consultazione): la mette a true costruisci_programma.py --telefono */
 const PASSAGGIO_FATTO = true;    // decisione 2.5: passaggio all'archivio fatto il 12 ottobre 2026, si salva sull'archivio vero
 const ELIMINAZIONI = new Map();   // id -> "cestino" | "ripristino" | "definitiva" (operazioni sul cestino non ancora salvate)
-const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size;
+const SCARTI = new Set();   // appunti dal telefono scartati, non ancora salvati
+const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size;
 let NCESTINO = 0;
 let CART = null, NOMEFILE = null, MODIFICATO_IL = 0, ULTIMO = "", salvando = false;   // cartella e file aperti, data del file all'apertura
 const puoSalvare = () => !!CART && (NOMEFILE === PROVA || PASSAGGIO_FATTO);
@@ -1060,6 +1094,10 @@ async function apri(fonte){
       db.run("create index i_immagini_scheda on immagini(scheda_id)");
       db.run("insert or replace into metadati values ('versione_schema', '3')");
     }
+    if (!tab.includes("appunti")){   // appunti dal telefono già sistemati sul computer (schema 4): servono a non ripeterli
+      db.run("create table appunti (id text primary key, tipo text not null, stato text not null, scheda_id integer, creato text, sistemato text not null)");
+      db.run("insert or replace into metadati values ('versione_schema', '4')");
+    }
     carica(dove, file);
     $("apertura").hidden = true; $("app").hidden = false;
     if (window.matchMedia("(max-width:900px)").matches) $("filtriBox").open = false;
@@ -1077,6 +1115,7 @@ async function apri(fonte){
    Nessun comando di modifica: le modifiche si fanno sul computer e arrivano sul telefono caricando di nuovo il file. */
 const CHIAVE_TEL = "archivio-telefono";
 let TEL = null;   // { blob, info: { nome, byte, caricato, indice, salvato, schede } }
+let APP_TEL = [];   // appunti annotati sul telefono (IndexedDB, chiave "appunti"), indipendenti dalla copia dell'archivio
 async function togli(k){ const d = await idb(); return new Promise((ok, ko) => { const t = d.transaction("h", "readwrite"); t.objectStore("h").delete(k); t.oncomplete = ok; t.onerror = () => ko(t.error); }); }
 const dataOra = v => { const d = new Date(v); return isNaN(d) ? "?" : `${d.toLocaleDateString("it-IT")} alle ${d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })}`; };
 function descriviCopia(info, meta){
@@ -1094,14 +1133,15 @@ function mostraCopia(){
 async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
-  $("aperturaTesto").textContent = "Versione per il telefono, in sola consultazione. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer; per vederle qui carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 12 ottobre 2026 (sola consultazione; stesse funzioni di ricerca del programma del computer, aggiornamento 1).";
+  $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
+  $("versione").textContent = "Versione per il telefono del 15 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); stesse funzioni di ricerca del programma del computer, aggiornamento 2.";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
   $("telTogli").onclick = $("telTogli2").onclick = togliDalTelefono;
   if ("serviceWorker" in navigator && isSecureContext && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
   TEL = await prendi(CHIAVE_TEL).catch(() => null) || null;
+  await caricaAppunti();
   mostraCopia();
   if (TEL && segno()) avviso("L'ultima apertura sul telefono non è arrivata alla fine (forse per mancanza di memoria). Puoi riprovare con Apri l'archivio, oppure togliere la copia e caricarla di nuovo.", true);
   else if (TEL) apriDalTelefono();
@@ -1112,6 +1152,7 @@ async function apriDalTelefono(){
   segno(true);
   await apri(async () => { avviso("Apertura della copia conservata sul telefono…"); return { file: TEL.blob, dove: null, nome: TEL.info.nome }; });
   segno(false);
+  if (db && !$("app").hidden) pulisciAppunti();
 }
 async function caricaSulTelefono(f){
   if (!$("app").hidden) $("apertura").hidden = false, $("app").hidden = true;
@@ -1144,7 +1185,7 @@ async function conservaConIndice(){
   } catch(e){ avvisoBreve("La copia con l'indice di ricerca non è stata conservata (" + (e.message || e) + "): la ricerca si preparerà a ogni apertura."); }
 }
 async function togliDalTelefono(){
-  if (!confirm("Togliere la copia dell'archivio dal telefono? Il file sul computer non cambia; per consultare di nuovo dovrai caricarlo.")) return;
+  if (!confirm("Togliere la copia dell'archivio dal telefono? Il file sul computer non cambia e gli appunti restano; per consultare di nuovo dovrai caricarlo.")) return;
   await togli(CHIAVE_TEL).catch(() => {});
   if (N){ location.reload(); return; }
   TEL = null; mostraCopia(); avviso("Copia tolta dal telefono.");
@@ -1524,14 +1565,14 @@ function disegnaElenco(){
     const rif = r ? bloccoRiferimento(id, r, RIGA[i], scritta) : "";
     const mod = MODIFICATE.get(id);
     html += `<article class="scheda" data-id="${id}" style="--c:var(--${a})">
-      <div class="meta"><span>${ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => AMB[x]).join(" · ")}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span></div>
+      <div class="meta"><span>${ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => AMB[x]).join(" · ")}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span></div>
       <p class="testo">${conNomi(testo, nomi)}</p>
       ${rif}
       ${coll ? `<div class="coll">Collegamento: <a href="${esc(coll)}" target="_blank" rel="noopener">${esc(coll)}</a></div>` : ""}
       ${appr ? `<details class="appr"${apriAppr ? " open" : ""}><summary>Approfondimento</summary><p class="testo">${conNomi(appr, nomi)}</p></details>` : ""}
       ${IM.has(id) && TELEFONO ? `<p class="imm-nota">${IM.get(id).length === 1 ? "1 immagine allegata" : IM.get(id).length + " immagini allegate"}: si vedono sul computer.</p>` : ""}
       ${IM.has(id) && !TELEFONO ? `<div class="immagini">${IM.get(id).map(([f, d], k) => `<figure><button class="mini" type="button" data-sch="${id}" data-k="${k}" aria-label="Ingrandisci l'immagine${d ? ": " + esc(d) : ""}"><img data-file="${esc(f)}" alt="${esc(d || "")}"></button>${d ? `<figcaption>${esc(d)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
-      ${TELEFONO ? "" : `<div class="azioni">${SCELTA && SCELTA.id !== id ? `<button class="collega" data-collega="${id}">Collega qui</button>` : ""}<button data-mod="${id}">Modifica</button><button data-nuova="${id}">Nuova scheda qui</button><button data-elimina="${id}">Elimina</button></div>`}
+      ${TELEFONO ? `<div class="azioni"><button data-ann="nuovo" data-id="${id}">Annota un fatto nuovo qui</button><button data-ann="correzione" data-id="${id}">Annota una correzione</button></div>` : `<div class="azioni">${SCELTA && SCELTA.id !== id ? `<button class="collega" data-collega="${id}">Collega qui</button>` : ""}<button data-mod="${id}">Modifica</button><button data-nuova="${id}">Nuova scheda qui</button><button data-elimina="${id}">Elimina</button></div>`}
     </article>`;
   });
   html += "</section>";
@@ -1562,6 +1603,8 @@ function suDensita(){ window.scrollTo({ top: document.querySelector(".densita").
 $("elenco").addEventListener("click", ev => {
   const n = ev.target.closest("button.nome"), f = ev.target.closest("button[data-f]"), v = ev.target.closest("button[data-vai]");
   const mo = ev.target.closest("button[data-mod]"), nu = ev.target.closest("button[data-nuova]"), el = ev.target.closest("button[data-elimina]");
+  const an = ev.target.closest("button[data-ann]");
+  if (an){ apriAnnota(an.dataset.ann, +an.dataset.id); return; }
   const mi = ev.target.closest("button.mini");
   if (mi){ apriVista(+mi.dataset.sch, +mi.dataset.k); return; }
   const rz = ev.target.closest("button[data-rif]"), co = ev.target.closest("button[data-collega]"), sr = ev.target.closest("button[data-riga]");
@@ -1606,7 +1649,9 @@ function aggiornaStatoMod(){
   if (ces) parti.push(ces === 1 ? "1 scheda spostata nel cestino" : `${fmt(ces)} schede spostate nel cestino`);
   if (rip) parti.push(rip === 1 ? "1 scheda ripristinata" : `${fmt(rip)} schede ripristinate`);
   if (def) parti.push(def === 1 ? "1 scheda eliminata definitivamente" : `${fmt(def)} schede eliminate definitivamente`);
-  const cosa = n ? `${parti.join(" e ")} non ancora ${n === 1 ? "salvata" : "salvate"}` : "";
+  const ns = n - SCARTI.size;
+  let cosa = ns ? `${parti.join(" e ")} non ancora ${ns === 1 ? "salvata" : "salvate"}` : "";
+  if (SCARTI.size) cosa += (cosa ? "; " : "") + (SCARTI.size === 1 ? "1 appunto scartato non ancora salvato" : `${fmt(SCARTI.size)} appunti scartati non ancora salvati`);
   let t, cl;
   if (puoSalvare()){
     cl = "prova";
@@ -1619,6 +1664,8 @@ function aggiornaStatoMod(){
     t = `Archivio aperto scegliendo il file: per salvare aprilo dalla cartella.` + (n ? ` In memoria: ${cosa}; chiudendo il programma si perdono.` : "");
   }
   $("barra").className = cl; $("barraTesto").textContent = t;
+  const daSist = APP_PC.size ? [...APP_PC.values()].filter(a => !statoApp(a.id)).length : 0;
+  $("bAppunti").textContent = APP_PC.size ? `Appunti dal telefono (${fmt(daSist)} da sistemare)` : "Importa appunti";
   $("bCestino").hidden = !NCESTINO; $("bCestino").textContent = `Cestino (${fmt(NCESTINO)})`;
   $("bRif").hidden = !DAVERIFICARE.size && !S.soloRif;
   $("bRif").textContent = S.soloRif ? "Mostra tutte le schede" : `Date relative da verificare (${fmt(DAVERIFICARE.size)})`;
@@ -1699,7 +1746,7 @@ async function eseguiSalvataggio(nome, dopo){
   await new Promise(r => setTimeout(r, 30));   // lascia comparire l'avviso prima del lavoro
   try {
     const { out, n } = preparaFile();
-    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI);   // modifiche contenute nel file che si scrive
+    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI), salvatiS = new Set(SCARTI);   // modifiche contenute nel file che si scrive
     const scritte = await scriviImmagini();   // prima le immagini: l'archivio non deve mai indicare un file che non c'è
     const r = await scriviFile(nome, out);
     scritte.forEach(f => IMG_NUOVE.delete(f));
@@ -1707,6 +1754,7 @@ async function eseguiSalvataggio(nome, dopo){
     MODIFICATO_IL = r.file.lastModified; NOMEFILE = nome;
     for (const [id, v] of salvate) if (MODIFICATE.get(id) === v) MODIFICATE.delete(id);
     for (const [id, v] of salvateE) if (ELIMINAZIONI.get(id) === v) ELIMINAZIONI.delete(id);
+    salvatiS.forEach(x => SCARTI.delete(x));
     if (!MODIFICATE.size) S.soloMod = false;
     const d = new Date(); ULTIMO = d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
     if (dopo) dopo();
@@ -2090,16 +2138,22 @@ function applica(){
       if (x.blob && !IMG_NUOVE.has(x.file)) IMG_NUOVE.set(x.file, x.blob);   // si scrive nella cartella Immagini al salvataggio
     });
     db.run("insert into ricerca(docid, testo, approfondimento) values (?, ?, ?)", [id, testo, appr]);
+    if (MS.appunto) db.run("insert or replace into appunti values (?, ?, 'applicato', ?, ?, ?)", [MS.appunto.id, MS.appunto.tipo, id, MS.appunto.creato || null, ora]);
     db.run("COMMIT");
   } catch(e){
     try { db.run("ROLLBACK"); } catch(_){}
     return err("La modifica non è stata applicata: " + (e.message || e));
   }
   MODIFICATE.set(id, MS.modo === "nuova" || MODIFICATE.get(id) === "nuova" ? "nuova" : "modificata");
-  const modo = MS.modo;
+  const modo = MS.modo, daAppunto = !!MS.appunto;
   $("maschera").close(); MS = null;
   ricostruisci(soloId);
   mostraScheda(id, modo === "nuova" ? `Scheda nuova inserita${rinumerate ? ` (rinumerate ${rinumerate} schede vicine)` : ""}.` : "Modifica applicata.");
+  if (daAppunto){
+    const resto = [...APP_PC.values()].filter(a => !statoApp(a.id)).length;
+    if (resto) avvisoBreve(`Appunto applicato. ${resto === 1 ? "Ne resta 1" : `Ne restano ${resto}`} da sistemare.`, { testo: "Apri gli appunti", fn: mostraAppunti });
+    else avvisoBreve("Appunto applicato: non ne restano altri da sistemare. Ricorda di salvare.");
+  }
 }
 /* Dopo ogni modifica: tabelle in memoria, ricerca attiva, scheda scelta, barra. */
 function ricostruisci(soloId){
@@ -2568,6 +2622,217 @@ function mostraScheda(id, msg){
   if (el){ el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); avvisoBreve(msg); }
   else avvisoBreve(`${msg} La scheda è più avanti nell'elenco: restringi il periodo dalla linea del tempo per vederla.`);
 }
+
+/* =====================================================================
+   Appunti dal telefono (15 ottobre 2026, decisione 2.30)
+   Sul telefono si annotano fatti nuovi e correzioni: restano sul telefono (IndexedDB, chiave "appunti") e si esportano
+   in un piccolo file. Sul computer il file si importa e ogni appunto si apre nella maschera già compilata: nell'archivio
+   entra solo con Applica (e poi Salva). La tabella appunti dell'archivio registra gli appunti sistemati (applicati o
+   scartati): reimportando un file non si ripetono, e il telefono li toglie dal suo elenco quando riceve una copia
+   dell'archivio che li contiene. Le correzioni si confrontano campo per campo con la versione da cui sono partite.
+   ===================================================================== */
+const FORMATO_APPUNTI = "cronologia-appunti";
+const CAMPI_APP = ["data", "ambiti", "testo", "approfondimento", "collegamento"];
+const NOME_CAMPO = { data: "data", ambiti: "ambito", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento" };
+const corto = (t, n) => { t = String(t || ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
+const nuovoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+const pulito = (v, f) => f === "ambiti" ? [...(v || [])].sort().join(",") : String(v ?? "").replace(/\s+$/, "").trim();
+const uguale = (a, b, f) => pulito(a, f) === pulito(b, f);
+function campiScheda(id){
+  const o = datiScheda(id);
+  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "" };
+}
+function voceAppunto(a, comandi, stato){
+  return `<div class="c-voce"><div>
+    <div class="d">${a.tipo === "nuovo" ? "Fatto nuovo" : "Correzione"} · ${esc(a.campi.data)}${stato ? ` <span class="q">(${esc(stato)})</span>` : ""}</div>
+    <div class="t">${esc(corto(a.campi.testo, 300))}</div>
+    <div class="q">${a.tipo === "nuovo" ? "Dopo la scheda" : "Scheda"}: ${esc(a.rif.data)} — ${esc(corto(a.rif.testo, 110))}. Annotato il ${dataOra(a.creato)}${a.esportato ? `, esportato il ${dataOra(a.esportato)}` : ""}.</div>
+  </div><div class="b">${comandi}</div></div>`;
+}
+function mostraAppunti(){
+  if (TELEFONO) disegnaAppuntiTel(); else disegnaAppuntiPc();
+  $("apNota").textContent = "";
+  if (!$("appunti").open) $("appunti").showModal();
+}
+$("apChiudi").onclick = () => $("appunti").close();
+
+/* --- telefono --- */
+async function caricaAppunti(){ APP_TEL = await prendi("appunti").catch(() => null) || []; mostraContoAppunti(); }
+async function scriviAppunti(){ await metti("appunti", APP_TEL); mostraContoAppunti(); }
+function mostraContoAppunti(){ if (!TELEFONO) return; $("telAppBox").hidden = !APP_TEL.length; $("telAppunti").textContent = `Appunti (${APP_TEL.length})`; }
+$("telAppunti").onclick = mostraAppunti;
+let AN = null;   // appunto aperto nella maschera del telefono
+const leggiAnnota = () => ({ data: $("aData").value.trim(), ambiti: [...document.querySelectorAll("#aAmbiti input:checked")].map(x => x.value).sort(),
+  testo: $("aTesto").value.replace(/\s+$/, ""), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim() });
+function apriAnnota(tipo, id, esistente){
+  if (esistente) AN = { id: esistente.id, tipo: esistente.tipo, creato: esistente.creato, rif: esistente.rif, originale: esistente.originale, esportato: esistente.esportato };
+  else {
+    const o = campiScheda(id);
+    AN = { id: nuovoId(), tipo, creato: new Date().toISOString(), rif: { id, ordine: ORDINE[POS[id]], data: o.data, testo: corto(o.testo, 200) }, originale: tipo === "correzione" ? o : null };
+  }
+  const c = esistente ? esistente.campi : tipo === "correzione" ? AN.originale : { data: AN.rif.data, ambiti: [campiScheda(id).ambiti[0] || "it"], testo: "", approfondimento: "", collegamento: "" };
+  $("aTitolo").textContent = AN.tipo === "nuovo" ? "Appunto: fatto nuovo" : "Appunto: correzione";
+  $("aRif").textContent = (AN.tipo === "nuovo" ? "Va subito dopo la scheda: " : "Scheda da correggere: ") + `${AN.rif.data} — ${corto(AN.rif.testo, 140)}`;
+  $("aAmbiti").innerHTML = ORD.map(a => `<label style="--c:var(--${a})"><input type="checkbox" value="${a}"${c.ambiti.includes(a) ? " checked" : ""}> ${AMB[a]}</label>`).join("");
+  $("aData").value = c.data; $("aTesto").value = c.testo; $("aAppr").value = c.approfondimento || ""; $("aColl").value = c.collegamento || "";
+  $("aErrore").textContent = "";
+  AN.inizio = JSON.stringify(leggiAnnota());
+  $("annota").showModal();
+  (AN.tipo === "nuovo" && !esistente ? $("aTesto") : $("aData")).focus();
+}
+function chiudiAnnota(chiedi){
+  if (chiedi && AN && JSON.stringify(leggiAnnota()) !== AN.inizio && !confirm("Chiudere senza conservare l'appunto?")) return;
+  $("annota").close(); AN = null;
+}
+async function conservaAnnota(){
+  if (!AN) return;
+  const c = leggiAnnota(), err = m => { $("aErrore").textContent = m; };
+  if (!c.data) return err("Scrivi la data.");
+  if (!c.testo.trim()) return err("Scrivi il fatto.");
+  if (!c.ambiti.length) return err("Scegli almeno un ambito.");
+  if (AN.tipo === "correzione" && CAMPI_APP.every(f => uguale(c[f], AN.originale[f], f))) return err("Non hai cambiato niente rispetto alla scheda.");
+  const k = APP_TEL.findIndex(a => a.id === AN.id);
+  // un appunto già esportato e poi cambiato diventa un appunto nuovo, così il computer non lo confonde con quello già importato
+  const rec = { id: k >= 0 && APP_TEL[k].esportato ? nuovoId() : AN.id, tipo: AN.tipo, creato: AN.creato, modificato: new Date().toISOString(), rif: AN.rif, originale: AN.originale, campi: c };
+  const prima = APP_TEL.slice();
+  if (k >= 0) APP_TEL[k] = rec; else APP_TEL.push(rec);
+  try { await scriviAppunti(); } catch(e){ APP_TEL = prima; return err("Appunto non conservato: " + (e.message || e)); }
+  $("annota").close(); AN = null;
+  if ($("appunti").open) disegnaAppuntiTel();
+  tutto();
+  avvisoBreve("Appunto conservato sul telefono.", { testo: "Vedi gli appunti", fn: mostraAppunti });
+}
+$("aForm").addEventListener("submit", ev => ev.preventDefault());
+$("annota").addEventListener("cancel", ev => { ev.preventDefault(); chiudiAnnota(true); });
+$("aAnnulla").onclick = () => chiudiAnnota(true);
+$("aConserva").onclick = () => conservaAnnota();
+function disegnaAppuntiTel(){
+  $("apTitolo").textContent = "Appunti sul telefono";
+  $("apSpiega").textContent = "Fatti nuovi e correzioni annotati qui. Nell'archivio entrano solo quando li applichi sul computer: esportali e importali nel programma del computer con \"Importa appunti\". Restano qui anche dopo l'esportazione e spariscono da soli quando carichi una copia dell'archivio in cui li hai già sistemati.";
+  $("apElenco").innerHTML = APP_TEL.length ? APP_TEL.map(a => voceAppunto(a, `<button data-apmod="${esc(a.id)}">Modifica</button><button class="def" data-apvia="${esc(a.id)}">Elimina</button>`)).join("")
+    : `<p class="q" style="padding:12px 0">Nessun appunto. Per annotare usa i comandi sotto ogni scheda.</p>`;
+  $("apEsporta").hidden = $("apSalvaFile").hidden = !APP_TEL.length; $("apImporta").hidden = true;
+}
+function fileAppunti(){
+  const dati = { formato: FORMATO_APPUNTI, versione: 1, esportato: new Date().toISOString(), copia_del: TEL ? TEL.info.salvato || null : null, appunti: APP_TEL };
+  return new File([JSON.stringify(dati, null, 1)], `appunti cronologia ${timbro()}.txt`, { type: "text/plain" });
+}
+async function esportaAppunti(condividi){
+  const f = fileAppunti();
+  const puo = condividi && navigator.canShare && navigator.canShare({ files: [f] });
+  try {
+    if (puo) await navigator.share({ files: [f], title: "Appunti della cronologia" });
+    else { const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000); }
+  } catch(e){ if (e.name !== "AbortError") $("apNota").textContent = "Esportazione non riuscita: " + (e.message || e); return; }
+  const ora = new Date().toISOString(); APP_TEL.forEach(a => { a.esportato = ora; });
+  await scriviAppunti().catch(() => {});
+  disegnaAppuntiTel();
+  $("apNota").textContent = puo ? `Inviato il file "${f.name}". Sul computer: "Importa appunti".` : `Salvato il file "${f.name}" nella cartella Download del telefono.`;
+}
+$("apEsporta").onclick = () => esportaAppunti(true);
+$("apSalvaFile").onclick = () => esportaAppunti(false);
+async function pulisciAppunti(){   // dopo l'apertura di una copia: via gli appunti che l'archivio registra come sistemati
+  if (!APP_TEL.length || !db) return;
+  const fatti = new Set((db.exec("select id from appunti")[0]?.values || []).map(x => x[0]));
+  const resta = APP_TEL.filter(a => !fatti.has(a.id)), tolti = APP_TEL.length - resta.length;
+  if (!tolti) return;
+  APP_TEL = resta; await scriviAppunti().catch(() => {}); tutto();
+  avvisoBreve(tolti === 1 ? "1 appunto già sistemato sul computer è stato tolto dall'elenco degli appunti." : `${tolti} appunti già sistemati sul computer sono stati tolti dall'elenco degli appunti.`);
+}
+
+/* --- computer --- */
+const APP_PC = new Map();   // appunti importati in questa sessione: id -> appunto
+function statoApp(id){ const r = uno("select stato, sistemato, scheda_id from appunti where id = ?", [id]); return r ? { stato: r[0], quando: r[1], scheda: r[2] } : null; }
+function appuntoValido(a){
+  return a && typeof a.id === "string" && a.id && (a.tipo === "nuovo" || a.tipo === "correzione") && a.rif && Number.isInteger(a.rif.id)
+    && a.campi && typeof a.campi.data === "string" && typeof a.campi.testo === "string" && Array.isArray(a.campi.ambiti)
+    && (a.tipo === "nuovo" || (a.originale && typeof a.originale.testo === "string" && Array.isArray(a.originale.ambiti)));
+}
+async function importaAppunti(f){
+  let d = null;
+  try { d = JSON.parse(await f.text()); } catch(e){}
+  if (!d || d.formato !== FORMATO_APPUNTI || !Array.isArray(d.appunti)){ avvisoBreve(`Il file "${f.name}" non è un file di appunti della cronologia.`); return; }
+  if (d.versione > 1){ avvisoBreve("Il file di appunti viene da una versione più recente del programma: aggiorna prima il programma del computer."); return; }
+  let validi = 0, gia = 0, illeggibili = 0;
+  for (const a of d.appunti){
+    if (!appuntoValido(a)){ illeggibili++; continue; }
+    a.campi.ambiti = a.campi.ambiti.filter(x => ORD.includes(x));
+    const c = APP_PC.get(a.id);
+    if (!c || String(a.modificato || "") > String(c.modificato || "")) APP_PC.set(a.id, a);
+    validi++; if (statoApp(a.id)) gia++;
+  }
+  aggiornaStatoMod(); mostraAppunti();
+  $("apNota").textContent = `File "${f.name}": ${validi === 1 ? "1 appunto" : validi + " appunti"}${gia ? `, di cui ${gia} già ${gia === 1 ? "sistemato" : "sistemati"}` : ""}${illeggibili ? `; ${illeggibili} non leggibili, ignorati` : ""}.`;
+}
+$("bAppunti").onclick = () => { if (APP_PC.size) mostraAppunti(); else $("fileAppunti").click(); };
+$("apImporta").onclick = () => $("fileAppunti").click();
+$("fileAppunti").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) importaAppunti(f); };
+function disegnaAppuntiPc(){
+  $("apTitolo").textContent = "Appunti dal telefono";
+  $("apSpiega").textContent = "Ogni appunto si apre nella maschera già compilata: controlla e premi Applica, poi Salva come sempre. Quelli che non servono si scartano. Gli appunti sistemati restano registrati nell'archivio: importando di nuovo lo stesso file non si ripetono.";
+  const tutti = [...APP_PC.values()].sort((a, b) => String(a.creato).localeCompare(String(b.creato)));
+  const da = tutti.filter(a => !statoApp(a.id)), fatti = tutti.filter(a => statoApp(a.id));
+  let h = da.length ? da.map(a => voceAppunto(a, `<button data-apapri="${esc(a.id)}">Apri nella maschera</button><button class="def" data-apscarta="${esc(a.id)}">Scarta</button>`)).join("")
+    : `<p class="q" style="padding:12px 0">Nessun appunto da sistemare.</p>`;
+  if (fatti.length) h += `<h3>Già sistemati (${fatti.length})</h3>` + fatti.map(a => { const st = statoApp(a.id);
+    return voceAppunto(a, st.scheda && POS[st.scheda] >= 0 ? `<button data-apvedi="${st.scheda}">Mostra la scheda</button>` : "", `${st.stato} il ${dataOra(st.quando)}`); }).join("");
+  $("apElenco").innerHTML = h;
+  $("apImporta").hidden = false; $("apEsporta").hidden = $("apSalvaFile").hidden = true;
+}
+function riempiMaschera(c){
+  if ($("mMano").checked && !uguale(c.data, $("mData").value, "data")){ $("mMano").checked = false; $("mManoBox").hidden = true; }   // data nuova: vale la lettura automatica
+  $("mData").value = c.data; $("mTesto").value = c.testo; $("mAppr").value = c.approfondimento || ""; $("mColl").value = c.collegamento || "";
+  document.querySelectorAll("#mAmbiti input").forEach(x => { x.checked = c.ambiti.includes(x.value); });
+  disegnaLettura(); disegnaRicavati();
+}
+function apriAppuntoPc(a){
+  if (occupato()) return;
+  if (a.tipo === "nuovo"){
+    let rif = a.rif.id, nota = "";
+    if (!(POS[rif] >= 0)){   // scheda di riferimento eliminata o nel cestino: la più vicina nella sequenza
+      let k = 0; for (let i = 0; i < N && ORDINE[i] <= (a.rif.ordine ?? -Infinity); i++) k = i;
+      rif = ID[k]; nota = " La scheda indicata sul telefono non c'è più (eliminata o nel cestino): la posizione proposta è la più vicina nella sequenza, controllala.";
+    }
+    $("appunti").close();
+    apriMaschera("nuova", rif); if (!MS) return;
+    riempiMaschera(a.campi);
+    $("mOrigine").textContent = `Fatto nuovo annotato sul telefono il ${dataOra(a.creato)}: controlla e premi Applica.${nota}`;
+  } else {
+    const id = a.rif.id;
+    if (!(POS[id] >= 0)){ $("apNota").textContent = "La scheda da correggere non c'è più (eliminata o nel cestino): questo appunto si può solo scartare."; return; }
+    const pc = campiScheda(id), val = {}, cambiati = [], conflitti = [];
+    CAMPI_APP.forEach(f => {
+      if (uguale(a.campi[f], a.originale[f], f)) val[f] = pc[f];   // il telefono non l'ha toccato: vale il computer
+      else { cambiati.push(f); val[f] = a.campi[f]; if (!uguale(pc[f], a.originale[f], f) && !uguale(pc[f], a.campi[f], f)) conflitti.push(f); }   // cambiato in modo diverso su tutti e due
+    });
+    $("appunti").close();
+    apriMaschera("modifica", id); if (!MS) return;
+    riempiMaschera(val);
+    let h = `Correzione annotata sul telefono il ${dataOra(a.creato)}${cambiati.length ? `: cambia ${cambiati.map(f => NOME_CAMPO[f]).join(", ")}` : ""}. Controlla e premi Applica.`;
+    if (conflitti.length) h += `<span class="conflitto"><b>Attenzione:</b> dopo la copia portata sul telefono ${conflitti.length === 1 ? "questo campo è cambiato" : "questi campi sono cambiati"} anche sul computer. Nella maschera c'è la versione del telefono; quella del computer era:`
+      + conflitti.map(f => `\n<b>${NOME_CAMPO[f]}</b>: ${esc(f === "ambiti" ? pc[f].map(x => AMB[x]).join(", ") : pc[f] || "(vuoto)")}`).join("") + `</span>`;
+    $("mOrigine").innerHTML = h;
+  }
+  MS.appunto = a; MS.inizio = istantanea();
+}
+function scartaAppunto(a){
+  if (!confirm("Scartare l'appunto? Non entrerà nell'archivio; dopo il salvataggio non ricomparirà importando di nuovo il file.")) return;
+  db.run("insert or replace into appunti values (?, ?, 'scartato', null, ?, ?)", [a.id, a.tipo, a.creato || null, adesso()]);
+  SCARTI.add(a.id); aggiornaStatoMod(); disegnaAppuntiPc();
+  $("apNota").textContent = "Appunto scartato: si registra nell'archivio con il prossimo salvataggio.";
+}
+$("apElenco").addEventListener("click", ev => {
+  const b = ev.target.closest("button"); if (!b) return;
+  const trova = id => TELEFONO ? APP_TEL.find(a => a.id === id) : APP_PC.get(id);
+  if (b.dataset.apmod){ const a = trova(b.dataset.apmod); if (a){ $("appunti").close(); apriAnnota(a.tipo, a.rif.id, a); } }
+  else if (b.dataset.apvia){
+    if (!confirm("Eliminare l'appunto dal telefono?")) return;
+    APP_TEL = APP_TEL.filter(a => a.id !== b.dataset.apvia); scriviAppunti().catch(() => {}); disegnaAppuntiTel(); tutto();
+  }
+  else if (b.dataset.apapri){ const a = trova(b.dataset.apapri); if (a) apriAppuntoPc(a); }
+  else if (b.dataset.apscarta){ const a = trova(b.dataset.apscarta); if (a) scartaAppunto(a); }
+  else if (b.dataset.apvedi){ $("appunti").close(); const p = POS[+b.dataset.apvedi]; if (p >= 0){ S.solo = p; S.zoom = []; S.limite = 300; tutto(); suDensita(); } }
+});
 </script>
 </body>
 </html>
