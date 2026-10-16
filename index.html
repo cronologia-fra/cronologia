@@ -162,6 +162,8 @@ dialog#maschera::backdrop,dialog#annota::backdrop{background:rgba(10,16,22,.55)}
 #mData,#aData{font-size:16px;font-weight:600}
 .lettura{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:6px;font-size:13.5px;line-height:1.55}
 .lettura .titolo{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);font-weight:600}
+.lettura .sposta{display:block;margin-top:6px;padding-top:6px;border-top:1px dashed var(--riga)}
+.lettura .sposta .spunta{margin-top:0;font-weight:600}
 .lettura .avv{display:block;color:var(--ci);margin-top:3px}
 .lettura .tenue,.ricavati .tenue{color:var(--tenue)}
 .spunta{display:inline-flex;gap:8px;align-items:center;margin-top:8px;font-size:13.5px;cursor:pointer}
@@ -200,9 +202,9 @@ dialog#vista::backdrop{background:rgba(0,0,0,.75)}
 .m-agg .secondario{margin:0;padding:6px 12px}
 #mImmaginiBox.sopra{outline:2px dashed var(--mo);outline-offset:4px;border-radius:6px}
 #avvisoBreve button{margin-left:12px;background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:2px 10px;font-size:13px}
-dialog#cestino,dialog#appunti{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-dialog#cestino[open],dialog#appunti[open]{display:flex;flex-direction:column}
-dialog#cestino::backdrop,dialog#appunti::backdrop{background:rgba(10,16,22,.55)}
+dialog#cestino,dialog#appunti,dialog#gAmbiti{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+dialog#cestino[open],dialog#appunti[open],dialog#gAmbiti[open]{display:flex;flex-direction:column}
+dialog#cestino::backdrop,dialog#appunti::backdrop,dialog#gAmbiti::backdrop{background:rgba(10,16,22,.55)}
 .c-elenco{overflow:auto;flex:1;padding:8px 22px}
 .c-voce{border-bottom:1px solid var(--riga);padding:10px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:start}
 .c-voce .d{font-weight:600;font-size:13.5px}
@@ -213,10 +215,20 @@ dialog#cestino::backdrop,dialog#appunti::backdrop{background:rgba(10,16,22,.55)}
 .c-voce .b button.def{color:var(--ci)}
 #avvisoBreve{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:min(560px,calc(100vw - 32px));background:var(--inchiostro);color:var(--carta);padding:10px 16px;border-radius:6px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);z-index:10}
 
-body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.telefono #bandaScelta{display:none!important}
+body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.telefono #bandaScelta{display:none!important}
 .conflitto{display:block;margin-top:8px;padding:8px 10px;background:#FFF1CC;color:#1D2A36;border-radius:6px;max-height:38vh;overflow:auto;white-space:pre-wrap}
 .scheda .bollo.app{background:var(--mo)}
 #apElenco h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--tenue);margin:18px 0 4px}
+.g-voce{display:grid;grid-template-columns:18px minmax(0,1fr) auto auto;gap:6px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--riga)}
+.g-sw{width:16px;height:16px;border-radius:4px;background:var(--c)}
+.g-voce input,.g-nuovo input[type=text]{width:100%;padding:7px 10px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit;font-size:15px}
+.g-voce .n{font-size:13px;color:var(--tenue);white-space:nowrap}
+.g-voce button{background:none;border:0;padding:0;color:var(--ci);text-decoration:underline;font-size:13px}
+.g-nuovo{padding:12px 22px 4px;border-top:1px solid var(--riga)}
+.g-nuovo .et{display:block;font-weight:600;font-size:13.5px;margin-bottom:6px}
+.g-colori{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 4px}
+.g-colori label{display:inline-flex;gap:6px;align-items:center;font-size:13px;cursor:pointer}
+.g-colori span{width:16px;height:16px;border-radius:4px;display:inline-block}
 .imm-nota{color:var(--tenue);font-size:13px;margin-top:8px}
 #telInfo{color:var(--inchiostro)}
 
@@ -249,7 +261,7 @@ body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.t
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 2 del 15 ottobre: appunti dal telefono (aggiornamento 1: ricerca per data, inizio della cronologia e fine del presente).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 4 del 16 ottobre: ambiti nuovi e rinominabili (aggiornamento 3: spostamento nel punto giusto quando cambia la data; 2: appunti dal telefono; 1: ricerca per data, inizio e fine).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -286,6 +298,7 @@ body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.t
     <aside>
       <h2>Ambito</h2>
       <div id="ambiti"></div>
+      <button id="bAmbiti" class="azzera" type="button" style="font-size:13px;margin:2px 0 6px">Gestisci gli ambiti</button>
       <h2>Fascicoli</h2>
       <p class="spiega">Titoli scritti all'inizio dei fatti, prima dei due punti. Qui compaiono quelli con almeno due schede.</p>
       <input class="filtra" id="filtraFasc" type="search" placeholder="Trova un fascicolo" aria-label="Trova un fascicolo">
@@ -379,6 +392,22 @@ body.telefono #barra,body.telefono .rif .comandi,body.telefono .rif .sugg,body.t
 <dialog id="vista" aria-label="Immagine">
   <div id="vImg"></div>
   <div class="v-piede"><span id="vDida"></span><span id="vConta"></span><button type="button" id="vPrec">‹ Precedente</button><button type="button" id="vSucc">Successiva ›</button><button type="button" id="vApri">Apri a parte</button><button type="button" id="vChiudi">Chiudi</button></div>
+</dialog>
+<dialog id="gAmbiti" aria-labelledby="gTitolo">
+  <div class="m-testa"><h2 id="gTitolo">Ambiti</h2>
+    <p>Per rinominare un ambito scrivi il nuovo nome nella sua casella. Un ambito nuovo si aggiunge in fondo; nelle schede si assegna dalla maschera, spuntandolo. Si può eliminare solo un ambito aggiunto che non ha schede. Gli ambiti aggiunti non hanno una colonna nell'esportazione in Excel; i sei del foglio mantengono la loro, con l'intestazione originale anche se li rinomini.</p></div>
+  <div class="c-elenco" id="gElenco"></div>
+  <div class="g-nuovo">
+    <label class="et" for="gNome">Nuovo ambito</label>
+    <input id="gNome" type="text" maxlength="60" autocomplete="off" placeholder="es. Scienza e tecnica">
+    <div class="g-colori" id="gColori" role="radiogroup" aria-label="Colore"></div>
+  </div>
+  <div class="m-piede">
+    <span class="m-errore" id="gErrore" role="alert"></span>
+    <span class="m-nota" id="gNota" role="status"></span>
+    <button type="button" class="secondario" id="gCrea">Crea l'ambito</button>
+    <button type="button" class="primario" id="gChiudi">Chiudi</button>
+  </div>
 </dialog>
 <dialog id="annota" aria-labelledby="aTitolo">
   <form id="aForm" novalidate>
@@ -1020,8 +1049,14 @@ const senzaAccenti = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 const MESI = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
 const MB = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
 const GIORNI_MESE = [31,29,31,30,31,30,31,31,30,31,30,31];
-const ORD = ["it","mo","ri","ec","ci","cm"];
-const AMB = {it:"Italia", mo:"Mondo", ri:"Religione, spionaggio, misteri", ec:"Economia", ci:"Criminalità Italia", cm:"Criminalità mondo"};
+/* ambiti: dal 16 ottobre 2026 si leggono dall'archivio (tabella ambiti, decisione 2.32); questi sono i sei del foglio CRONO */
+const AMB_BASE = {it:"Italia", mo:"Mondo", ri:"Religione, spionaggio, misteri", ec:"Economia", ci:"Criminalità Italia", cm:"Criminalità mondo"};
+let ORD = Object.keys(AMB_BASE);
+let AMB = { ...AMB_BASE };
+let COLORE = {};   // colori degli ambiti aggiunti (i sei del foglio hanno i loro nel foglio di stile)
+const MAX_AMBITI = 20;
+const TAVOLOZZA = [["#1F6F78","#5BB5BE","verde acqua"],["#A0522D","#E08A5C","terracotta"],["#5E6B1F","#A9B85A","oliva"],["#4B5A9E","#8E9BE0","indaco"],
+  ["#6B4E2E","#B8916A","marrone"],["#5C6670","#A3AEB8","grigio"],["#8A6D00","#D9B740","ocra"],["#2E7D32","#81C784","verde prato"]];
 const PRECISIONI = ["giorno","intervallo","mese","anno","periodo","alternativa","approssimata","decennio","relativa","futuro"];
 
 let SQL, db, N = 0;
@@ -1034,7 +1069,8 @@ const TELEFONO = true;   /* versione per il telefono (sola consultazione): la me
 const PASSAGGIO_FATTO = true;    // decisione 2.5: passaggio all'archivio fatto il 12 ottobre 2026, si salva sull'archivio vero
 const ELIMINAZIONI = new Map();   // id -> "cestino" | "ripristino" | "definitiva" (operazioni sul cestino non ancora salvate)
 const SCARTI = new Set();   // appunti dal telefono scartati, non ancora salvati
-const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size;
+const AMBITI_MOD = new Set();   // ambiti creati o rinominati, non ancora salvati
+const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size + AMBITI_MOD.size;
 let NCESTINO = 0;
 let CART = null, NOMEFILE = null, MODIFICATO_IL = 0, ULTIMO = "", salvando = false;   // cartella e file aperti, data del file all'apertura
 const puoSalvare = () => !!CART && (NOMEFILE === PROVA || PASSAGGIO_FATTO);
@@ -1098,6 +1134,13 @@ async function apri(fonte){
       db.run("create table appunti (id text primary key, tipo text not null, stato text not null, scheda_id integer, creato text, sistemato text not null)");
       db.run("insert or replace into metadati values ('versione_schema', '4')");
     }
+    if (!db.exec("pragma table_info(ambiti)")[0].values.some(x => x[1] === "etichetta")){   // schema 5: nome mostrato e colore degli ambiti
+      db.run("alter table ambiti add column etichetta text"); db.run("alter table ambiti add column colore text");
+      for (const [c, n] of Object.entries(AMB_BASE)) db.run("update ambiti set etichetta = ? where codice = ?", [n, c]);
+      db.run("update ambiti set etichetta = nome where etichetta is null");
+      db.run("insert or replace into metadati values ('versione_schema', '5')");
+    }
+    caricaAmbiti(); S.amb = (1 << ORD.length) - 1;
     carica(dove, file);
     $("apertura").hidden = true; $("app").hidden = false;
     if (window.matchMedia("(max-width:900px)").matches) $("filtriBox").open = false;
@@ -1134,7 +1177,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 15 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); stesse funzioni di ricerca del programma del computer, aggiornamento 2.";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti letti dall'archivio; aggiornamento 4.";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1208,8 +1251,9 @@ function carica(dove, file){
   $("statoGen").dataset.dove = dove || "";
   if (!N) costruisciArray();
   aggiornaStatoMod();
-  $("legenda").innerHTML = ORD.map(a => `<span style="--c:var(--${a})">${AMB[a]}</span>`).join("");
+  disegnaLegenda();
 }
+function disegnaLegenda(){ $("legenda").innerHTML = ORD.map(a => `<span style="--c:var(--${a})">${esc(AMB[a])}</span>`).join(""); }
 /* Ricostruisce le tabelle in memoria usate da filtri, linea del tempo ed elenco (all'apertura e dopo ogni modifica). */
 function costruisciArray(){
   const r = db.exec(`select s.id, s.anno, s.anno_fine, s.mese, s.giorno, s.giorno_fine, s.precisione, s.fascicolo_id, s.riga_origine, s.ordine,
@@ -1219,7 +1263,7 @@ function costruisciArray(){
   NCESTINO = db.exec("select count(*) from cestino")[0].values[0][0];
   DAVERIFICARE = new Set((db.exec(`select scheda_id from riferimenti r where stato in ${STATI_DA_VERIFICARE} and not exists (select 1 from cestino c where c.scheda_id = r.scheda_id)`)[0]?.values || []).map(x => x[0]));
   ID = new Int32Array(N); Y = new Float64Array(N); Y2 = new Float64Array(N); M = new Uint8Array(N); D = new Uint8Array(N); GF = new Uint8Array(N);
-  AMBM = new Uint8Array(N); FAS = new Int32Array(N); PREC = new Uint8Array(N); RIGA = new Int32Array(N); ORDINE = new Float64Array(N);
+  AMBM = new Uint32Array(N); FAS = new Int32Array(N); PREC = new Uint8Array(N); RIGA = new Int32Array(N); ORDINE = new Float64Array(N);
   let maxId = 0;
   r.forEach((x, i) => {
     ID[i] = x[0]; Y[i] = x[1] === null ? NaN : x[1]; Y2[i] = x[2] === null ? NaN : x[2]; M[i] = x[3] || 0; D[i] = x[4] || 0; GF[i] = x[5] || 0;
@@ -1447,7 +1491,7 @@ function disegnaLato(){
   const amb = $("ambiti"); amb.innerHTML = "";
   ORD.forEach((a, k) => {
     const l = document.createElement("label"); l.className = "ambito"; l.style.setProperty("--c", `var(--${a})`);
-    l.innerHTML = `<input type="checkbox" ${S.amb & (1 << k) ? "checked" : ""}><span>${AMB[a]}</span><span class="n">${fmt(ca[k])}</span>`;
+    l.innerHTML = `<input type="checkbox" ${S.amb & (1 << k) ? "checked" : ""}><span>${esc(AMB[a])}</span><span class="n">${fmt(ca[k])}</span>`;
     l.querySelector("input").onchange = ev => { S.amb = ev.target.checked ? S.amb | (1 << k) : S.amb & ~(1 << k); S.limite = 300; tutto(); };
     amb.appendChild(l);
   });
@@ -1649,8 +1693,9 @@ function aggiornaStatoMod(){
   if (ces) parti.push(ces === 1 ? "1 scheda spostata nel cestino" : `${fmt(ces)} schede spostate nel cestino`);
   if (rip) parti.push(rip === 1 ? "1 scheda ripristinata" : `${fmt(rip)} schede ripristinate`);
   if (def) parti.push(def === 1 ? "1 scheda eliminata definitivamente" : `${fmt(def)} schede eliminate definitivamente`);
-  const ns = n - SCARTI.size;
+  const ns = n - SCARTI.size - AMBITI_MOD.size;
   let cosa = ns ? `${parti.join(" e ")} non ancora ${ns === 1 ? "salvata" : "salvate"}` : "";
+  if (AMBITI_MOD.size) cosa += (cosa ? "; " : "") + (AMBITI_MOD.size === 1 ? "1 ambito nuovo o rinominato non ancora salvato" : `${fmt(AMBITI_MOD.size)} ambiti nuovi o rinominati non ancora salvati`);
   if (SCARTI.size) cosa += (cosa ? "; " : "") + (SCARTI.size === 1 ? "1 appunto scartato non ancora salvato" : `${fmt(SCARTI.size)} appunti scartati non ancora salvati`);
   let t, cl;
   if (puoSalvare()){
@@ -1746,7 +1791,7 @@ async function eseguiSalvataggio(nome, dopo){
   await new Promise(r => setTimeout(r, 30));   // lascia comparire l'avviso prima del lavoro
   try {
     const { out, n } = preparaFile();
-    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI), salvatiS = new Set(SCARTI);   // modifiche contenute nel file che si scrive
+    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI), salvatiS = new Set(SCARTI), salvatiA = new Set(AMBITI_MOD);   // modifiche contenute nel file che si scrive
     const scritte = await scriviImmagini();   // prima le immagini: l'archivio non deve mai indicare un file che non c'è
     const r = await scriviFile(nome, out);
     scritte.forEach(f => IMG_NUOVE.delete(f));
@@ -1754,7 +1799,7 @@ async function eseguiSalvataggio(nome, dopo){
     MODIFICATO_IL = r.file.lastModified; NOMEFILE = nome;
     for (const [id, v] of salvate) if (MODIFICATE.get(id) === v) MODIFICATE.delete(id);
     for (const [id, v] of salvateE) if (ELIMINAZIONI.get(id) === v) ELIMINAZIONI.delete(id);
-    salvatiS.forEach(x => SCARTI.delete(x));
+    salvatiS.forEach(x => SCARTI.delete(x)); salvatiA.forEach(x => AMBITI_MOD.delete(x));
     if (!MODIFICATE.size) S.soloMod = false;
     const d = new Date(); ULTIMO = d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
     if (dopo) dopo();
@@ -1894,6 +1939,40 @@ function sequenza(d){
   if (b >= 0 && Math.min(d.anno, fine) > Y[b] + tol(Y[b])) return `Fuori sequenza: la scheda sotto è del ${formatoAnno(Y[b])}. ${resta}`;
   return "";
 }
+/* --- punto giusto della sequenza per una data (15 ottobre 2026, decisione 2.31) ---
+   Per ogni punto si contano i contrasti: schede prima con data successiva e schede dopo con data precedente. Due date si
+   confrontano fino alla precisione che hanno in comune (anno con anno; il mese solo se c'è in tutte e due; il giorno solo
+   se c'è in tutte e due): "1992" e "23/05/1992" non sono in contrasto, e fra date uguali vale l'ordine scelto dall'utente.
+   Le date relative non contano. Il punto giusto è quello con meno contrasti, così una scheda fuori posto altrove non
+   sposta la proposta; a parità, il più vicino al punto attuale. Se il punto attuale ha già il minimo, non si propone niente. */
+function puntoGiusto(d, self, attuale){
+  const k = d.anno, m = d.mese || 0, g = d.giorno || 0;
+  const cmp = i => Y[i] !== k ? (Y[i] < k ? -1 : 1) : !m || !M[i] || M[i] === m && (!g || !D[i]) ? 0 : M[i] !== m ? (M[i] < m ? -1 : 1) : D[i] < g ? -1 : D[i] > g ? 1 : 0;
+  const REL = PRECISIONI.indexOf("relativa"), conta = i => i !== self && !Number.isNaN(Y[i]) && PREC[i] !== REL;
+  let c = 0;
+  for (let i = 0; i < N; i++) if (conta(i) && cmp(i) < 0) c++;
+  const costo = new Int32Array(N + 1); let best = Infinity;
+  for (let t = 0; t <= N; t++){   // costo[t]: contrasti mettendo la scheda subito prima della posizione t
+    costo[t] = c; if (c < best) best = c;
+    if (t < N && conta(t)){ const x = cmp(t); if (x > 0) c++; else if (x < 0) c--; }
+  }
+  if (costo[attuale] === best) return null;
+  let t = -1;
+  for (let u = 0; u <= N; u++) if (costo[u] === best && (t < 0 || Math.abs(u - attuale) < Math.abs(t - attuale))) t = u;
+  return t;
+}
+function proposta(d){   // null: niente da proporre; { fermo: true }: già al posto giusto; altrimenti il punto e i vicini
+  if (d.anno === null || Math.abs(d.anno) > 9e18 || d.precisione === "futuro" || d.precisione === "relativa") return null;
+  if (senzaAnnoProprio($("mData").value.trim())) return null;   // "Aprile", "Fine anno": l'anno viene dalla posizione, spostare non ha senso
+  const self = MS.modo === "modifica" ? POS[MS.id] : -1;
+  const attuale = MS.modo === "modifica" ? self : (MS.dove === "dopo" ? POS[MS.rif] + 1 : POS[MS.rif]);
+  const t = puntoGiusto(d, self, attuale);
+  if (t === null || (MS.modo === "modifica" && (t === self || t === self + 1))) return { fermo: true };
+  let a = t - 1; if (a === self) a--;
+  let b = t; if (b === self) b++;
+  const v = i => { const r = uno("select data_scritta, testo from schede where id = ?", [ID[i]]); return `«${r[0]}» (${corto(r[1], 70)})`; };
+  return { t, a, descr: `Andrebbe ${a >= 0 ? "dopo " + v(a) : "in testa alla cronologia"}${b < N ? ", prima di " + v(b) : ""}.` };
+}
 function valoriMano(){
   const n = id => { const v = $(id).value.trim(); return v === "" ? null : Number(v); };
   const anno = n("mAnno"), af = n("mAnnoF");
@@ -1942,9 +2021,13 @@ function disegnaLettura(){
   if (L.invertito) h.push(`<span class="avv">Intervallo di giorni con estremi invertiti: vale il primo giorno.</span>`);
   const imp = giornoImpossibile(d);
   if (imp) h.push(`<span class="avv"><b>${esc(imp)}</b>${L.registrata ? " La data registrata è sbagliata: correggila." : " Correggi la data: così non si può applicare."}</span>`);
-  const seq = L.registrata ? "" : sequenza(d);
+  const pr = L.registrata || imp ? null : proposta(d);
+  MS.sposta = pr && !pr.fermo ? pr : null;
+  const seq = L.registrata || pr ? "" : sequenza(d);
   if (seq) h.push(`<span class="avv">${esc(seq)}</span>`);
+  if (MS.sposta) h.push(`<span class="sposta"><label class="spunta"><input type="checkbox" id="mSposta"${MS.spostaNo ? "" : " checked"}> ${MS.modo === "modifica" ? "Sposta la scheda" : "Metti la scheda"} nel punto giusto della sequenza</label><span class="tenue" style="display:block">${esc(MS.sposta.descr)}</span></span>`);
   box.innerHTML = h.join(" ");
+  const cs = $("mSposta"); if (cs) cs.onchange = () => { MS.spostaNo = !cs.checked; };
   // correzione a mano: non per tempo profondo e futuro (si corregge la data scritta: decisioni 2.8 e 2.20)
   const vieta = profondo(d) && !$("mMano").checked;
   $("mManoEt").hidden = vieta;
@@ -2090,6 +2173,8 @@ function applica(){
   const ora = adesso();
   const soloId = S.solo !== null ? ID[S.solo] : null;
   let id = MS.id, rinumerate = 0;
+  let sposta = MS.sposta && !MS.spostaNo ? MS.sposta : null;
+  if (sposta && $("mMano").checked){ const pr = proposta(d); sposta = pr && !pr.fermo ? pr : null; }   // con la correzione a mano vale la data corretta
   db.run("BEGIN");
   try {
     let vecchio = null;
@@ -2104,9 +2189,14 @@ function applica(){
       db.run("update schede set data_scritta = ?, fascicolo_id = ?, testo = ?, approfondimento = ?, collegamento = ?, modificata = ? where id = ?", [ds, fid, testo, appr, coll, ora, id]);
       if (dataCambiata) db.run("update schede set anno = ?, anno_fine = ?, mese = ?, giorno = ?, giorno_fine = ?, precisione = ?, data_metodo = ?, data_nota = ?, data_anomalia = ? where id = ?",
         [d.anno, d.anno_fine, d.mese, d.giorno, d.giorno_fine, d.precisione, d.metodo, d.nota, d.anomalia, id]);
+      if (sposta){   // nuova posizione: subito dopo la scheda indicata dalla proposta
+        db.run("update schede set ordine = ? where id = ?", [-id, id]);   // valore provvisorio, per non contare la scheda stessa
+        const o = ordineDopo(sposta.a >= 0 ? ORDINE[sposta.a] : 0); rinumerate = o.rinumerate;
+        db.run("update schede set ordine = ? where id = ?", [o.ordine, id]);
+      }
     } else {
       const p = POS[MS.rif];
-      const a = MS.dove === "dopo" ? ORDINE[p] : (uno("select max(ordine) from schede where ordine < ?", [ORDINE[p]])[0] ?? 0);
+      const a = sposta ? (sposta.a >= 0 ? ORDINE[sposta.a] : 0) : MS.dove === "dopo" ? ORDINE[p] : (uno("select max(ordine) from schede where ordine < ?", [ORDINE[p]])[0] ?? 0);
       const o = ordineDopo(a); rinumerate = o.rinumerate;
       id = uno("select coalesce(max(id), 0) + 1 from schede")[0];
       db.run(`insert into schede (id, ordine, anno, mese, giorno, anno_fine, mese_fine, giorno_fine, precisione, data_scritta, data_metodo, data_nota, data_anomalia,
@@ -2148,7 +2238,13 @@ function applica(){
   const modo = MS.modo, daAppunto = !!MS.appunto;
   $("maschera").close(); MS = null;
   ricostruisci(soloId);
-  mostraScheda(id, modo === "nuova" ? `Scheda nuova inserita${rinumerate ? ` (rinumerate ${rinumerate} schede vicine)` : ""}.` : "Modifica applicata.");
+  if (sposta){   // la linea del tempo va al periodo della nuova posizione
+    const q = POS[id], z = percorsoData(Y[q], M[q], D[q]);
+    while (z.length && !contaIn(z[z.length - 1])) z.pop();
+    S.zoom = z; S.limite = 300;
+  }
+  const rin = rinumerate ? ` (rinumerate ${rinumerate} schede vicine)` : "";
+  mostraScheda(id, modo === "nuova" ? `Scheda nuova inserita${sposta ? " nel punto giusto della sequenza" : ""}${rin}.` : `Modifica applicata${sposta ? ": scheda spostata nel punto giusto della sequenza" : ""}${rin}.`);
   if (daAppunto){
     const resto = [...APP_PC.values()].filter(a => !statoApp(a.id)).length;
     if (resto) avvisoBreve(`Appunto applicato. ${resto === 1 ? "Ne resta 1" : `Ne restano ${resto}`} da sistemare.`, { testo: "Apri gli appunti", fn: mostraAppunti });
@@ -2252,11 +2348,12 @@ function costruisciFoglio(){
       (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id)
     from schede s where not exists (select 1 from cestino c where c.scheda_id = s.id) order by s.ordine`)[0]?.values || [];
   // 1. righe: schede consecutive con la stessa data e la stessa riga d'origine (o inserite nel programma), una per colonna
-  const righe = []; let cur = null, piuAmbiti = 0;
+  const righe = []; let cur = null, piuAmbiti = 0, esclusi = 0;
   for (const [id, ds, met, anno, riga, colo, testo, appr, coll, amb] of r){
-    const ambiti = String(amb || "").split(",").filter(Boolean);
+    const ambiti = String(amb || "").split(",").filter(a => COLONNA[a]);   // gli ambiti aggiunti non hanno una colonna (decisione 2.32)
+    if (!ambiti.length){ esclusi++; continue; }
     if (ambiti.length > 1) piuAmbiti++;
-    const col = colo && ambiti.some(a => COLONNA[a] === colo) ? colo : COLONNA[ORD.find(a => ambiti.includes(a)) || "it"];
+    const col = colo && ambiti.some(a => COLONNA[a] === colo) ? colo : COLONNA[Object.keys(COLONNA).find(a => ambiti.includes(a))];
     const v = valoreData(ds, met), k = chiaveData(v);
     if (!(cur && cur.k === k && !cur.celle[col] && (cur.riga === null || riga === null || cur.riga === riga))){ cur = { k, v, riga: riga ?? null, anno, celle: {} }; righe.push(cur); }
     if (cur.riga === null) cur.riga = riga ?? null;
@@ -2277,7 +2374,7 @@ function costruisciFoglio(){
   }
   // 3. foglio
   const ws = {}; let rr = 1;
-  ws.A1 = { t: "s", v: "DATA" }; ORD.forEach(a => ws[COLONNA[a] + "1"] = { t: "s", v: intest[a] || AMB[a] });
+  ws.A1 = { t: "s", v: "DATA" }; Object.keys(COLONNA).forEach(a => ws[COLONNA[a] + "1"] = { t: "s", v: intest[a] || AMB_BASE[a] });
   for (const rg of fuori){
     rr++;
     const v = rg.v;
@@ -2289,8 +2386,8 @@ function costruisciFoglio(){
       ws[c + rr] = cella;
     }
   }
-  ws["!ref"] = `A1:G${rr}`; ws["!cols"] = [{ wch: 24 }, ...ORD.map(() => ({ wch: 60 }))];
-  return { wb: { SheetNames: ["CRONO"], Sheets: { CRONO: ws } }, schede: r.length, righe: rr - 1, aggiunte, diverse, piuAmbiti };
+  ws["!ref"] = `A1:G${rr}`; ws["!cols"] = [{ wch: 24 }, ...Object.keys(COLONNA).map(() => ({ wch: 60 }))];
+  return { wb: { SheetNames: ["CRONO"], Sheets: { CRONO: ws } }, schede: r.length - esclusi, righe: rr - 1, aggiunte, diverse, piuAmbiti, esclusi };
 }
 let esportando = false;
 async function esportaExcel(){
@@ -2318,6 +2415,7 @@ async function esportaExcel(){
     if (daSalvare()) note.push("comprese le modifiche non ancora salvate");
     if (f.aggiunte) note.push(`${fmt(f.aggiunte)} righe con il solo anno aggiunte per le date senza anno`);
     if (f.piuAmbiti) note.push(`${fmt(f.piuAmbiti)} schede con più ambiti messe nella colonna del primo`);
+    if (f.esclusi) note.push(`attenzione: ${f.esclusi === 1 ? "1 scheda che ha solo ambiti aggiunti non è nel file" : fmt(f.esclusi) + " schede che hanno solo ambiti aggiunti non sono nel file"} (gli ambiti aggiunti non hanno una colonna)`);
     if (f.diverse) note.push(`attenzione: in ${fmt(f.diverse)} righe una nuova conversione leggerebbe un anno diverso`);
     avvisoBreve(`File Excel salvato ${dove}. ${sch(f.schede)} in ${fmt(f.righe)} righe${note.length ? "; " + note.join("; ") : ""}.`);
     window.ULTIMA_ESPORTAZIONE = { nome, ...f, wb: undefined };
@@ -2832,6 +2930,110 @@ $("apElenco").addEventListener("click", ev => {
   else if (b.dataset.apapri){ const a = trova(b.dataset.apapri); if (a) apriAppuntoPc(a); }
   else if (b.dataset.apscarta){ const a = trova(b.dataset.apscarta); if (a) scartaAppunto(a); }
   else if (b.dataset.apvedi){ $("appunti").close(); const p = POS[+b.dataset.apvedi]; if (p >= 0){ S.solo = p; S.zoom = []; S.limite = 300; tutto(); suDensita(); } }
+});
+
+/* =====================================================================
+   Ambiti (16 ottobre 2026, decisione 2.32)
+   Gli ambiti si leggono dalla tabella ambiti dell'archivio: i sei del foglio CRONO (codici it, mo, ri, ec, ci, cm, con la loro
+   colonna in Excel) e quelli aggiunti nel programma (codici a7, a8…, senza colonna in Excel). Si creano con nome e colore e si
+   rinominano dalla finestra "Gestisci gli ambiti"; si elimina solo un ambito aggiunto senza schede. Il nome mostrato è il campo
+   etichetta (schema 5); l'intestazione della colonna in Excel dei sei del foglio non cambia.
+   ===================================================================== */
+function caricaAmbiti(){
+  const r = db.exec("select codice, coalesce(etichetta, nome), colore from ambiti order by posizione, codice")[0]?.values || [];
+  if (!r.length) return;
+  ORD = r.map(x => x[0]).filter(c => /^[a-z0-9]+$/.test(c)).slice(0, MAX_AMBITI);
+  AMB = Object.fromEntries(r.map(x => [x[0], x[1]]));
+  COLORE = Object.fromEntries(r.filter(x => x[2] && /^#[0-9A-Fa-f]{6}$/.test(x[2])).map(x => [x[0], x[2]]));
+  applicaColori();
+}
+function applicaColori(){
+  let st = $("coloriAmbiti");
+  if (!st){ st = document.createElement("style"); st.id = "coloriAmbiti"; document.head.appendChild(st); }
+  const chiaro = [], scuro = [];
+  for (const c of ORD){
+    if (AMB_BASE[c]) continue;   // i sei del foglio hanno i colori nel foglio di stile
+    const col = COLORE[c] || TAVOLOZZA[5][0], t = TAVOLOZZA.find(x => x[0].toLowerCase() === col.toLowerCase());
+    chiaro.push(`--${c}:${col}`); scuro.push(`--${c}:${t ? t[1] : col}`);
+  }
+  st.textContent = `:root{${chiaro.join(";")}}@media (prefers-color-scheme:dark){:root{${scuro.join(";")}}}`;
+}
+function contiAmbiti(){   // schede per ambito (fuori dal cestino) e uso totale (anche nel cestino)
+  const vis = Object.fromEntries(db.exec("select ambito, count(*) from schede_ambiti a where not exists (select 1 from cestino c where c.scheda_id = a.scheda_id) group by ambito")[0]?.values || []);
+  const tot = Object.fromEntries(db.exec("select ambito, count(*) from schede_ambiti group by ambito")[0]?.values || []);
+  return { vis, tot };
+}
+const nomeAmbitoPulito = t => String(t || "").replace(/\s+/g, " ").trim();
+function nomeAmbitoErrato(nome, tranne){
+  if (!nome) return "Scrivi il nome dell'ambito.";
+  if (nome.length > 60) return "Il nome è troppo lungo (al massimo 60 caratteri).";
+  const k = senzaAccenti(nome).toLowerCase();
+  if (ORD.some(c => c !== tranne && senzaAccenti(AMB[c]).toLowerCase() === k)) return `C'è già un ambito «${nome}».`;
+  return "";
+}
+function disegnaGestioneAmbiti(){
+  const { vis, tot } = contiAmbiti();
+  $("gElenco").innerHTML = ORD.map(c => `<div class="g-voce" style="--c:var(--${c})"><span class="g-sw"></span>
+    <input type="text" data-cod="${c}" value="${esc(AMB[c])}" maxlength="60" aria-label="Nome dell'ambito">
+    <span class="n">${sch(vis[c] || 0)}${AMB_BASE[c] ? ` · colonna ${COLONNA[c]} in Excel` : " · senza colonna in Excel"}</span>
+    ${!AMB_BASE[c] && !tot[c] ? `<button type="button" data-elim="${c}">Elimina</button>` : "<span></span>"}</div>`).join("");
+  const usati = new Set(Object.values(COLORE).map(x => x.toLowerCase()));
+  const libero = TAVOLOZZA.find(x => !usati.has(x[0].toLowerCase())) || TAVOLOZZA[0];
+  $("gColori").innerHTML = TAVOLOZZA.map(([c, , n]) => `<label><input type="radio" name="gCol" value="${c}"${c === libero[0] ? " checked" : ""}><span style="background:${c}"></span>${n}${usati.has(c.toLowerCase()) ? " (già usato)" : ""}</label>`).join("");
+  $("gCrea").disabled = ORD.length >= MAX_AMBITI;
+  if (ORD.length >= MAX_AMBITI) $("gNota").textContent = `Si possono avere al massimo ${MAX_AMBITI} ambiti.`;
+}
+function aggiornaDopoAmbiti(msg){
+  caricaAmbiti(); disegnaLegenda(); aggiornaStatoMod(); tutto(); disegnaGestioneAmbiti();
+  $("gNota").textContent = msg + " Le modifiche vanno nel file con Salva.";
+}
+$("bAmbiti").onclick = () => {
+  if (occupato()) return;
+  $("gErrore").textContent = ""; $("gNota").textContent = ""; $("gNome").value = "";
+  disegnaGestioneAmbiti(); $("gAmbiti").showModal();
+};
+$("gChiudi").onclick = () => $("gAmbiti").close();
+$("gCrea").onclick = () => {
+  $("gErrore").textContent = "";
+  const nome = nomeAmbitoPulito($("gNome").value), e = nomeAmbitoErrato(nome);
+  if (e){ $("gErrore").textContent = e; return; }
+  if (ORD.length >= MAX_AMBITI){ $("gErrore").textContent = `Si possono avere al massimo ${MAX_AMBITI} ambiti.`; return; }
+  const colore = (document.querySelector('input[name="gCol"]:checked') || {}).value || TAVOLOZZA[0][0];
+  const usati = (db.exec("select codice from ambiti")[0]?.values || []).map(x => x[0]);
+  let n = 7; while (usati.includes("a" + n)) n++;
+  const cod = "a" + n, pos = (uno("select coalesce(max(posizione), 0) + 1 from ambiti") || [ORD.length + 1])[0];
+  db.run("insert into ambiti (codice, nome, colonna_excel, intestazione_excel, posizione, etichetta, colore) values (?, ?, null, ?, ?, ?, ?)", [cod, nome, nome.toUpperCase(), pos, nome, colore]);
+  AMBITI_MOD.add(cod);
+  caricaAmbiti(); S.amb |= 1 << ORD.indexOf(cod);
+  $("gNome").value = "";
+  aggiornaDopoAmbiti(`Ambito «${nome}» creato: per metterci una scheda aprila con Modifica e spunta l'ambito.`);
+};
+$("gNome").addEventListener("keydown", ev => { if (ev.key === "Enter"){ ev.preventDefault(); $("gCrea").click(); } });
+$("gElenco").addEventListener("change", ev => {
+  const i = ev.target.closest("input[data-cod]"); if (!i) return;
+  const c = i.dataset.cod, nome = nomeAmbitoPulito(i.value);
+  $("gErrore").textContent = "";
+  if (nome === AMB[c]) return;
+  const e = nomeAmbitoErrato(nome, c);
+  if (e){ $("gErrore").textContent = e; i.value = AMB[c]; return; }
+  const vecchio = AMB[c];
+  db.run("update ambiti set etichetta = ? where codice = ?", [nome, c]);
+  if (!AMB_BASE[c]) db.run("update ambiti set nome = ?, intestazione_excel = ? where codice = ?", [nome, nome.toUpperCase(), c]);
+  AMBITI_MOD.add(c);
+  aggiornaDopoAmbiti(`Ambito «${vecchio}» rinominato «${nome}».`);
+});
+$("gElenco").addEventListener("keydown", ev => { if (ev.key === "Enter" && ev.target.matches("input[data-cod]")){ ev.preventDefault(); ev.target.blur(); } });
+$("gElenco").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-elim]"); if (!b) return;
+  const c = b.dataset.elim;
+  if (AMB_BASE[c] || contiAmbiti().tot[c]) return;
+  if (!confirm(`Eliminare l'ambito «${AMB[c]}»? Non ha schede.`)) return;
+  const nome = AMB[c], k = ORD.indexOf(c);
+  db.run("delete from ambiti where codice = ?", [c]);
+  AMBITI_MOD.add(c);
+  // i bit degli ambiti successivi scalano di uno: si ricostruiscono le tabelle in memoria e si rimettono tutti gli ambiti nei filtri
+  caricaAmbiti(); costruisciArray(); S.amb = (1 << ORD.length) - 1;
+  aggiornaDopoAmbiti(`Ambito «${nome}» eliminato.`);
 });
 </script>
 </body>
