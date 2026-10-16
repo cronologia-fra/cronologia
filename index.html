@@ -12,6 +12,7 @@
 :root{
   --bg:#E8EDF0; --carta:#F7F9FA; --inchiostro:#1D2A36; --tenue:#5A6773; --riga:#C8D1D8; --evid:#FFE58A;
   --it:#2F6B4F; --mo:#2B5C8A; --ri:#6A4B8C; --ec:#8A6A1F; --ci:#A33A3A; --cm:#8C3B5E;
+  --a-it:var(--it); --a-mo:var(--mo); --a-ri:var(--ri); --a-ec:var(--ec); --a-ci:var(--ci); --a-cm:var(--cm);   /* colori degli ambiti: si possono cambiare senza toccare quelli dei comandi */
   --sans:"Segoe UI",Arial,sans-serif; --serif:Cambria,Georgia,"Times New Roman",serif;
 }
 @media (prefers-color-scheme:dark){
@@ -224,6 +225,30 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
 .g-voce input,.g-nuovo input[type=text]{width:100%;padding:7px 10px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit;font-size:15px}
 .g-voce .n{font-size:13px;color:var(--tenue);white-space:nowrap}
 .g-voce button{background:none;border:0;padding:0;color:var(--ci);text-decoration:underline;font-size:13px}
+.g-sotto{padding-left:28px}
+.g-sotto .g-sw{width:12px;height:12px;border-radius:50%;margin-left:2px}
+.g-voce select{padding:6px 8px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit;font-size:13px}
+.g-voce .g-conv{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.g-voce .g-conv button{color:var(--mo)}
+#gElenco h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--tenue);margin:18px 0 2px}
+.g-riga{display:flex;gap:8px}
+.g-riga select{flex:0 0 auto;padding:7px 8px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit;font-size:14px}
+.m-sotto{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.m-sotto .r{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:13.5px;padding-left:10px;border-left:3px solid var(--c)}
+.m-sotto .r b{font-weight:600;margin-right:2px}
+.m-sotto label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.m-sotto input{accent-color:var(--c);margin:0}
+.m-sotto button{background:none;border:0;padding:0;color:var(--mo);text-decoration:underline;font-size:13px}
+.voce.sotto{font-size:13.5px}
+.sa{display:inline-flex;align-items:center;gap:5px}
+.sa::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--s);flex:0 0 auto}
+.voce.attiva .sa::before{box-shadow:0 0 0 1.5px var(--carta)}
+.g-voce button.g-sw{border:0;padding:0;cursor:pointer;background:var(--c);text-decoration:none}
+button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
+.g-tav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 0 10px 28px;border-bottom:1px solid var(--riga)}
+.g-tav button{width:24px;height:24px;border-radius:5px;border:2px solid transparent;padding:0;cursor:pointer}
+.g-tav button.scelto{border-color:var(--inchiostro)}
+.g-tav button.rip{width:auto;height:auto;background:none;border:0;color:var(--mo);text-decoration:underline;font-size:13px;margin-left:6px}
 .g-nuovo{padding:12px 22px 4px;border-top:1px solid var(--riga)}
 .g-nuovo .et{display:block;font-weight:600;font-size:13.5px;margin-bottom:6px}
 .g-colori{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 4px}
@@ -261,7 +286,7 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 4 del 16 ottobre: ambiti nuovi e rinominabili (aggiornamento 3: spostamento nel punto giusto quando cambia la data; 2: appunti dal telefono; 1: ricerca per data, inizio e fine).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 6 del 16 ottobre: sotto-ambiti filtrati per nome in tutti gli ambiti, colori di ambiti e sotto-ambiti (5: sotto-ambiti; 3: spostamento nel punto giusto quando cambia la data; 2: appunti dal telefono; 1: ricerca per data, inizio e fine).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -298,7 +323,12 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
     <aside>
       <h2>Ambito</h2>
       <div id="ambiti"></div>
-      <button id="bAmbiti" class="azzera" type="button" style="font-size:13px;margin:2px 0 6px">Gestisci gli ambiti</button>
+      <button id="bAmbiti" class="azzera" type="button" style="font-size:13px;margin:2px 0 6px">Ambiti e sotto-ambiti</button>
+      <div id="sottoBox" hidden>
+        <h2>Sotto-ambiti</h2>
+        <p class="spiega">Lo stesso nome in ambiti diversi vale come uno solo (es. Proteste in Italia e in Mondo). Per restringere a un ambito, togli la spunta agli altri.</p>
+        <div id="sotto"></div>
+      </div>
       <h2>Fascicoli</h2>
       <p class="spiega">Titoli scritti all'inizio dei fatti, prima dei due punti. Qui compaiono quelli con almeno due schede.</p>
       <input class="filtra" id="filtraFasc" type="search" placeholder="Trova un fascicolo" aria-label="Trova un fascicolo">
@@ -348,7 +378,7 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
           </div>
         </div>
       </div>
-      <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="mAmbiti"></div></fieldset>
+      <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="mAmbiti"></div><div class="m-sotto" id="mSotto"></div></fieldset>
       <div class="campo">
         <label for="mTesto">Fatto</label>
         <textarea id="mTesto" rows="4"></textarea>
@@ -394,18 +424,17 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
   <div class="v-piede"><span id="vDida"></span><span id="vConta"></span><button type="button" id="vPrec">‹ Precedente</button><button type="button" id="vSucc">Successiva ›</button><button type="button" id="vApri">Apri a parte</button><button type="button" id="vChiudi">Chiudi</button></div>
 </dialog>
 <dialog id="gAmbiti" aria-labelledby="gTitolo">
-  <div class="m-testa"><h2 id="gTitolo">Ambiti</h2>
-    <p>Per rinominare un ambito scrivi il nuovo nome nella sua casella. Un ambito nuovo si aggiunge in fondo; nelle schede si assegna dalla maschera, spuntandolo. Si può eliminare solo un ambito aggiunto che non ha schede. Gli ambiti aggiunti non hanno una colonna nell'esportazione in Excel; i sei del foglio mantengono la loro, con l'intestazione originale anche se li rinomini.</p></div>
+  <div class="m-testa"><h2 id="gTitolo">Ambiti e sotto-ambiti</h2>
+    <p>I sei ambiti sono quelli del foglio, con la loro colonna in Excel: se ne possono cambiare il nome mostrato e il colore (clic sul quadratino). Sotto ciascuno si creano i sotto-ambiti (es. Mondo › Proteste); nelle schede si assegnano dalla maschera e una scheda con un sotto-ambito esce in Excel nella colonna del suo ambito. Per rinominare scrivi il nuovo nome nella casella.</p></div>
   <div class="c-elenco" id="gElenco"></div>
   <div class="g-nuovo">
-    <label class="et" for="gNome">Nuovo ambito</label>
-    <input id="gNome" type="text" maxlength="60" autocomplete="off" placeholder="es. Scienza e tecnica">
-    <div class="g-colori" id="gColori" role="radiogroup" aria-label="Colore"></div>
+    <label class="et" for="gNome">Nuovo sotto-ambito</label>
+    <div class="g-riga"><select id="gPadre" aria-label="Ambito"></select><input id="gNome" type="text" maxlength="60" autocomplete="off" placeholder="es. Proteste"></div>
   </div>
   <div class="m-piede">
     <span class="m-errore" id="gErrore" role="alert"></span>
     <span class="m-nota" id="gNota" role="status"></span>
-    <button type="button" class="secondario" id="gCrea">Crea l'ambito</button>
+    <button type="button" class="secondario" id="gCrea">Crea il sotto-ambito</button>
     <button type="button" class="primario" id="gChiudi">Chiudi</button>
   </div>
 </dialog>
@@ -414,7 +443,7 @@ body.telefono #bAmbiti,body.telefono #barra,body.telefono .rif .comandi,body.tel
     <div class="m-testa"><h2 id="aTitolo">Appunto</h2><p id="aRif"></p></div>
     <div class="m-corpo">
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
-      <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div></fieldset>
+      <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
       <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5"></textarea></div>
       <div class="campo"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><textarea id="aAppr" rows="5"></textarea></div>
       <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
@@ -1053,15 +1082,22 @@ const GIORNI_MESE = [31,29,31,30,31,30,31,31,30,31,30,31];
 const AMB_BASE = {it:"Italia", mo:"Mondo", ri:"Religione, spionaggio, misteri", ec:"Economia", ci:"Criminalità Italia", cm:"Criminalità mondo"};
 let ORD = Object.keys(AMB_BASE);
 let AMB = { ...AMB_BASE };
-let COLORE = {};   // colori degli ambiti aggiunti (i sei del foglio hanno i loro nel foglio di stile)
+let COLORE = {};   // colori scelti per gli ambiti (senza scelta: quelli del foglio di stile)
 const MAX_AMBITI = 20;
-const TAVOLOZZA = [["#1F6F78","#5BB5BE","verde acqua"],["#A0522D","#E08A5C","terracotta"],["#5E6B1F","#A9B85A","oliva"],["#4B5A9E","#8E9BE0","indaco"],
-  ["#6B4E2E","#B8916A","marrone"],["#5C6670","#A3AEB8","grigio"],["#8A6D00","#D9B740","ocra"],["#2E7D32","#81C784","verde prato"]];
+const TAVOLOZZA = [   // [colore, colore per lo schermo scuro, nome]: i sei colori originali degli ambiti, poi gli altri
+  ["#2F6B4F","#5FAE88","verde bosco"],["#2B5C8A","#6A9FD4","blu"],["#6A4B8C","#A88BCB","viola prugna"],["#8A6A1F","#C9A54E","oro antico"],["#A33A3A","#E07A7A","rosso mattone"],["#8C3B5E","#D27FA4","amaranto"],
+  ["#1F6F78","#5BB5BE","verde acqua"],["#A0522D","#E08A5C","terracotta"],["#5E6B1F","#A9B85A","oliva"],["#4B5A9E","#8E9BE0","indaco"],["#6B4E2E","#B8916A","marrone"],["#5C6670","#A3AEB8","grigio"],
+  ["#8A6D00","#D9B740","ocra"],["#2E7D32","#81C784","verde prato"],["#C62828","#EF6C6C","rosso vivo"],["#D86A10","#F5A25D","arancio"],["#A88A00","#E8CF4A","giallo"],["#0277BD","#64B5F6","azzurro"],
+  ["#1A237E","#8C9EFF","blu notte"],["#7B1FA2","#BA68C8","viola"],["#C2185B","#F06292","rosa"],["#6D1B2B","#C2667A","bordeaux"],["#00838F","#4DD0E1","turchese"],["#263238","#B0BEC5","antracite"]];
+const ORIGINALE = { it: "#2F6B4F", mo: "#2B5C8A", ri: "#6A4B8C", ec: "#8A6A1F", ci: "#A33A3A", cm: "#8C3B5E" };
+const nomeColore = c => (TAVOLOZZA.find(x => x[0].toLowerCase() === String(c).toLowerCase()) || [, , "colore"])[2];
 const PRECISIONI = ["giorno","intervallo","mese","anno","periodo","alternativa","approssimata","decennio","relativa","futuro"];
 
 let SQL, db, N = 0;
 let ID, Y, Y2, M, D, GF, AMBM, FAS, PREC, RIGA, ORDINE, NOFF, NIDS, POS;
 let NOMI = [], NCONT = [], FNOME = [], FCONT = [];
+let SOFF = new Int32Array(1), SIDS = new Int32Array(0);   // sotto-ambiti per scheda (come i nomi)
+let SUB = new Map();   // sotto-ambiti: id -> { id, ambito, nome }, nell'ordine degli ambiti e poi dei nomi
 let indicePronto = false;
 const MODIFICATE = new Map();   // id -> "modificata" | "nuova" (modifiche in memoria non ancora salvate)
 const ARCHIVIO = "cronologia.sqlite", PROVA = "cronologia-prova.sqlite", CARTELLA_COPIE = "Copie", COPIE_DA_TENERE = 20;
@@ -1069,7 +1105,7 @@ const TELEFONO = true;   /* versione per il telefono (sola consultazione): la me
 const PASSAGGIO_FATTO = true;    // decisione 2.5: passaggio all'archivio fatto il 12 ottobre 2026, si salva sull'archivio vero
 const ELIMINAZIONI = new Map();   // id -> "cestino" | "ripristino" | "definitiva" (operazioni sul cestino non ancora salvate)
 const SCARTI = new Set();   // appunti dal telefono scartati, non ancora salvati
-const AMBITI_MOD = new Set();   // ambiti creati o rinominati, non ancora salvati
+const AMBITI_MOD = new Set();   // modifiche ad ambiti e sotto-ambiti non ancora salvate
 const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size + AMBITI_MOD.size;
 let NCESTINO = 0;
 let CART = null, NOMEFILE = null, MODIFICATO_IL = 0, ULTIMO = "", salvando = false;   // cartella e file aperti, data del file all'apertura
@@ -1140,6 +1176,16 @@ async function apri(fonte){
       db.run("update ambiti set etichetta = nome where etichetta is null");
       db.run("insert or replace into metadati values ('versione_schema', '5')");
     }
+    if (!tab.includes("sottoambiti")){   // schema 6: sotto-ambiti, ciascuno dentro uno degli ambiti
+      db.run("create table sottoambiti (id integer primary key, ambito text not null references ambiti(codice), nome text not null, posizione integer not null default 0)");
+      db.run("create table schede_sottoambiti (scheda_id integer not null references schede(id) on delete cascade, sottoambito_id integer not null references sottoambiti(id) on delete cascade, primary key (scheda_id, sottoambito_id))");
+      db.run("create index i_schede_sottoambiti on schede_sottoambiti(sottoambito_id)");
+      db.run("insert or replace into metadati values ('versione_schema', '6')");
+    }
+    if (!db.exec("pragma table_info(sottoambiti)")[0].values.some(x => x[1] === "colore")){   // schema 7: colore dei sotto-ambiti
+      db.run("alter table sottoambiti add column colore text");
+      db.run("insert or replace into metadati values ('versione_schema', '7')");
+    }
     caricaAmbiti(); S.amb = (1 << ORD.length) - 1;
     carica(dove, file);
     $("apertura").hidden = true; $("app").hidden = false;
@@ -1177,7 +1223,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti letti dall'archivio; aggiornamento 4.";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; aggiornamento 6.";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1253,7 +1299,7 @@ function carica(dove, file){
   aggiornaStatoMod();
   disegnaLegenda();
 }
-function disegnaLegenda(){ $("legenda").innerHTML = ORD.map(a => `<span style="--c:var(--${a})">${esc(AMB[a])}</span>`).join(""); }
+function disegnaLegenda(){ $("legenda").innerHTML = ORD.map(a => `<span style="--c:var(--a-${a})">${esc(AMB[a])}</span>`).join(""); }
 /* Ricostruisce le tabelle in memoria usate da filtri, linea del tempo ed elenco (all'apertura e dopo ogni modifica). */
 function costruisciArray(){
   const r = db.exec(`select s.id, s.anno, s.anno_fine, s.mese, s.giorno, s.giorno_fine, s.precisione, s.fascicolo_id, s.riga_origine, s.ordine,
@@ -1281,6 +1327,12 @@ function costruisciArray(){
   for (let i = 0; i < N; i++) NOFF[i + 1] += NOFF[i];
   NIDS = new Int32Array(sn.length); const pieno = NOFF.slice(0, N);
   sn.forEach(x => { NIDS[pieno[POS[x[0]]]++] = x[1]; NCONT[x[1]]++; });
+  // sotto-ambiti
+  const ss = db.exec("select scheda_id, sottoambito_id from schede_sottoambiti where scheda_id not in (select scheda_id from cestino)")[0]?.values || [];
+  SOFF = new Int32Array(N + 1); ss.forEach(x => { if (POS[x[0]] >= 0) SOFF[POS[x[0]] + 1]++; });
+  for (let i = 0; i < N; i++) SOFF[i + 1] += SOFF[i];
+  SIDS = new Int32Array(SOFF[N]); const pienoS = SOFF.slice(0, N);
+  ss.forEach(x => { if (POS[x[0]] >= 0) SIDS[pienoS[POS[x[0]]]++] = x[1]; });
   // fascicoli
   const ff = db.exec("select id, nome from fascicoli")[0]; let maxF = 0; FNOME = [];
   if (ff){ ff.values.forEach(x => maxF = Math.max(maxF, x[0])); FNOME = new Array(maxF + 1); ff.values.forEach(x => FNOME[x[0]] = x[1]); }
@@ -1342,8 +1394,9 @@ function regexTermini(termini){
 }
 
 /* ---------- stato ---------- */
-const S = { amb: (1 << ORD.length) - 1, fil: 0, nome: 0, q: "", ric: null, zoom: [], solo: null, soloMod: false, soloRif: false, riga: 0, limite: 300, filtroNomi: "", filtroFasc: "" };
+const S = { amb: (1 << ORD.length) - 1, sotto: "", fil: 0, nome: 0, q: "", ric: null, zoom: [], solo: null, soloMod: false, soloRif: false, riga: 0, limite: 300, filtroNomi: "", filtroFasc: "" };
 let DAVERIFICARE = new Set();   // schede con una data relativa il cui collegamento è da confermare o da scegliere
+function haSottoNome(i, chiave){ for (let k = SOFF[i]; k < SOFF[i + 1]; k++){ const x = SUB.get(SIDS[k]); if (x && x.chiave === chiave) return true; } return false; }
 function haNome(i, n){ for (let k = NOFF[i]; k < NOFF[i + 1]; k++) if (NIDS[k] === n) return true; return false; }
 function passa(i, salta){
   if (S.solo !== null && i !== S.solo) return false;
@@ -1351,6 +1404,7 @@ function passa(i, salta){
   if (S.soloRif && !DAVERIFICARE.has(ID[i])) return false;
   if (S.riga && RIGA[i] !== S.riga) return false;
   if (salta !== "amb" && !(AMBM[i] & S.amb)) return false;
+  if (salta !== "sotto" && S.sotto && !haSottoNome(i, S.sotto)) return false;
   if (salta !== "fil" && S.fil && FAS[i] !== S.fil) return false;
   if (salta !== "nome" && S.nome && !haNome(i, S.nome)) return false;
   if (S.ric && !S.ric.maschera[i]) return false;
@@ -1458,7 +1512,7 @@ function disegnaDensita(){
     const h = n ? Math.max(3, Math.round(n / max * 140)) : 0;
     b.title = `${g.tit}: ${sch(n)}`; b.setAttribute("aria-label", b.title);
     b.innerHTML = `<div class="num">${n ? fmt(n) : ""}</div><div class="pila" style="height:${h}px">${
-      ORD.map((a, j) => conti[k][j] ? `<i style="background:var(--${a});flex:${conti[k][j]} 0 0"></i>` : "").join("")}</div><div class="et">${esc(g.et)}</div>`;
+      ORD.map((a, j) => conti[k][j] ? `<i style="background:var(--a-${a});flex:${conti[k][j]} 0 0"></i>` : "").join("")}</div><div class="et">${esc(g.et)}</div>`;
     if (!n) b.disabled = true;
     else b.onclick = () => {
       if (b.classList.contains("scelta")) S.zoom.pop();
@@ -1481,19 +1535,35 @@ function disegnaDensita(){
 /* ---------- disegno: filtri laterali ---------- */
 function disegnaLato(){
   const c = cima();
-  const ca = new Int32Array(ORD.length), cf = new Map(), cn = new Map();
+  const ca = new Int32Array(ORD.length), cf = new Map(), cn = new Map(), cs = new Map();
   for (let i = 0; i < N; i++){
     if (!dentro(i, c)) continue;
     if (passa(i, "amb")) for (let k = 0; k < ORD.length; k++) if (AMBM[i] & (1 << k)) ca[k]++;
     if (FAS[i] && passa(i, "fil")) cf.set(FAS[i], (cf.get(FAS[i]) || 0) + 1);
+    if (SOFF[i + 1] > SOFF[i] && passa(i, "sotto")){   // ogni nome conta una volta per scheda, anche se è in due ambiti
+      const visti = new Set(); for (let k = SOFF[i]; k < SOFF[i + 1]; k++){ const x = SUB.get(SIDS[k]); if (x) visti.add(x.chiave); }
+      visti.forEach(c => cs.set(c, (cs.get(c) || 0) + 1));
+    }
     if (passa(i, "nome")) for (let k = NOFF[i]; k < NOFF[i + 1]; k++) cn.set(NIDS[k], (cn.get(NIDS[k]) || 0) + 1);
   }
   const amb = $("ambiti"); amb.innerHTML = "";
   ORD.forEach((a, k) => {
-    const l = document.createElement("label"); l.className = "ambito"; l.style.setProperty("--c", `var(--${a})`);
+    const l = document.createElement("label"); l.className = "ambito"; l.style.setProperty("--c", `var(--a-${a})`);
     l.innerHTML = `<input type="checkbox" ${S.amb & (1 << k) ? "checked" : ""}><span>${esc(AMB[a])}</span><span class="n">${fmt(ca[k])}</span>`;
     l.querySelector("input").onchange = ev => { S.amb = ev.target.checked ? S.amb | (1 << k) : S.amb & ~(1 << k); S.limite = 300; tutto(); };
     amb.appendChild(l);
+  });
+  const sb = $("sotto"), gruppi = gruppiSotto();
+  $("sottoBox").hidden = !gruppi.size;
+  sb.innerHTML = "";
+  const chiavi = [...gruppi.keys()].filter(c => cs.get(c) || S.sotto === c).sort((a, b) => (cs.get(b) || 0) - (cs.get(a) || 0) || gruppi.get(a).nome.localeCompare(gruppi.get(b).nome, "it"));
+  if (!chiavi.length) sb.innerHTML = `<p class="spiega">Nessun sotto-ambito nella selezione.</p>`;
+  chiavi.forEach(c => {
+    const g = gruppi.get(c), b = document.createElement("button"); b.type = "button"; b.className = "voce sotto" + (S.sotto === c ? " attiva" : "");
+    b.title = g.ambiti.map(a => AMB[a]).join(", ");
+    b.innerHTML = `<span class="sa" style="--s:${g.colore}">${esc(g.nome)}</span><span class="n">${fmt(cs.get(c) || 0)}</span>`;
+    b.onclick = () => { S.sotto = S.sotto === c ? "" : c; S.limite = 300; tutto(); };
+    sb.appendChild(b);
   });
   elencoVoci($("filoni"), cf, id => FNOME[id], S.fil, id => FCONT[id] >= 2, S.filtroFasc, 25, id => { S.fil = S.fil === id ? 0 : id; }, "Nessun fascicolo nella selezione.");
   elencoVoci($("nomi"), cn, id => NOMI[id], S.nome, () => true, S.filtroNomi, 30, id => { S.nome = S.nome === id ? 0 : id; }, "Nessun nome trovato.");
@@ -1573,6 +1643,7 @@ function disegnaElenco(){
   if (S.soloMod) chips.push(["Solo le schede modificate o nuove", () => { S.soloMod = false; aggiornaStatoMod(); }]);
   if (S.soloRif) chips.push(["Solo le date relative da verificare", () => { S.soloRif = false; aggiornaStatoMod(); }]);
   if (S.riga) chips.push([`Solo la riga ${S.riga} del foglio`, () => { S.riga = 0; }]);
+  if (S.sotto && gruppiSotto().has(S.sotto)){ const g = gruppiSotto().get(S.sotto); chips.push([`Sotto-ambito: ${g.nome}${g.ambiti.length > 1 ? " (tutti gli ambiti)" : ""}`, () => { S.sotto = ""; }]); }
   if (S.fil) chips.push([`Fascicolo: ${FNOME[S.fil]}`, () => { S.fil = 0; }]);
   if (S.nome) chips.push([`Nome: ${NOMI[S.nome]}`, () => { S.nome = 0; }]);
   const na = ORD.filter((a, k) => S.amb & (1 << k)).length;
@@ -1582,7 +1653,7 @@ function disegnaElenco(){
     s.querySelector("button").onclick = () => { f(); S.limite = 300; tutto(); }; st.appendChild(s);
   });
   if (chips.length > 1){ const a = document.createElement("button"); a.className = "azzera"; a.textContent = "Togli tutti i filtri";
-    a.onclick = () => { S.q = ""; S.ric = null; S.fil = 0; S.nome = 0; S.solo = null; S.soloMod = false; S.soloRif = false; S.riga = 0; S.amb = (1 << ORD.length) - 1; $("q").value = ""; S.limite = 300; aggiornaStatoMod(); tutto(); }; st.appendChild(a); }
+    a.onclick = () => { S.q = ""; S.ric = null; S.sotto = ""; S.fil = 0; S.nome = 0; S.solo = null; S.soloMod = false; S.soloRif = false; S.riga = 0; S.amb = (1 << ORD.length) - 1; $("q").value = ""; S.limite = 300; aggiornaStatoMod(); tutto(); }; st.appendChild(a); }
 
   const el = $("elenco");
   if (!lista.length){ el.innerHTML = `<div class="vuoto">Nessuna scheda corrisponde ai filtri scelti. Togli un filtro o risali di livello nella linea del tempo.</div>`; return; }
@@ -1608,8 +1679,8 @@ function disegnaElenco(){
     const r = R.get(id);
     const rif = r ? bloccoRiferimento(id, r, RIGA[i], scritta) : "";
     const mod = MODIFICATE.get(id);
-    html += `<article class="scheda" data-id="${id}" style="--c:var(--${a})">
-      <div class="meta"><span>${ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => AMB[x]).join(" · ")}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span></div>
+    html += `<article class="scheda" data-id="${id}" style="--c:var(--a-${a})">
+      <div class="meta"><span>${htmlAmbiti(i)}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span></div>
       <p class="testo">${conNomi(testo, nomi)}</p>
       ${rif}
       ${coll ? `<div class="coll">Collegamento: <a href="${esc(coll)}" target="_blank" rel="noopener">${esc(coll)}</a></div>` : ""}
@@ -1695,7 +1766,7 @@ function aggiornaStatoMod(){
   if (def) parti.push(def === 1 ? "1 scheda eliminata definitivamente" : `${fmt(def)} schede eliminate definitivamente`);
   const ns = n - SCARTI.size - AMBITI_MOD.size;
   let cosa = ns ? `${parti.join(" e ")} non ancora ${ns === 1 ? "salvata" : "salvate"}` : "";
-  if (AMBITI_MOD.size) cosa += (cosa ? "; " : "") + (AMBITI_MOD.size === 1 ? "1 ambito nuovo o rinominato non ancora salvato" : `${fmt(AMBITI_MOD.size)} ambiti nuovi o rinominati non ancora salvati`);
+  if (AMBITI_MOD.size) cosa += (cosa ? "; " : "") + (AMBITI_MOD.size === 1 ? "1 modifica agli ambiti non ancora salvata" : `${fmt(AMBITI_MOD.size)} modifiche agli ambiti non ancora salvate`);
   if (SCARTI.size) cosa += (cosa ? "; " : "") + (SCARTI.size === 1 ? "1 appunto scartato non ancora salvato" : `${fmt(SCARTI.size)} appunti scartati non ancora salvati`);
   let t, cl;
   if (puoSalvare()){
@@ -2064,12 +2135,13 @@ function disegnaRicavati(){
 
 /* --- apertura e chiusura --- */
 function istantanea(){ return JSON.stringify([$("mData").value, $("mTesto").value, $("mAppr").value, $("mColl").value, [...document.querySelectorAll("#mAmbiti input")].map(x => x.checked),
-  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS && MS.modo === "nuova" ? MS.dove : "", apriFascicolo(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
+  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS ? [...MS.sotto].sort((a, b) => a - b) : [], MS && MS.modo === "nuova" ? MS.dove : "", apriFascicolo(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
 function apriMaschera(modo, id){
   if (occupato()) return;
   MS = { modo, apriFasc: { k: null, si: false }, immagini: [] };
   $("mErrImg").textContent = "";
-  const box = $("mAmbiti"); box.innerHTML = ORD.map(a => `<label style="--c:var(--${a})"><input type="checkbox" value="${a}"> ${AMB[a]}</label>`).join("");
+  const box = $("mAmbiti"); box.innerHTML = ORD.map(a => `<label style="--c:var(--a-${a})"><input type="checkbox" value="${a}"> ${esc(AMB[a])}</label>`).join("");
+  MS.sotto = new Set(modo === "modifica" ? (db.exec(`select sottoambito_id from schede_sottoambiti where scheda_id = ${+id}`)[0]?.values || []).map(x => x[0]) : []);
   if (modo === "modifica"){
     const o = datiScheda(id); MS.id = id; MS.orig = o;
     $("mTitolo").textContent = "Modifica della scheda";
@@ -2095,6 +2167,7 @@ function apriMaschera(modo, id){
   if ($("mMano").checked) mettiMano(MS.lettura.d);
   $("mManoBox").hidden = !$("mMano").checked;
   disegnaRicavati();
+  disegnaSotto("mAmbiti", "mSotto", MS.sotto, true);
   disegnaImmaginiMaschera();
   MS.inizio = istantanea();
   $("maschera").showModal();
@@ -2206,6 +2279,8 @@ function applica(){
     }
     db.run("delete from schede_ambiti where scheda_id = ?", [id]);
     ambiti.forEach(a => db.run("insert into schede_ambiti values (?, ?)", [id, a]));
+    db.run("delete from schede_sottoambiti where scheda_id = ?", [id]);   // solo i sotto-ambiti degli ambiti spuntati
+    [...MS.sotto].filter(x => SUB.has(x) && ambiti.includes(SUB.get(x).ambito)).forEach(x => db.run("insert into schede_sottoambiti values (?, ?)", [id, x]));
     const vecchiNomi = (db.exec(`select nome_id from schede_nomi where scheda_id = ${id}`)[0]?.values || []).map(x => x[0]);
     db.run("delete from schede_nomi where scheda_id = ?", [id]);
     for (const n of MS.nomi){
@@ -2730,15 +2805,16 @@ function mostraScheda(id, msg){
    dell'archivio che li contiene. Le correzioni si confrontano campo per campo con la versione da cui sono partite.
    ===================================================================== */
 const FORMATO_APPUNTI = "cronologia-appunti";
-const CAMPI_APP = ["data", "ambiti", "testo", "approfondimento", "collegamento"];
-const NOME_CAMPO = { data: "data", ambiti: "ambito", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento" };
+const CAMPI_APP = ["data", "ambiti", "sottoambiti", "testo", "approfondimento", "collegamento"];
+const NOME_CAMPO = { data: "data", ambiti: "ambito", sottoambiti: "sotto-ambiti", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento" };
 const corto = (t, n) => { t = String(t || ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
 const nuovoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
-const pulito = (v, f) => f === "ambiti" ? [...(v || [])].sort().join(",") : String(v ?? "").replace(/\s+$/, "").trim();
+const pulito = (v, f) => f === "ambiti" ? [...(v || [])].sort().join(",") : f === "sottoambiti" ? [...(v || [])].sort((a, b) => a - b).join(",") : String(v ?? "").replace(/\s+$/, "").trim();
 const uguale = (a, b, f) => pulito(a, f) === pulito(b, f);
 function campiScheda(id){
   const o = datiScheda(id);
-  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "" };
+  const sotto = (db.exec(`select sottoambito_id from schede_sottoambiti where scheda_id = ${+id} order by sottoambito_id`)[0]?.values || []).map(x => x[0]);
+  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), sottoambiti: sotto, testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "" };
 }
 function voceAppunto(a, comandi, stato){
   return `<div class="c-voce"><div>
@@ -2761,6 +2837,7 @@ function mostraContoAppunti(){ if (!TELEFONO) return; $("telAppBox").hidden = !A
 $("telAppunti").onclick = mostraAppunti;
 let AN = null;   // appunto aperto nella maschera del telefono
 const leggiAnnota = () => ({ data: $("aData").value.trim(), ambiti: [...document.querySelectorAll("#aAmbiti input:checked")].map(x => x.value).sort(),
+  sottoambiti: AN ? [...AN.sotto].filter(x => SUB.has(x) && document.querySelector(`#aAmbiti input[value="${SUB.get(x).ambito}"]:checked`)).sort((a, b) => a - b) : [],
   testo: $("aTesto").value.replace(/\s+$/, ""), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim() });
 function apriAnnota(tipo, id, esistente){
   if (esistente) AN = { id: esistente.id, tipo: esistente.tipo, creato: esistente.creato, rif: esistente.rif, originale: esistente.originale, esportato: esistente.esportato };
@@ -2771,7 +2848,8 @@ function apriAnnota(tipo, id, esistente){
   const c = esistente ? esistente.campi : tipo === "correzione" ? AN.originale : { data: AN.rif.data, ambiti: [campiScheda(id).ambiti[0] || "it"], testo: "", approfondimento: "", collegamento: "" };
   $("aTitolo").textContent = AN.tipo === "nuovo" ? "Appunto: fatto nuovo" : "Appunto: correzione";
   $("aRif").textContent = (AN.tipo === "nuovo" ? "Va subito dopo la scheda: " : "Scheda da correggere: ") + `${AN.rif.data} — ${corto(AN.rif.testo, 140)}`;
-  $("aAmbiti").innerHTML = ORD.map(a => `<label style="--c:var(--${a})"><input type="checkbox" value="${a}"${c.ambiti.includes(a) ? " checked" : ""}> ${AMB[a]}</label>`).join("");
+  $("aAmbiti").innerHTML = ORD.map(a => `<label style="--c:var(--a-${a})"><input type="checkbox" value="${a}"${c.ambiti.includes(a) ? " checked" : ""}> ${esc(AMB[a])}</label>`).join("");
+  AN.sotto = new Set(c.sottoambiti || []); disegnaSotto("aAmbiti", "aSotto", AN.sotto, false);
   $("aData").value = c.data; $("aTesto").value = c.testo; $("aAppr").value = c.approfondimento || ""; $("aColl").value = c.collegamento || "";
   $("aErrore").textContent = "";
   AN.inizio = JSON.stringify(leggiAnnota());
@@ -2855,6 +2933,7 @@ async function importaAppunti(f){
   for (const a of d.appunti){
     if (!appuntoValido(a)){ illeggibili++; continue; }
     a.campi.ambiti = a.campi.ambiti.filter(x => ORD.includes(x));
+    if (Array.isArray(a.campi.sottoambiti)) a.campi.sottoambiti = a.campi.sottoambiti.filter(x => SUB.has(x));
     const c = APP_PC.get(a.id);
     if (!c || String(a.modificato || "") > String(c.modificato || "")) APP_PC.set(a.id, a);
     validi++; if (statoApp(a.id)) gia++;
@@ -2881,7 +2960,8 @@ function riempiMaschera(c){
   if ($("mMano").checked && !uguale(c.data, $("mData").value, "data")){ $("mMano").checked = false; $("mManoBox").hidden = true; }   // data nuova: vale la lettura automatica
   $("mData").value = c.data; $("mTesto").value = c.testo; $("mAppr").value = c.approfondimento || ""; $("mColl").value = c.collegamento || "";
   document.querySelectorAll("#mAmbiti input").forEach(x => { x.checked = c.ambiti.includes(x.value); });
-  disegnaLettura(); disegnaRicavati();
+  if (c.sottoambiti) MS.sotto = new Set(c.sottoambiti.filter(x => SUB.has(x)));
+  disegnaLettura(); disegnaRicavati(); disegnaSotto("mAmbiti", "mSotto", MS.sotto, true);
 }
 function apriAppuntoPc(a){
   if (occupato()) return;
@@ -2908,7 +2988,7 @@ function apriAppuntoPc(a){
     riempiMaschera(val);
     let h = `Correzione annotata sul telefono il ${dataOra(a.creato)}${cambiati.length ? `: cambia ${cambiati.map(f => NOME_CAMPO[f]).join(", ")}` : ""}. Controlla e premi Applica.`;
     if (conflitti.length) h += `<span class="conflitto"><b>Attenzione:</b> dopo la copia portata sul telefono ${conflitti.length === 1 ? "questo campo è cambiato" : "questi campi sono cambiati"} anche sul computer. Nella maschera c'è la versione del telefono; quella del computer era:`
-      + conflitti.map(f => `\n<b>${NOME_CAMPO[f]}</b>: ${esc(f === "ambiti" ? pc[f].map(x => AMB[x]).join(", ") : pc[f] || "(vuoto)")}`).join("") + `</span>`;
+      + conflitti.map(f => `\n<b>${NOME_CAMPO[f]}</b>: ${esc(f === "ambiti" ? pc[f].map(x => AMB[x]).join(", ") : f === "sottoambiti" ? pc[f].map(nomeSotto).join(", ") || "(nessuno)" : pc[f] || "(vuoto)")}`).join("") + `</span>`;
     $("mOrigine").innerHTML = h;
   }
   MS.appunto = a; MS.inizio = istantanea();
@@ -2933,11 +3013,12 @@ $("apElenco").addEventListener("click", ev => {
 });
 
 /* =====================================================================
-   Ambiti (16 ottobre 2026, decisione 2.32)
-   Gli ambiti si leggono dalla tabella ambiti dell'archivio: i sei del foglio CRONO (codici it, mo, ri, ec, ci, cm, con la loro
-   colonna in Excel) e quelli aggiunti nel programma (codici a7, a8…, senza colonna in Excel). Si creano con nome e colore e si
-   rinominano dalla finestra "Gestisci gli ambiti"; si elimina solo un ambito aggiunto senza schede. Il nome mostrato è il campo
-   etichetta (schema 5); l'intestazione della colonna in Excel dei sei del foglio non cambia.
+   Ambiti e sotto-ambiti (16 ottobre 2026, decisioni 2.32 e 2.33)
+   I sei ambiti sono quelli del foglio CRONO (it, mo, ri, ec, ci, cm), ciascuno con la sua colonna in Excel: nel programma se
+   ne cambia solo il nome mostrato (campo etichetta). Dentro ogni ambito si creano sotto-ambiti (tabella sottoambiti), che si
+   assegnano alle schede dalla maschera (tabella schede_sottoambiti; una scheda può averne più d'uno, purché abbia il loro
+   ambito). In Excel una scheda con un sotto-ambito esce nella colonna del suo ambito. Gli ambiti aggiunti con l'aggiornamento 4
+   (codici a7, a8…) si trasformano in sotto-ambiti dalla finestra di gestione; finché restano, funzionano come prima.
    ===================================================================== */
 function caricaAmbiti(){
   const r = db.exec("select codice, coalesce(etichetta, nome), colore from ambiti order by posizione, codice")[0]?.values || [];
@@ -2945,46 +3026,109 @@ function caricaAmbiti(){
   ORD = r.map(x => x[0]).filter(c => /^[a-z0-9]+$/.test(c)).slice(0, MAX_AMBITI);
   AMB = Object.fromEntries(r.map(x => [x[0], x[1]]));
   COLORE = Object.fromEntries(r.filter(x => x[2] && /^#[0-9A-Fa-f]{6}$/.test(x[2])).map(x => [x[0], x[2]]));
+  const su = db.exec("select id, ambito, nome, colore from sottoambiti")[0]?.values || [];
+  su.sort((a, b) => ORD.indexOf(a[1]) - ORD.indexOf(b[1]) || a[2].localeCompare(b[2], "it"));
+  SUB = new Map(su.filter(x => ORD.includes(x[1])).map(x => [x[0], { id: x[0], ambito: x[1], nome: x[2], chiave: chiaveNome(x[2]), colore: x[3] && /^#[0-9A-Fa-f]{6}$/.test(x[3]) ? x[3] : null }]));
   applicaColori();
 }
-function applicaColori(){
+function applicaColori(){   // colori scelti per ambiti e sotto-ambiti (con la tinta per lo schermo scuro)
   let st = $("coloriAmbiti");
   if (!st){ st = document.createElement("style"); st.id = "coloriAmbiti"; document.head.appendChild(st); }
   const chiaro = [], scuro = [];
+  const metti = (v, col) => { const t = TAVOLOZZA.find(x => x[0].toLowerCase() === col.toLowerCase()); chiaro.push(`--${v}:${col}`); scuro.push(`--${v}:${t ? t[1] : col}`); };
   for (const c of ORD){
-    if (AMB_BASE[c]) continue;   // i sei del foglio hanno i colori nel foglio di stile
-    const col = COLORE[c] || TAVOLOZZA[5][0], t = TAVOLOZZA.find(x => x[0].toLowerCase() === col.toLowerCase());
-    chiaro.push(`--${c}:${col}`); scuro.push(`--${c}:${t ? t[1] : col}`);
+    if (COLORE[c]) metti("a-" + c, COLORE[c]);
+    else if (!AMB_BASE[c]) metti("a-" + c, TAVOLOZZA[11][0]);   // ambito aggiunto senza colore: grigio
   }
+  for (const x of SUB.values()) if (x.colore) metti("s" + x.id, x.colore);
   st.textContent = `:root{${chiaro.join(";")}}@media (prefers-color-scheme:dark){:root{${scuro.join(";")}}}`;
 }
-function contiAmbiti(){   // schede per ambito (fuori dal cestino) e uso totale (anche nel cestino)
-  const vis = Object.fromEntries(db.exec("select ambito, count(*) from schede_ambiti a where not exists (select 1 from cestino c where c.scheda_id = a.scheda_id) group by ambito")[0]?.values || []);
-  const tot = Object.fromEntries(db.exec("select ambito, count(*) from schede_ambiti group by ambito")[0]?.values || []);
-  return { vis, tot };
+const nomeSotto = id => { const x = SUB.get(id); return x ? `${AMB[x.ambito]} › ${x.nome}` : ""; };
+const coloreSotto = x => x.colore ? `var(--s${x.id})` : `var(--a-${x.ambito})`;
+function htmlAmbiti(i){   // "Mondo › ● Proteste, ● Politica · Italia", ogni sotto-ambito con il suo colore
+  const ha = new Set(SIDS.subarray(SOFF[i], SOFF[i + 1])), sub = ha.size ? [...SUB.values()].filter(x => ha.has(x.id)) : [];   // nell'ordine dei filtri
+  return ORD.filter((a, k) => AMBM[i] & (1 << k)).map(a => { const n = sub.filter(x => x.ambito === a);
+    return esc(AMB[a]) + (n.length ? " › " + n.map(x => `<span class="sa" style="--s:${coloreSotto(x)}">${esc(x.nome)}</span>`).join(", ") : ""); }).join(" · ");
 }
-const nomeAmbitoPulito = t => String(t || "").replace(/\s+/g, " ").trim();
+function gruppiSotto(){   // sotto-ambiti con lo stesso nome (maiuscole e accenti non contano) riuniti: chiave -> { nome, ambiti, colore }
+  const g = new Map();
+  for (const x of SUB.values()){
+    if (!g.has(x.chiave)) g.set(x.chiave, { nome: x.nome, ambiti: [], colore: coloreSotto(x) });
+    g.get(x.chiave).ambiti.push(x.ambito);
+  }
+  return g;
+}
+function contiAmbiti(){
+  const vis = Object.fromEntries(db.exec("select ambito, count(*) from schede_ambiti a where not exists (select 1 from cestino c where c.scheda_id = a.scheda_id) group by ambito")[0]?.values || []);
+  const sotto = Object.fromEntries(db.exec("select sottoambito_id, count(*) from schede_sottoambiti a where not exists (select 1 from cestino c where c.scheda_id = a.scheda_id) group by sottoambito_id")[0]?.values || []);
+  return { vis, sotto };
+}
+const nomePulito = t => String(t || "").replace(/\s+/g, " ").trim();
+const chiaveNome = t => senzaAccenti(t).toLowerCase();
 function nomeAmbitoErrato(nome, tranne){
   if (!nome) return "Scrivi il nome dell'ambito.";
   if (nome.length > 60) return "Il nome è troppo lungo (al massimo 60 caratteri).";
-  const k = senzaAccenti(nome).toLowerCase();
-  if (ORD.some(c => c !== tranne && senzaAccenti(AMB[c]).toLowerCase() === k)) return `C'è già un ambito «${nome}».`;
+  if (ORD.some(c => c !== tranne && chiaveNome(AMB[c]) === chiaveNome(nome))) return `C'è già un ambito «${nome}».`;
   return "";
 }
-function disegnaGestioneAmbiti(){
-  const { vis, tot } = contiAmbiti();
-  $("gElenco").innerHTML = ORD.map(c => `<div class="g-voce" style="--c:var(--${c})"><span class="g-sw"></span>
-    <input type="text" data-cod="${c}" value="${esc(AMB[c])}" maxlength="60" aria-label="Nome dell'ambito">
-    <span class="n">${sch(vis[c] || 0)}${AMB_BASE[c] ? ` · colonna ${COLONNA[c]} in Excel` : " · senza colonna in Excel"}</span>
-    ${!AMB_BASE[c] && !tot[c] ? `<button type="button" data-elim="${c}">Elimina</button>` : "<span></span>"}</div>`).join("");
-  const usati = new Set(Object.values(COLORE).map(x => x.toLowerCase()));
-  const libero = TAVOLOZZA.find(x => !usati.has(x[0].toLowerCase())) || TAVOLOZZA[0];
-  $("gColori").innerHTML = TAVOLOZZA.map(([c, , n]) => `<label><input type="radio" name="gCol" value="${c}"${c === libero[0] ? " checked" : ""}><span style="background:${c}"></span>${n}${usati.has(c.toLowerCase()) ? " (già usato)" : ""}</label>`).join("");
-  $("gCrea").disabled = ORD.length >= MAX_AMBITI;
-  if (ORD.length >= MAX_AMBITI) $("gNota").textContent = `Si possono avere al massimo ${MAX_AMBITI} ambiti.`;
+function nomeSottoErrato(amb, nome, tranne){
+  if (!nome) return "Scrivi il nome del sotto-ambito.";
+  if (nome.length > 60) return "Il nome è troppo lungo (al massimo 60 caratteri).";
+  if ([...SUB.values()].some(x => x.ambito === amb && x.id !== tranne && chiaveNome(x.nome) === chiaveNome(nome))) return `In ${AMB[amb]} c'è già il sotto-ambito «${nome}».`;
+  return "";
 }
-function aggiornaDopoAmbiti(msg){
-  caricaAmbiti(); disegnaLegenda(); aggiornaStatoMod(); tutto(); disegnaGestioneAmbiti();
+function creaSotto(amb, nome){   // restituisce l'id, o un messaggio d'errore
+  nome = nomePulito(nome);
+  if (!AMB_BASE[amb]) return { errore: "I sotto-ambiti si creano solo dentro i sei ambiti del foglio." };
+  const e = nomeSottoErrato(amb, nome); if (e) return { errore: e };
+  db.run("insert into sottoambiti (ambito, nome, posizione) values (?, ?, 0)", [amb, nome]);
+  const id = uno("select last_insert_rowid()")[0];
+  AMBITI_MOD.add("s" + id); caricaAmbiti(); aggiornaStatoMod();
+  return { id };
+}
+/* riquadro dei sotto-ambiti nella maschera (e in quella degli appunti del telefono): uno per ogni ambito spuntato */
+function disegnaSotto(idAmb, idSotto, scelti, nuovo){
+  const box = $(idSotto); if (!box) return;
+  const amb = [...document.querySelectorAll(`#${idAmb} input:checked`)].map(x => x.value).filter(a => AMB_BASE[a]);
+  box.innerHTML = amb.map(a => {
+    const sub = [...SUB.values()].filter(x => x.ambito === a);
+    if (!sub.length && !nuovo) return "";
+    return `<div class="r" style="--c:var(--a-${a})"><b>${esc(AMB[a])}:</b>${sub.map(x => `<label style="--c:${coloreSotto(x)}"><input type="checkbox" data-sotto="${x.id}"${scelti.has(x.id) ? " checked" : ""}> ${esc(x.nome)}</label>`).join("")}${nuovo ? `<button type="button" data-nuovosotto="${a}">+ nuovo sotto-ambito</button>` : sub.length ? "" : ""}</div>`;
+  }).join("");
+}
+$("mAmbiti").addEventListener("change", () => { if (MS) disegnaSotto("mAmbiti", "mSotto", MS.sotto, true); });
+$("aAmbiti").addEventListener("change", () => { if (AN) disegnaSotto("aAmbiti", "aSotto", AN.sotto, false); });
+$("mSotto").addEventListener("change", ev => { const x = ev.target.closest("input[data-sotto]"); if (x && MS){ const id = +x.dataset.sotto; if (x.checked) MS.sotto.add(id); else MS.sotto.delete(id); } });
+$("aSotto").addEventListener("change", ev => { const x = ev.target.closest("input[data-sotto]"); if (x && AN){ const id = +x.dataset.sotto; if (x.checked) AN.sotto.add(id); else AN.sotto.delete(id); } });
+$("mSotto").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-nuovosotto]"); if (!b || !MS) return;
+  const a = b.dataset.nuovosotto, nome = prompt(`Nome del nuovo sotto-ambito di ${AMB[a]}:`);
+  if (nome === null || !nomePulito(nome)) return;
+  const r = creaSotto(a, nome);
+  if (r.errore){ $("mErrore").textContent = r.errore; return; }
+  $("mErrore").textContent = ""; MS.sotto.add(r.id); disegnaSotto("mAmbiti", "mSotto", MS.sotto, true); disegnaLato();
+});
+/* finestra di gestione */
+function disegnaGestioneAmbiti(){
+  const { vis, sotto } = contiAmbiti(), base = ORD.filter(c => AMB_BASE[c]), extra = ORD.filter(c => !AMB_BASE[c]);
+  let h = base.map(c => `<div class="g-voce" style="--c:var(--a-${c})"><button type="button" class="g-sw" data-col="a:${c}" title="Colore: ${COLORE[c] ? nomeColore(COLORE[c]) : "originale"}. Clic per cambiarlo" aria-label="Cambia il colore di ${esc(AMB[c])}"></button>
+      <input type="text" data-cod="${c}" value="${esc(AMB[c])}" maxlength="60" aria-label="Nome dell'ambito">
+      <span class="n">${sch(vis[c] || 0)} · colonna ${COLONNA[c]} in Excel</span><span></span></div>`
+    + [...SUB.values()].filter(x => x.ambito === c).map(x => `<div class="g-voce g-sotto" style="--c:${coloreSotto(x)}"><button type="button" class="g-sw" data-col="s:${x.id}" title="Colore: ${x.colore ? nomeColore(x.colore) : "quello dell'ambito"}. Clic per cambiarlo" aria-label="Cambia il colore di ${esc(x.nome)}"></button>
+      <input type="text" data-sub="${x.id}" value="${esc(x.nome)}" maxlength="60" aria-label="Nome del sotto-ambito">
+      <span class="n">${sch(sotto[x.id] || 0)}</span><button type="button" data-elimsub="${x.id}">Elimina</button></div>`).join("")).join("");
+  if (extra.length) h += `<h3>Ambiti aggiunti da trasformare in sotto-ambiti</h3>` + extra.map(c => `<div class="g-voce" style="--c:var(--a-${c})"><span class="g-sw"></span>
+      <span>${esc(AMB[c])}</span><span class="n">${sch(vis[c] || 0)}</span>
+      <span class="g-conv">diventa sotto-ambito di <select data-padre="${c}" aria-label="Ambito in cui va">${base.map(b => `<option value="${b}">${esc(AMB[b])}</option>`).join("")}</select><button type="button" data-conv="${c}">Trasforma</button></span></div>`).join("");
+  $("gElenco").innerHTML = h;
+  const scelto = $("gPadre").value;
+  $("gPadre").innerHTML = base.map(b => `<option value="${b}"${b === scelto ? " selected" : ""}>${esc(AMB[b])}</option>`).join("");
+}
+function dopoAmbiti(msg, ricostruire){
+  caricaAmbiti();
+  if (ricostruire){ costruisciArray(); S.amb = (1 << ORD.length) - 1; }
+  if (S.sotto && !gruppiSotto().has(S.sotto)) S.sotto = "";
+  disegnaLegenda(); aggiornaStatoMod(); tutto(); disegnaGestioneAmbiti();
   $("gNota").textContent = msg + " Le modifiche vanno nel file con Salva.";
 }
 $("bAmbiti").onclick = () => {
@@ -2995,45 +3139,84 @@ $("bAmbiti").onclick = () => {
 $("gChiudi").onclick = () => $("gAmbiti").close();
 $("gCrea").onclick = () => {
   $("gErrore").textContent = "";
-  const nome = nomeAmbitoPulito($("gNome").value), e = nomeAmbitoErrato(nome);
-  if (e){ $("gErrore").textContent = e; return; }
-  if (ORD.length >= MAX_AMBITI){ $("gErrore").textContent = `Si possono avere al massimo ${MAX_AMBITI} ambiti.`; return; }
-  const colore = (document.querySelector('input[name="gCol"]:checked') || {}).value || TAVOLOZZA[0][0];
-  const usati = (db.exec("select codice from ambiti")[0]?.values || []).map(x => x[0]);
-  let n = 7; while (usati.includes("a" + n)) n++;
-  const cod = "a" + n, pos = (uno("select coalesce(max(posizione), 0) + 1 from ambiti") || [ORD.length + 1])[0];
-  db.run("insert into ambiti (codice, nome, colonna_excel, intestazione_excel, posizione, etichetta, colore) values (?, ?, null, ?, ?, ?, ?)", [cod, nome, nome.toUpperCase(), pos, nome, colore]);
-  AMBITI_MOD.add(cod);
-  caricaAmbiti(); S.amb |= 1 << ORD.indexOf(cod);
+  const a = $("gPadre").value, r = creaSotto(a, $("gNome").value);
+  if (r.errore){ $("gErrore").textContent = r.errore; return; }
   $("gNome").value = "";
-  aggiornaDopoAmbiti(`Ambito «${nome}» creato: per metterci una scheda aprila con Modifica e spunta l'ambito.`);
+  dopoAmbiti(`Sotto-ambito «${nomeSotto(r.id)}» creato: per metterci una scheda aprila con Modifica e spuntalo sotto l'ambito.`);
 };
 $("gNome").addEventListener("keydown", ev => { if (ev.key === "Enter"){ ev.preventDefault(); $("gCrea").click(); } });
 $("gElenco").addEventListener("change", ev => {
-  const i = ev.target.closest("input[data-cod]"); if (!i) return;
-  const c = i.dataset.cod, nome = nomeAmbitoPulito(i.value);
   $("gErrore").textContent = "";
-  if (nome === AMB[c]) return;
-  const e = nomeAmbitoErrato(nome, c);
-  if (e){ $("gErrore").textContent = e; i.value = AMB[c]; return; }
-  const vecchio = AMB[c];
-  db.run("update ambiti set etichetta = ? where codice = ?", [nome, c]);
-  if (!AMB_BASE[c]) db.run("update ambiti set nome = ?, intestazione_excel = ? where codice = ?", [nome, nome.toUpperCase(), c]);
-  AMBITI_MOD.add(c);
-  aggiornaDopoAmbiti(`Ambito «${vecchio}» rinominato «${nome}».`);
+  const ia = ev.target.closest("input[data-cod]"), is = ev.target.closest("input[data-sub]");
+  if (ia){
+    const c = ia.dataset.cod, nome = nomePulito(ia.value);
+    if (nome === AMB[c]) return;
+    const e = nomeAmbitoErrato(nome, c);
+    if (e){ $("gErrore").textContent = e; ia.value = AMB[c]; return; }
+    const vecchio = AMB[c];
+    db.run("update ambiti set etichetta = ? where codice = ?", [nome, c]);
+    AMBITI_MOD.add("r" + c);
+    dopoAmbiti(`Ambito «${vecchio}» rinominato «${nome}» (in Excel resta l'intestazione originale).`);
+  } else if (is){
+    const id = +is.dataset.sub, x = SUB.get(id), nome = nomePulito(is.value);
+    if (!x || nome === x.nome) return;
+    const e = nomeSottoErrato(x.ambito, nome, id);
+    if (e){ $("gErrore").textContent = e; is.value = x.nome; return; }
+    const vecchio = x.nome;
+    db.run("update sottoambiti set nome = ? where id = ?", [nome, id]);
+    AMBITI_MOD.add("n" + id);
+    dopoAmbiti(`Sotto-ambito «${vecchio}» rinominato «${nome}».`);
+  }
 });
-$("gElenco").addEventListener("keydown", ev => { if (ev.key === "Enter" && ev.target.matches("input[data-cod]")){ ev.preventDefault(); ev.target.blur(); } });
+$("gElenco").addEventListener("keydown", ev => { if (ev.key === "Enter" && ev.target.matches("input[data-cod], input[data-sub]")){ ev.preventDefault(); ev.target.blur(); } });
 $("gElenco").addEventListener("click", ev => {
-  const b = ev.target.closest("button[data-elim]"); if (!b) return;
-  const c = b.dataset.elim;
-  if (AMB_BASE[c] || contiAmbiti().tot[c]) return;
-  if (!confirm(`Eliminare l'ambito «${AMB[c]}»? Non ha schede.`)) return;
-  const nome = AMB[c], k = ORD.indexOf(c);
-  db.run("delete from ambiti where codice = ?", [c]);
-  AMBITI_MOD.add(c);
-  // i bit degli ambiti successivi scalano di uno: si ricostruiscono le tabelle in memoria e si rimettono tutti gli ambiti nei filtri
-  caricaAmbiti(); costruisciArray(); S.amb = (1 << ORD.length) - 1;
-  aggiornaDopoAmbiti(`Ambito «${nome}» eliminato.`);
+  const be = ev.target.closest("button[data-elimsub]"), bc = ev.target.closest("button[data-conv]"), bk = ev.target.closest("button[data-col]"), bt = ev.target.closest("button[data-tav]");
+  if (bk){   // apre (o chiude) la tavolozza sotto la voce
+    const aperta = $("gElenco").querySelector(".g-tav"), stessa = aperta && aperta.dataset.per === bk.dataset.col;
+    if (aperta) aperta.remove();
+    if (stessa) return;
+    const [tipo, k] = bk.dataset.col.split(":"), att = tipo === "a" ? COLORE[k] : SUB.get(+k)?.colore;
+    const d = document.createElement("div"); d.className = "g-tav"; d.dataset.per = bk.dataset.col;
+    d.innerHTML = TAVOLOZZA.map(([c, , n]) => `<button type="button" data-tav="${c}" style="background:${c}" title="${n}" aria-label="${n}"${att && att.toLowerCase() === c.toLowerCase() ? ' class="scelto"' : ""}></button>`).join("")
+      + `<button type="button" class="rip" data-tav="">${tipo === "a" ? "colore originale" : "colore dell'ambito"}</button>`;
+    bk.closest(".g-voce").after(d); return;
+  }
+  if (bt){
+    const [tipo, k] = bt.closest(".g-tav").dataset.per.split(":"), col = bt.dataset.tav || null;
+    if (tipo === "a"){ db.run("update ambiti set colore = ? where codice = ?", [col, k]); AMBITI_MOD.add("k" + k); }
+    else { db.run("update sottoambiti set colore = ? where id = ?", [col, +k]); AMBITI_MOD.add("c" + k); }
+    const chi = tipo === "a" ? AMB[k] : SUB.get(+k)?.nome;
+    dopoAmbiti(`Colore di «${chi}»: ${col ? nomeColore(col) : tipo === "a" ? "originale" : "quello dell'ambito"}.`);
+    return;
+  }
+  if (be){
+    const id = +be.dataset.elimsub, x = SUB.get(id); if (!x) return;
+    const n = contiAmbiti().sotto[id] || 0;
+    if (!confirm(`Eliminare il sotto-ambito «${x.nome}» di ${AMB[x.ambito]}?${n ? ` Le sue ${n === 1 ? "1 scheda resta" : n + " schede restano"} nell'ambito ${AMB[x.ambito]}.` : ""}`)) return;
+    db.run("delete from schede_sottoambiti where sottoambito_id = ?", [id]); db.run("delete from sottoambiti where id = ?", [id]);
+    AMBITI_MOD.add("d" + id);
+    dopoAmbiti(`Sotto-ambito «${x.nome}» eliminato.`, true);
+  } else if (bc){
+    const c = bc.dataset.conv, P = document.querySelector(`#gElenco select[data-padre="${c}"]`).value, nome = AMB[c];
+    const ids = (db.exec(`select scheda_id from schede_ambiti where ambito = '${c}'`)[0]?.values || []).map(x => x[0]);
+    if (!confirm(`Trasformare «${nome}» in un sotto-ambito di ${AMB[P]}?${ids.length ? ` ${ids.length === 1 ? "La sua scheda avrà" : `Le sue ${ids.length} schede avranno`} anche l'ambito ${AMB[P]}, quindi in Excel ${ids.length === 1 ? "uscirà" : "usciranno"} nella colonna ${COLONNA[P]}.` : ""}`)) return;
+    const ora = adesso();
+    db.run("BEGIN");
+    try {
+      let id = [...SUB.values()].find(x => x.ambito === P && chiaveNome(x.nome) === chiaveNome(nome))?.id;   // se c'è già, si uniscono
+      if (!id){ db.run("insert into sottoambiti (ambito, nome, posizione) values (?, ?, 0)", [P, nome]); id = uno("select last_insert_rowid()")[0]; }
+      ids.forEach(s => {
+        db.run("insert or ignore into schede_ambiti values (?, ?)", [s, P]);
+        db.run("insert or ignore into schede_sottoambiti values (?, ?)", [s, id]);
+        db.run("update schede set modificata = ? where id = ?", [ora, s]);
+      });
+      db.run("delete from schede_ambiti where ambito = ?", [c]); db.run("delete from ambiti where codice = ?", [c]);
+      db.run("COMMIT");
+    } catch(e){ try { db.run("ROLLBACK"); } catch(_){} $("gErrore").textContent = "Trasformazione non riuscita: " + (e.message || e); return; }
+    ids.forEach(s => { if (POS[s] >= 0 && MODIFICATE.get(s) !== "nuova") MODIFICATE.set(s, "modificata"); });
+    AMBITI_MOD.add("t" + c);
+    dopoAmbiti(`«${nome}» è ora un sotto-ambito di ${AMB[P]}${ids.length ? ` (${sch(ids.length)})` : ""}.`, true);
+  }
 });
 </script>
 </body>
