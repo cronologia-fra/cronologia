@@ -51,7 +51,19 @@ header p{margin:6px 0 0;color:var(--tenue);font-size:14px}
 #barraTesto{flex:1 1 320px}
 #barraErrore{flex-basis:100%;color:var(--ci);font-weight:600}
 #barraErrore:empty{display:none}
-.cerca{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.densita{scroll-margin-top:calc(var(--alto-fissa,0px) + 10px)}
+.scheda{scroll-margin-top:calc(var(--alto-fissa,0px) + 50px)}
+.fissa{margin:14px -24px 0;padding:0 24px 2px;background:var(--bg);z-index:6}
+.fissa .dove{display:none;font-size:13px;color:var(--tenue);font-weight:600}
+.vista-b{margin-left:auto;font-size:13.5px!important}
+@media (min-width:901px){
+  .fissa{position:sticky;top:0}
+  .fissa.attaccata{padding-top:10px;padding-bottom:8px;border-bottom:1px solid var(--riga);box-shadow:0 8px 14px -12px rgba(0,0,0,.35)}
+  .fissa.attaccata .cerca .nota,.fissa.attaccata .vai .nota{display:none}
+  .fissa.attaccata .dove{display:inline}
+  .fissa.attaccata .cerca{margin-top:0}
+}
+.cerca{margin-top:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .cerca input{flex:1 1 320px;max-width:560px;padding:11px 14px;border:1px solid var(--riga);border-radius:6px;background:var(--carta);color:var(--inchiostro);font:inherit;font-size:16px}
 .cerca .nota{color:var(--tenue);font-size:13px}
 .vai{margin-top:10px;display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center;font-size:14px}
@@ -108,7 +120,7 @@ details.filtri-mobile>summary{display:none}
 .chip button{border:0;background:var(--bg);border-radius:50%;width:20px;height:20px;line-height:18px;padding:0}
 .azzera{background:none;border:0;color:var(--mo);text-decoration:underline;font-size:13px;padding:0}
 .giorno{margin:0 0 22px}
-.giorno h3{font-size:15px;font-weight:600;margin:0 0 8px;padding-bottom:5px;border-bottom:1px solid var(--riga);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.giorno h3{position:sticky;top:var(--alto-fissa,0px);z-index:3;background:var(--bg);padding-top:6px;font-size:15px;font-weight:600;margin:0 0 8px;padding-bottom:5px;border-bottom:1px solid var(--riga);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
 .giorno h3 .prec{font-weight:400;font-size:12.5px;color:var(--tenue)}
 .scheda{background:var(--carta);border:1px solid var(--riga);border-left:4px solid var(--c);border-radius:4px;padding:10px 14px 9px;margin-bottom:8px;max-width:80ch;transition:box-shadow .4s}
 .scheda.evidenziata{box-shadow:0 0 0 3px var(--evid)}
@@ -118,9 +130,44 @@ details.filtri-mobile>summary{display:none}
 .scheda .meta .riga{color:var(--tenue);font-weight:400;margin-left:auto}
 .scheda .bollo{font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--carta);background:var(--ec);border-radius:3px;padding:1px 6px}
 .scheda .azioni{display:flex;gap:16px;margin-top:8px;font-size:12.5px}
+.scheda .meta .icone{margin-left:auto;display:inline-flex;gap:2px;margin-top:-3px;margin-right:-6px}   /* comandi come icone (21 ottobre 2026) */
+.scheda .meta .icone button{background:none;border:0;padding:3px 4px;border-radius:4px;color:var(--tenue);line-height:0;cursor:pointer}
+.scheda .meta .icone button:hover,.scheda .meta .icone button:focus-visible{background:var(--bg);color:var(--mo)}
+.scheda .meta .icone button.del:hover{color:var(--ci)}
+.scheda .meta .icone svg{width:16px;height:16px}
+#elenco.compatta .scheda{padding:5px 12px;margin-bottom:4px;cursor:pointer}
+#elenco.compatta .scheda:not(.aperta)>:not(.testo){display:none}
+#elenco.compatta .scheda:not(.aperta) .testo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0;font-size:calc(15px * var(--scala, 1));line-height:1.6}
+#elenco.compatta .scheda.aperta{padding:10px 14px 9px;cursor:auto}
+#elenco.compatta .giorno{margin-bottom:14px}
 .scheda .azioni button{background:none;border:0;padding:0;color:var(--tenue);text-decoration:underline;text-underline-offset:2px}
 .scheda .azioni button:hover{color:var(--mo)}
 .testo{font-family:var(--serif);font-size:16px;line-height:1.6;margin:0}
+#elenco .testo{font-size:calc(16px * var(--scala, 1))}
+#elenco details.appr .testo{font-size:calc(15px * var(--scala, 1))}
+#elenco .scheda .meta,#elenco details.appr summary,#elenco .ver-nota{font-size:calc(12.5px * var(--scala, 1))}
+#elenco .giorno h3{font-size:calc(15px * var(--scala, 1))}
+.testo-b{display:inline-flex;align-items:center;gap:2px;border:1px solid var(--riga);border-radius:6px;background:var(--carta)}
+.testo-b button{background:none;border:0;padding:4px 8px;color:var(--mo);font-weight:600;font-size:14px;cursor:pointer}
+.testo-b button:disabled{color:var(--riga);cursor:default}
+.testo-b span{font-size:12px;color:var(--tenue);min-width:36px;text-align:center;font-variant-numeric:tabular-nums}
+#stampa{display:none}
+@media print{
+  @page{margin:16mm 15mm}
+  body.stampando>*:not(#stampa){display:none!important}
+  body.stampando{background:#fff}
+  body.stampando #stampa{display:block!important;color:#111;font-family:Cambria,Georgia,"Times New Roman",serif}
+  #stampa h1{font:700 17pt "Segoe UI",Arial,sans-serif;margin:0 0 3pt}
+  #stampa .s-sotto{font:9pt "Segoe UI",Arial,sans-serif;color:#555;margin:0 0 12pt;padding-bottom:6pt;border-bottom:1.5pt solid #222}
+  #stampa h2{font:700 11pt "Segoe UI",Arial,sans-serif;margin:11pt 0 4pt;padding-bottom:2pt;border-bottom:.5pt solid #999;break-after:avoid}
+  #stampa h2 .p{font-weight:400;color:#666;font-size:9pt;margin-left:6pt}
+  #stampa .s-scheda{border-left:2.5pt solid var(--c);padding:1pt 0 1pt 7pt;margin:0 0 6pt;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  #stampa .s-meta{font:600 8pt "Segoe UI",Arial,sans-serif;color:var(--c);margin-bottom:1pt}
+  #stampa .s-meta .g{color:#666;font-weight:400}
+  #stampa .s-testo{font-size:11pt;line-height:1.45;margin:0}
+  #stampa .s-appr{font-size:9.5pt;line-height:1.4;color:#333;margin:2pt 0 0;padding-left:6pt;border-left:.5pt solid #bbb;white-space:pre-line}
+  #stampa .s-ver{font:8.5pt "Segoe UI",Arial,sans-serif;color:#A33A3A;margin-top:1pt}
+}
 button.nome{background:none;border:0;padding:0;font:inherit;color:inherit;border-bottom:1px dotted var(--tenue)}
 button.nome:hover{color:var(--mo);border-bottom-color:var(--mo)}
 .rif{margin-top:7px;font-size:13px;color:var(--tenue)}
@@ -203,9 +250,9 @@ dialog#vista::backdrop{background:rgba(0,0,0,.75)}
 .m-agg .secondario{margin:0;padding:6px 12px}
 #mImmaginiBox.sopra{outline:2px dashed var(--mo);outline-offset:4px;border-radius:6px}
 #avvisoBreve button{margin-left:12px;background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:2px 10px;font-size:13px}
-dialog#cestino,dialog#appunti,dialog#gAmbiti{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-dialog#cestino[open],dialog#appunti[open],dialog#gAmbiti[open]{display:flex;flex-direction:column}
-dialog#cestino::backdrop,dialog#appunti::backdrop,dialog#gAmbiti::backdrop{background:rgba(10,16,22,.55)}
+dialog#cestino,dialog#appunti,dialog#gAmbiti,dialog#dStampa{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+dialog#cestino[open],dialog#appunti[open],dialog#gAmbiti[open],dialog#dStampa[open]{display:flex;flex-direction:column}
+dialog#cestino::backdrop,dialog#appunti::backdrop,dialog#gAmbiti::backdrop,dialog#dStampa::backdrop{background:rgba(10,16,22,.55)}
 .c-elenco{overflow:auto;flex:1;padding:8px 22px}
 .c-voce{border-bottom:1px solid var(--riga);padding:10px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:start}
 .c-voce .d{font-weight:600;font-size:13.5px}
@@ -254,6 +301,25 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
 .g-colori{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 4px}
 .g-colori label{display:inline-flex;gap:6px;align-items:center;font-size:13px;cursor:pointer}
 .g-colori span{width:16px;height:16px;border-radius:4px;display:inline-block}
+.sugg-nomi{margin-top:6px;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center}
+.sugg-nomi .t{color:var(--tenue)}
+.sugg-nomi button{border:1px solid var(--riga);background:var(--carta);color:var(--inchiostro);border-radius:4px;padding:2px 7px;font-size:12.5px;cursor:pointer}
+.sugg-nomi button:first-of-type{border-color:var(--mo)}
+.sugg-nomi button .n{color:var(--tenue);margin-left:4px;font-size:11.5px}
+.ricavati .nm.nuovo{outline:1px dashed var(--ec)}
+.ricavati .simile{color:var(--ec)}
+.ricavati .simile button{background:none;border:0;padding:0;color:var(--mo);text-decoration:underline;font-size:13px}
+.etichetta-riga{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.etichetta-riga label{margin-bottom:6px}
+.etichetta-riga .conta{margin-left:auto;font-size:12px;color:var(--tenue)}
+dialog#maschera.pieno,dialog#annota.pieno{width:100vw;height:100vh;max-width:none;max-height:none;margin:0;border-radius:0;border:0}
+dialog.pieno .m-corpo{display:flex;flex-direction:column}
+dialog.pieno .m-corpo>*:not(.campo-pieno){display:none}
+dialog.pieno .campo-pieno{flex:1;display:flex;flex-direction:column;margin:0}
+dialog.pieno .campo-pieno textarea{flex:1;font-size:17px;line-height:1.75;resize:none;max-width:90ch;width:100%;align-self:center}
+dialog.pieno .campo-pieno .etichetta-riga{max-width:90ch;width:100%;align-self:center}
+.scheda .bollo.ver{background:var(--ci)}
+.scheda .ver-nota{font-size:13px;color:var(--ci);margin-top:5px}
 .imm-nota{color:var(--tenue);font-size:13px;margin-top:8px}
 #telInfo{color:var(--inchiostro)}
 
@@ -286,7 +352,7 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 6 del 16 ottobre: sotto-ambiti filtrati per nome in tutti gli ambiti, colori di ambiti e sotto-ambiti (5: sotto-ambiti; 3: spostamento nel punto giusto quando cambia la data; 2: appunti dal telefono; 1: ricerca per data, inizio e fine).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF (8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -295,6 +361,8 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
   <p id="statoGen"></p>
   <p class="aiuto" id="telStato" hidden><span id="telAppBox" hidden><button id="telAppunti" class="azzera" type="button" style="font-size:13px;font-weight:600"></button> · </span><button id="telAggiorna" class="azzera" type="button" style="font-size:13px">Carica una copia più recente</button> · <button id="telTogli2" class="azzera" type="button" style="font-size:13px">Togli la copia dal telefono</button></p>
   <div id="barra"><span id="barraTesto"></span><button id="soloMod" type="button" class="azzera" hidden></button><button id="bRif" type="button" class="azzera" hidden></button><button id="bCestino" type="button" class="azzera" hidden></button><button id="bAppunti" type="button" class="secondario">Importa appunti</button><button id="bExcel" type="button" class="secondario">Esporta in Excel</button><button id="bProva" type="button" class="secondario" hidden>Crea la copia di prova</button><button id="bSalva" type="button" class="primario" hidden>Salva</button><span id="barraErrore" role="alert"></span></div>
+</header>
+<div class="fissa" id="fissa">
   <div class="cerca">
     <input id="q" type="search" placeholder="Cerca nei fatti e negli approfondimenti, es. Dongo" aria-label="Cerca" disabled>
     <span class="nota" id="notaRicerca">Preparazione della ricerca…</span>
@@ -304,9 +372,13 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
     <input id="vaiData" type="text" placeholder="es. 13/05/2025, maggio 1945, 1945, 350 AC" autocomplete="off" spellcheck="false">
     <button id="bVai" type="button" class="secondario">Vai</button>
     <span class="salti"><button id="bInizio" type="button">Inizio della cronologia</button><button id="bFine" type="button">Fine del presente</button></span>
+    <span class="dove" id="dove"></span>
+    <button id="bCompatta" type="button" class="azzera vista-b">Vista compatta</button>
+    <span class="testo-b" role="group" aria-label="Grandezza del testo"><button id="bTestoMeno" type="button" title="Testo più piccolo" aria-label="Testo più piccolo">A−</button><span id="testoPerc">100%</span><button id="bTestoPiu" type="button" title="Testo più grande" aria-label="Testo più grande">A+</button></span>
+    <button id="bStampa" type="button" class="azzera">Stampa o PDF</button>
     <span class="nota" id="notaVai" role="status"></span>
   </div>
-</header>
+</div>
 
 <section class="densita" aria-label="Distribuzione delle schede nel tempo">
   <div class="densita-testa">
@@ -328,6 +400,10 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
         <h2>Sotto-ambiti</h2>
         <p class="spiega">Lo stesso nome in ambiti diversi vale come uno solo (es. Proteste in Italia e in Mondo). Per restringere a un ambito, togli la spunta agli altri.</p>
         <div id="sotto"></div>
+      </div>
+      <div id="verBox" hidden>
+        <h2>Da verificare</h2>
+        <label class="ambito" style="--c:var(--ci)"><input type="checkbox" id="soloVer"><span>Solo le schede da verificare</span><span class="n" id="nVer"></span></label>
       </div>
       <h2>Fascicoli</h2>
       <p class="spiega">Titoli scritti all'inizio dei fatti, prima dei due punti. Qui compaiono quelli con almeno due schede.</p>
@@ -381,12 +457,18 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="mAmbiti"></div><div class="m-sotto" id="mSotto"></div></fieldset>
       <div class="campo">
         <label for="mTesto">Fatto</label>
-        <textarea id="mTesto" rows="4"></textarea>
+        <textarea id="mTesto" rows="4" lang="it"></textarea>
+        <div class="sugg-nomi" id="mTestoSugg" hidden></div>
         <div class="ricavati" id="mRicavati"></div>
       </div>
       <div class="campo">
-        <label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label>
-        <textarea id="mAppr" rows="6"></textarea>
+        <div class="etichetta-riga"><label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera pieno-b" data-pieno="mAppr">A tutto schermo</button><span class="conta" id="mApprConta"></span></div>
+        <textarea id="mAppr" rows="6" lang="it"></textarea>
+        <div class="sugg-nomi" id="mApprSugg" hidden></div>
+      </div>
+      <div class="campo">
+        <label class="spunta" style="margin-top:0;font-weight:600"><input type="checkbox" id="mVer"> Da verificare</label>
+        <input id="mVerNota" type="text" maxlength="300" autocomplete="off" placeholder="Cosa c'è da verificare (facoltativo), es. data da controllare sulla fonte" hidden style="margin-top:6px">
       </div>
       <div class="campo" id="mImmaginiBox">
         <label>Immagini <span class="facolt">(facoltative; quelle grandi si riducono a 2000 pixel)</span></label>
@@ -444,8 +526,9 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
     <div class="m-corpo">
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
-      <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5"></textarea></div>
-      <div class="campo"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><textarea id="aAppr" rows="5"></textarea></div>
+      <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
+      <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><textarea id="aAppr" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
+      <div class="campo"><label class="spunta" style="margin-top:0;font-weight:600"><input type="checkbox" id="aVer"> Da verificare</label><input id="aVerNota" type="text" maxlength="300" autocomplete="off" placeholder="Cosa c'è da verificare (facoltativo)" hidden style="margin-top:6px"></div>
       <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
     </div>
     <div class="m-piede">
@@ -468,6 +551,21 @@ button.g-sw:hover{outline:2px solid var(--mo);outline-offset:1px}
   </div>
 </dialog>
 <input id="fileAppunti" type="file" accept=".txt,.json,text/plain,application/json" hidden>
+<dialog id="dStampa" aria-labelledby="sTitolo">
+  <div class="m-testa"><h2 id="sTitolo">Stampa o PDF della selezione</h2><p id="sSpiega"></p></div>
+  <div class="m-corpo">
+    <div class="campo"><label for="sTit">Titolo in testa alla prima pagina</label><input id="sTit" type="text" maxlength="160" autocomplete="off"></div>
+    <label class="spunta"><input type="checkbox" id="sAppr" checked> Con gli approfondimenti</label><br>
+    <label class="spunta"><input type="checkbox" id="sRiga"> Con riga e colonna del foglio</label>
+  </div>
+  <div class="m-piede">
+    <span class="m-errore" id="sErrore" role="alert"></span>
+    <span class="m-nota">Nella finestra di stampa di Chrome, alla voce «Destinazione», scegli «Salva come PDF» per avere il file.</span>
+    <button type="button" class="secondario" id="sAnnulla">Annulla</button>
+    <button type="button" class="primario" id="sStampa">Stampa</button>
+  </div>
+</dialog>
+<div id="stampa" hidden></div>
 <div id="avvisoBreve" role="status" hidden></div>
 
 <script>
@@ -1076,6 +1174,11 @@ const fa = a => a >= 10000 ? fmt(a) : String(a);   // anni: separatore delle mig
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const senzaAccenti = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
 const MESI = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+const ICONA = {
+  mod: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11.2 2.3l2.5 2.5-8.2 8.2-3.2.7.7-3.2z"/><path d="M9.8 3.7l2.5 2.5"/></svg>',
+  nuova: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>',
+  elimina: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5h11M6.5 4.5V3h3v1.5M4 4.5l.7 8.5h6.6l.7-8.5M6.8 7v4M9.2 7v4"/></svg>'
+};
 const MB = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
 const GIORNI_MESE = [31,29,31,30,31,30,31,31,30,31,30,31];
 /* ambiti: dal 16 ottobre 2026 si leggono dall'archivio (tabella ambiti, decisione 2.32); questi sono i sei del foglio CRONO */
@@ -1094,9 +1197,11 @@ const nomeColore = c => (TAVOLOZZA.find(x => x[0].toLowerCase() === String(c).to
 const PRECISIONI = ["giorno","intervallo","mese","anno","periodo","alternativa","approssimata","decennio","relativa","futuro"];
 
 let SQL, db, N = 0;
-let ID, Y, Y2, M, D, GF, AMBM, FAS, PREC, RIGA, ORDINE, NOFF, NIDS, POS;
+let ID, Y, Y2, M, D, GF, AMBM, FAS, PREC, RIGA, ORDINE, NOFF, NIDS, POS, STAG;   // STAG: data scritta con una stagione (il mese letto è solo indicativo)
 let NOMI = [], NCONT = [], FNOME = [], FCONT = [];
 let SOFF = new Int32Array(1), SIDS = new Int32Array(0);   // sotto-ambiti per scheda (come i nomi)
+let VERIFICARE = new Set();   // schede segnate "da verificare" (fuori dal cestino)
+let NOMI_VER = 0;   // cresce a ogni ricostruzione dell'indice dei nomi (per i suggerimenti)
 let SUB = new Map();   // sotto-ambiti: id -> { id, ambito, nome }, nell'ordine degli ambiti e poi dei nomi
 let indicePronto = false;
 const MODIFICATE = new Map();   // id -> "modificata" | "nuova" (modifiche in memoria non ancora salvate)
@@ -1186,6 +1291,10 @@ async function apri(fonte){
       db.run("alter table sottoambiti add column colore text");
       db.run("insert or replace into metadati values ('versione_schema', '7')");
     }
+    if (!tab.includes("verifiche")){   // schema 8: schede segnate "da verificare", con una nota
+      db.run("create table verifiche (scheda_id integer primary key references schede(id) on delete cascade, nota text, segnata text not null)");
+      db.run("insert or replace into metadati values ('versione_schema', '8')");
+    }
     caricaAmbiti(); S.amb = (1 << ORD.length) - 1;
     carica(dove, file);
     $("apertura").hidden = true; $("app").hidden = false;
@@ -1223,7 +1332,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; aggiornamento 6.";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; aggiornamento 9.";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1303,18 +1412,20 @@ function disegnaLegenda(){ $("legenda").innerHTML = ORD.map(a => `<span style="-
 /* Ricostruisce le tabelle in memoria usate da filtri, linea del tempo ed elenco (all'apertura e dopo ogni modifica). */
 function costruisciArray(){
   const r = db.exec(`select s.id, s.anno, s.anno_fine, s.mese, s.giorno, s.giorno_fine, s.precisione, s.fascicolo_id, s.riga_origine, s.ordine,
-      (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id)
+      (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id),
+      (lower(s.data_scritta) like '%inverno%' or lower(s.data_scritta) like '%primavera%' or lower(s.data_scritta) like '%estate%' or lower(s.data_scritta) like '%autunno%')
     from schede s where not exists (select 1 from cestino c where c.scheda_id = s.id) order by s.ordine`)[0]?.values || [];
   N = r.length;
   NCESTINO = db.exec("select count(*) from cestino")[0].values[0][0];
   DAVERIFICARE = new Set((db.exec(`select scheda_id from riferimenti r where stato in ${STATI_DA_VERIFICARE} and not exists (select 1 from cestino c where c.scheda_id = r.scheda_id)`)[0]?.values || []).map(x => x[0]));
   ID = new Int32Array(N); Y = new Float64Array(N); Y2 = new Float64Array(N); M = new Uint8Array(N); D = new Uint8Array(N); GF = new Uint8Array(N);
-  AMBM = new Uint32Array(N); FAS = new Int32Array(N); PREC = new Uint8Array(N); RIGA = new Int32Array(N); ORDINE = new Float64Array(N);
+  AMBM = new Uint32Array(N); FAS = new Int32Array(N); PREC = new Uint8Array(N); RIGA = new Int32Array(N); ORDINE = new Float64Array(N); STAG = new Uint8Array(N);
   let maxId = 0;
   r.forEach((x, i) => {
     ID[i] = x[0]; Y[i] = x[1] === null ? NaN : x[1]; Y2[i] = x[2] === null ? NaN : x[2]; M[i] = x[3] || 0; D[i] = x[4] || 0; GF[i] = x[5] || 0;
     PREC[i] = Math.max(0, PRECISIONI.indexOf(x[6])); FAS[i] = x[7] || 0; RIGA[i] = x[8] || 0; ORDINE[i] = x[9];
     let m = 0; String(x[10] || "").split(",").forEach(a => { const k = ORD.indexOf(a); if (k >= 0) m |= 1 << k; }); AMBM[i] = m;
+    STAG[i] = x[11] ? 1 : 0;
     if (x[0] > maxId) maxId = x[0];
   });
   maxId = Math.max(maxId, db.exec("select coalesce(max(id), 0) from schede")[0].values[0][0]);   // anche le schede nel cestino hanno un posto (vuoto)
@@ -1327,6 +1438,8 @@ function costruisciArray(){
   for (let i = 0; i < N; i++) NOFF[i + 1] += NOFF[i];
   NIDS = new Int32Array(sn.length); const pieno = NOFF.slice(0, N);
   sn.forEach(x => { NIDS[pieno[POS[x[0]]]++] = x[1]; NCONT[x[1]]++; });
+  VERIFICARE = new Set((db.exec("select scheda_id from verifiche v where not exists (select 1 from cestino c where c.scheda_id = v.scheda_id)")[0]?.values || []).map(x => x[0]));
+  NOMI_VER++;
   // sotto-ambiti
   const ss = db.exec("select scheda_id, sottoambito_id from schede_sottoambiti where scheda_id not in (select scheda_id from cestino)")[0]?.values || [];
   SOFF = new Int32Array(N + 1); ss.forEach(x => { if (POS[x[0]] >= 0) SOFF[POS[x[0]] + 1]++; });
@@ -1394,7 +1507,7 @@ function regexTermini(termini){
 }
 
 /* ---------- stato ---------- */
-const S = { amb: (1 << ORD.length) - 1, sotto: "", fil: 0, nome: 0, q: "", ric: null, zoom: [], solo: null, soloMod: false, soloRif: false, riga: 0, limite: 300, filtroNomi: "", filtroFasc: "" };
+const S = { amb: (1 << ORD.length) - 1, sotto: "", fil: 0, nome: 0, q: "", ric: null, zoom: [], solo: null, soloMod: false, soloRif: false, soloVer: false, riga: 0, limite: 300, filtroNomi: "", filtroFasc: "" };
 let DAVERIFICARE = new Set();   // schede con una data relativa il cui collegamento è da confermare o da scegliere
 function haSottoNome(i, chiave){ for (let k = SOFF[i]; k < SOFF[i + 1]; k++){ const x = SUB.get(SIDS[k]); if (x && x.chiave === chiave) return true; } return false; }
 function haNome(i, n){ for (let k = NOFF[i]; k < NOFF[i + 1]; k++) if (NIDS[k] === n) return true; return false; }
@@ -1402,6 +1515,7 @@ function passa(i, salta){
   if (S.solo !== null && i !== S.solo) return false;
   if (S.soloMod && !MODIFICATE.has(ID[i])) return false;
   if (S.soloRif && !DAVERIFICARE.has(ID[i])) return false;
+  if (S.soloVer && !VERIFICARE.has(ID[i])) return false;
   if (S.riga && RIGA[i] !== S.riga) return false;
   if (salta !== "amb" && !(AMBM[i] & S.amb)) return false;
   if (salta !== "sotto" && S.sotto && !haSottoNome(i, S.sotto)) return false;
@@ -1509,7 +1623,7 @@ function disegnaDensita(){
     if (padre && padre.tipo === "mese" && g.d === 0 && !n) return;
     const b = document.createElement("button");
     b.className = "barra" + (scelta && g.tit === scelta.tit && g.y0 === scelta.y0 && g.m === scelta.m && g.d === scelta.d ? " scelta" : "");
-    const h = n ? Math.max(3, Math.round(n / max * 140)) : 0;
+    const h = n ? 20 + Math.round(n / max * 120) : 0;   // base di 20 pixel più la parte proporzionale: le barre piccole mostrano i colori e restano diverse fra loro (il numero sopra resta quello vero)
     b.title = `${g.tit}: ${sch(n)}`; b.setAttribute("aria-label", b.title);
     b.innerHTML = `<div class="num">${n ? fmt(n) : ""}</div><div class="pila" style="height:${h}px">${
       ORD.map((a, j) => conti[k][j] ? `<i style="background:var(--a-${a});flex:${conti[k][j]} 0 0"></i>` : "").join("")}</div><div class="et">${esc(g.et)}</div>`;
@@ -1553,6 +1667,8 @@ function disegnaLato(){
     l.querySelector("input").onchange = ev => { S.amb = ev.target.checked ? S.amb | (1 << k) : S.amb & ~(1 << k); S.limite = 300; tutto(); };
     amb.appendChild(l);
   });
+  let nv = 0; if (VERIFICARE.size) for (let i = 0; i < N; i++) if (VERIFICARE.has(ID[i]) && dentro(i, c) && passa(i)) nv++;
+  $("verBox").hidden = !VERIFICARE.size && !S.soloVer; $("soloVer").checked = S.soloVer; $("nVer").textContent = fmt(nv);
   const sb = $("sotto"), gruppi = gruppiSotto();
   $("sottoBox").hidden = !gruppi.size;
   sb.innerHTML = "";
@@ -1643,6 +1759,7 @@ function disegnaElenco(){
   if (S.soloMod) chips.push(["Solo le schede modificate o nuove", () => { S.soloMod = false; aggiornaStatoMod(); }]);
   if (S.soloRif) chips.push(["Solo le date relative da verificare", () => { S.soloRif = false; aggiornaStatoMod(); }]);
   if (S.riga) chips.push([`Solo la riga ${S.riga} del foglio`, () => { S.riga = 0; }]);
+  if (S.soloVer) chips.push(["Solo le schede da verificare", () => { S.soloVer = false; }]);
   if (S.sotto && gruppiSotto().has(S.sotto)){ const g = gruppiSotto().get(S.sotto); chips.push([`Sotto-ambito: ${g.nome}${g.ambiti.length > 1 ? " (tutti gli ambiti)" : ""}`, () => { S.sotto = ""; }]); }
   if (S.fil) chips.push([`Fascicolo: ${FNOME[S.fil]}`, () => { S.fil = 0; }]);
   if (S.nome) chips.push([`Nome: ${NOMI[S.nome]}`, () => { S.nome = 0; }]);
@@ -1653,7 +1770,7 @@ function disegnaElenco(){
     s.querySelector("button").onclick = () => { f(); S.limite = 300; tutto(); }; st.appendChild(s);
   });
   if (chips.length > 1){ const a = document.createElement("button"); a.className = "azzera"; a.textContent = "Togli tutti i filtri";
-    a.onclick = () => { S.q = ""; S.ric = null; S.sotto = ""; S.fil = 0; S.nome = 0; S.solo = null; S.soloMod = false; S.soloRif = false; S.riga = 0; S.amb = (1 << ORD.length) - 1; $("q").value = ""; S.limite = 300; aggiornaStatoMod(); tutto(); }; st.appendChild(a); }
+    a.onclick = () => { S.q = ""; S.ric = null; S.sotto = ""; S.soloVer = false; S.fil = 0; S.nome = 0; S.solo = null; S.soloMod = false; S.soloRif = false; S.riga = 0; S.amb = (1 << ORD.length) - 1; $("q").value = ""; S.limite = 300; aggiornaStatoMod(); tutto(); }; st.appendChild(a); }
 
   const el = $("elenco");
   if (!lista.length){ el.innerHTML = `<div class="vuoto">Nessuna scheda corrisponde ai filtri scelti. Togli un filtro o risali di livello nella linea del tempo.</div>`; return; }
@@ -1661,6 +1778,7 @@ function disegnaElenco(){
   const ids = pagina.map(i => ID[i]).join(",");
   const T = new Map(); db.exec(`select id, testo, approfondimento, data_scritta, collegamento, colonna_origine from schede where id in (${ids})`)[0].values.forEach(x => T.set(x[0], x));
   const R = new Map(); (db.exec(`select r.scheda_id, r.stato, r.scheda_collegata_id, c.data_scritta, c.testo, c.riga_origine, r.tipo from riferimenti r left join schede c on c.id = r.scheda_collegata_id where r.scheda_id in (${ids})`)[0]?.values || []).forEach(x => R.set(x[0], x));
+  const VN = new Map(); (db.exec(`select scheda_id, nota from verifiche where scheda_id in (${ids})`)[0]?.values || []).forEach(([s, n]) => VN.set(s, n));
   const IM = new Map(); (db.exec(`select scheda_id, file, didascalia from immagini where scheda_id in (${ids}) order by scheda_id, posizione`)[0]?.values || []).forEach(([s, f, d]) => { if (!IM.has(s)) IM.set(s, []); IM.get(s).push([f, d]); });
   const re = S.ric ? regexTermini(S.ric.termini) : null;
   let html = "", chiave = null;
@@ -1680,14 +1798,15 @@ function disegnaElenco(){
     const rif = r ? bloccoRiferimento(id, r, RIGA[i], scritta) : "";
     const mod = MODIFICATE.get(id);
     html += `<article class="scheda" data-id="${id}" style="--c:var(--a-${a})">
-      <div class="meta"><span>${htmlAmbiti(i)}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span></div>
+      <div class="meta"><span title="${RIGA[i] ? `Riga ${RIGA[i]}, colonna ${col} del foglio CRONO` : "Scheda inserita nel programma"}">${htmlAmbiti(i)}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${VN.has(id) ? `<span class="bollo ver">DA VERIFICARE</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}${TELEFONO ? `<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span>` : `<span class="icone"><button type="button" data-mod="${id}" title="Modifica (o doppio clic sul testo)" aria-label="Modifica">${ICONA.mod}</button><button type="button" data-nuova="${id}" title="Nuova scheda qui" aria-label="Nuova scheda qui">${ICONA.nuova}</button><button type="button" class="del" data-elimina="${id}" title="Elimina (va nel cestino)" aria-label="Elimina">${ICONA.elimina}</button></span>`}</div>
       <p class="testo">${conNomi(testo, nomi)}</p>
+      ${VN.get(id) ? `<div class="ver-nota">Da verificare: ${esc(VN.get(id))}</div>` : ""}
       ${rif}
       ${coll ? `<div class="coll">Collegamento: <a href="${esc(coll)}" target="_blank" rel="noopener">${esc(coll)}</a></div>` : ""}
       ${appr ? `<details class="appr"${apriAppr ? " open" : ""}><summary>Approfondimento</summary><p class="testo">${conNomi(appr, nomi)}</p></details>` : ""}
       ${IM.has(id) && TELEFONO ? `<p class="imm-nota">${IM.get(id).length === 1 ? "1 immagine allegata" : IM.get(id).length + " immagini allegate"}: si vedono sul computer.</p>` : ""}
       ${IM.has(id) && !TELEFONO ? `<div class="immagini">${IM.get(id).map(([f, d], k) => `<figure><button class="mini" type="button" data-sch="${id}" data-k="${k}" aria-label="Ingrandisci l'immagine${d ? ": " + esc(d) : ""}"><img data-file="${esc(f)}" alt="${esc(d || "")}"></button>${d ? `<figcaption>${esc(d)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
-      ${TELEFONO ? `<div class="azioni"><button data-ann="nuovo" data-id="${id}">Annota un fatto nuovo qui</button><button data-ann="correzione" data-id="${id}">Annota una correzione</button></div>` : `<div class="azioni">${SCELTA && SCELTA.id !== id ? `<button class="collega" data-collega="${id}">Collega qui</button>` : ""}<button data-mod="${id}">Modifica</button><button data-nuova="${id}">Nuova scheda qui</button><button data-elimina="${id}">Elimina</button></div>`}
+      ${TELEFONO ? `<div class="azioni"><button data-ann="nuovo" data-id="${id}">Annota un fatto nuovo qui</button><button data-ann="correzione" data-id="${id}">Annota una correzione</button></div>` : SCELTA && SCELTA.id !== id ? `<div class="azioni"><button class="collega" data-collega="${id}">Collega qui</button></div>` : ""}
     </article>`;
   });
   html += "</section>";
@@ -1714,8 +1833,20 @@ function evidenzia(root, re){
 }
 
 /* ---------- eventi ---------- */
-function suDensita(){ window.scrollTo({ top: document.querySelector(".densita").offsetTop - 10 }); }
+const altoFissa = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--alto-fissa")) || 0;
+function suDensita(){ window.scrollTo({ top: document.querySelector(".densita").offsetTop - 10 - altoFissa() }); }
+$("elenco").addEventListener("dblclick", ev => {   // doppio clic sul testo di una scheda: si apre la maschera di modifica
+  if (TELEFONO || ev.target.closest("button, a, summary, input, label, figure")) return;
+  const art = ev.target.closest("article.scheda"); if (!art || !ev.target.closest(".testo")) return;
+  window.getSelection()?.removeAllRanges();
+  apriMaschera("modifica", +art.dataset.id);
+});
 $("elenco").addEventListener("click", ev => {
+  if ($("elenco").classList.contains("compatta")){   // vista compatta: il clic apre la riga; sulla scheda aperta, un clic sul testo la richiude
+    const art = ev.target.closest("article.scheda");
+    if (art && !art.classList.contains("aperta")){ art.classList.add("aperta"); return; }
+    if (art && !ev.target.closest("button, a, summary, details, input, label, figure") && ev.target.closest(".testo")){ art.classList.remove("aperta"); return; }
+  }
   const n = ev.target.closest("button.nome"), f = ev.target.closest("button[data-f]"), v = ev.target.closest("button[data-vai]");
   const mo = ev.target.closest("button[data-mod]"), nu = ev.target.closest("button[data-nuova]"), el = ev.target.closest("button[data-elimina]");
   const an = ev.target.closest("button[data-ann]");
@@ -1745,7 +1876,23 @@ $("q").addEventListener("input", ev => { clearTimeout(t); t = setTimeout(() => {
 $("filtraNomi").addEventListener("input", ev => { S.filtroNomi = ev.target.value.trim(); disegnaLato(); });
 $("filtraFasc").addEventListener("input", ev => { S.filtroFasc = ev.target.value.trim(); disegnaLato(); });
 $("soloMod").onclick = () => { S.soloMod = !S.soloMod; S.solo = null; S.limite = 300; aggiornaStatoMod(); tutto(); };
-function tutto(){ disegnaDensita(); disegnaLato(); disegnaElenco(); }
+function tutto(){ disegnaDensita(); disegnaLato(); disegnaElenco(); $("dove").textContent = (S.zoom.length ? descriviLivello(S.zoom[S.zoom.length - 1]) : "Tutte le epoche").replace(/^./, c => c.toUpperCase()); }
+/* barra di ricerca ferma in alto e intestazioni delle date sotto di lei (21 ottobre 2026) */
+const fissa = $("fissa");
+function misuraFissa(){
+  const ferma = getComputedStyle(fissa).position === "sticky";
+  fissa.classList.toggle("attaccata", ferma && fissa.getBoundingClientRect().top <= 0.5 && window.scrollY > 0);
+  document.documentElement.style.setProperty("--alto-fissa", ferma ? fissa.offsetHeight + "px" : "0px");
+}
+window.addEventListener("scroll", misuraFissa, { passive: true }); window.addEventListener("resize", misuraFissa);
+new ResizeObserver(misuraFissa).observe(fissa);
+/* vista compatta: una riga per fatto, un clic la apre */
+function vistaCompatta(si){
+  $("elenco").classList.toggle("compatta", si); $("bCompatta").textContent = si ? "Vista completa" : "Vista compatta";
+  try { localStorage.setItem("cronologia-vista", si ? "compatta" : "completa"); } catch(e){}
+}
+$("bCompatta").onclick = () => vistaCompatta(!$("elenco").classList.contains("compatta"));
+try { if (localStorage.getItem("cronologia-vista") === "compatta") vistaCompatta(true); } catch(e){}
 function scriviStatoGen(){   // riga sotto il titolo: conteggi senza le schede nel cestino
   const meta = Object.fromEntries(db.exec("select chiave, valore from metadati")[0].values);
   const dc = meta.data_conversione ? new Date(meta.data_conversione) : null, dove = $("statoGen").dataset.dove;
@@ -2014,11 +2161,14 @@ function sequenza(d){
    Per ogni punto si contano i contrasti: schede prima con data successiva e schede dopo con data precedente. Due date si
    confrontano fino alla precisione che hanno in comune (anno con anno; il mese solo se c'è in tutte e due; il giorno solo
    se c'è in tutte e due): "1992" e "23/05/1992" non sono in contrasto, e fra date uguali vale l'ordine scelto dall'utente.
-   Le date relative non contano. Il punto giusto è quello con meno contrasti, così una scheda fuori posto altrove non
+   Le date relative non contano; le stagioni contano solo per l'anno. Il punto giusto è quello con meno contrasti, così una scheda fuori posto altrove non
    sposta la proposta; a parità, il più vicino al punto attuale. Se il punto attuale ha già il minimo, non si propone niente. */
-function puntoGiusto(d, self, attuale){
-  const k = d.anno, m = d.mese || 0, g = d.giorno || 0;
-  const cmp = i => Y[i] !== k ? (Y[i] < k ? -1 : 1) : !m || !M[i] || M[i] === m && (!g || !D[i]) ? 0 : M[i] !== m ? (M[i] < m ? -1 : 1) : D[i] < g ? -1 : D[i] > g ? 1 : 0;
+const STAGIONE = /inverno|primavera|estate|autunno/i;
+function puntoGiusto(d, self, attuale, stagione){
+  const k = d.anno, m = stagione ? 0 : d.mese || 0, g = stagione ? 0 : d.giorno || 0;
+  // le stagioni contano solo per l'anno: "Inverno" è letto come gennaio ma nel foglio sta spesso a fine anno (21 ottobre 2026)
+  const cmp = i => { if (Y[i] !== k) return Y[i] < k ? -1 : 1; const mi = STAG[i] ? 0 : M[i];
+    return !m || !mi || mi === m && (!g || !D[i]) ? 0 : mi !== m ? (mi < m ? -1 : 1) : D[i] < g ? -1 : D[i] > g ? 1 : 0; };
   const REL = PRECISIONI.indexOf("relativa"), conta = i => i !== self && !Number.isNaN(Y[i]) && PREC[i] !== REL;
   let c = 0;
   for (let i = 0; i < N; i++) if (conta(i) && cmp(i) < 0) c++;
@@ -2034,10 +2184,10 @@ function puntoGiusto(d, self, attuale){
 }
 function proposta(d){   // null: niente da proporre; { fermo: true }: già al posto giusto; altrimenti il punto e i vicini
   if (d.anno === null || Math.abs(d.anno) > 9e18 || d.precisione === "futuro" || d.precisione === "relativa") return null;
-  if (senzaAnnoProprio($("mData").value.trim())) return null;   // "Aprile", "Fine anno": l'anno viene dalla posizione, spostare non ha senso
+  // "Aprile", "Fine anno": l'anno viene dalla posizione; la proposta resta dentro quell'anno (e la data registrata conserva il suo anno, punto 2.21.2)
   const self = MS.modo === "modifica" ? POS[MS.id] : -1;
   const attuale = MS.modo === "modifica" ? self : (MS.dove === "dopo" ? POS[MS.rif] + 1 : POS[MS.rif]);
-  const t = puntoGiusto(d, self, attuale);
+  const t = puntoGiusto(d, self, attuale, STAGIONE.test($("mData").value));
   if (t === null || (MS.modo === "modifica" && (t === self || t === self + 1))) return { fermo: true };
   let a = t - 1; if (a === self) a--;
   let b = t; if (b === self) b++;
@@ -2092,13 +2242,14 @@ function disegnaLettura(){
   if (L.invertito) h.push(`<span class="avv">Intervallo di giorni con estremi invertiti: vale il primo giorno.</span>`);
   const imp = giornoImpossibile(d);
   if (imp) h.push(`<span class="avv"><b>${esc(imp)}</b>${L.registrata ? " La data registrata è sbagliata: correggila." : " Correggi la data: così non si può applicare."}</span>`);
-  const pr = L.registrata || imp ? null : proposta(d);
+  const pr = imp ? null : proposta(d);
   MS.sposta = pr && !pr.fermo ? pr : null;
+  if (!MS.spostaScelto) MS.spostaNo = !!L.registrata;   // data invariata: si segnala, ma senza spunta; data cambiata: spunta già messa
   const seq = L.registrata || pr ? "" : sequenza(d);
   if (seq) h.push(`<span class="avv">${esc(seq)}</span>`);
-  if (MS.sposta) h.push(`<span class="sposta"><label class="spunta"><input type="checkbox" id="mSposta"${MS.spostaNo ? "" : " checked"}> ${MS.modo === "modifica" ? "Sposta la scheda" : "Metti la scheda"} nel punto giusto della sequenza</label><span class="tenue" style="display:block">${esc(MS.sposta.descr)}</span></span>`);
+  if (MS.sposta) h.push(`<span class="sposta">${L.registrata ? `<span class="tenue" style="display:block">La scheda sembra fuori posto nella sequenza.</span>` : ""}<label class="spunta"><input type="checkbox" id="mSposta"${MS.spostaNo ? "" : " checked"}> ${MS.modo === "modifica" ? "Sposta la scheda" : "Metti la scheda"} nel punto giusto della sequenza</label><span class="tenue" style="display:block">${esc(MS.sposta.descr)}</span></span>`);
   box.innerHTML = h.join(" ");
-  const cs = $("mSposta"); if (cs) cs.onchange = () => { MS.spostaNo = !cs.checked; };
+  const cs = $("mSposta"); if (cs) cs.onchange = () => { MS.spostaNo = !cs.checked; MS.spostaScelto = true; };
   // correzione a mano: non per tempo profondo e futuro (si corregge la data scritta: decisioni 2.8 e 2.20)
   const vieta = profondo(d) && !$("mMano").checked;
   $("mManoEt").hidden = vieta;
@@ -2128,17 +2279,27 @@ function disegnaRicavati(){
   if (f.id) h = `Fascicolo: <b>${esc(f.nome)}</b> <span class="tenue">(esistente, ${sch(FCONT[f.id] || 0)})</span>`;
   else if (f.nuovo) h = `<label class="spunta" style="margin:0"><input type="checkbox" id="mApriFasc"${apriFascicolo() ? " checked" : ""}> Apri il fascicolo <b>«${esc(f.nome)}»</b></label> <span class="tenue">(titolo nuovo: senza spunta resta solo nel testo)</span>`;
   else h = `<span class="tenue">Nessun fascicolo (si apre scrivendo un titolo seguito dai due punti all'inizio del fatto).</span>`;
-  h += `<br>Nomi: ${nomi.length ? nomi.map(n => `<span class="nm">${esc(n)}</span>`).join("") : `<span class="tenue">nessuno (si riconoscono le parole in maiuscolo)</span>`}`;
+  h += `<br>Nomi: ${nomi.length ? nomi.map(n => `<span class="nm${nomeNuovo(n) ? " nuovo" : ""}"${nomeNuovo(n) ? ' title="Nome nuovo: non è ancora nell\'indice"' : ""}>${esc(n)}</span>`).join("") : `<span class="tenue">nessuno (si riconoscono le parole in maiuscolo)</span>`}`;
+  for (const n of nomi.filter(nomeNuovo)){
+    const sim = nomiSimili(n);
+    if (sim.length) h += `<br><span class="simile">«${esc(n)}» è un nome nuovo; nell'indice c'è ${sim.map(x => `<button type="button" data-sost="${esc(n)}" data-con="${esc(x)}" title="Sostituisci nel fatto">${esc(x)}</button>`).join(" o ")}: stesso nome scritto diversamente?</span>`;
+  }
   $("mRicavati").innerHTML = h;
   const c = $("mApriFasc"); if (c) c.onchange = () => { MS.apriFasc = { k: MS.fasc.k, si: c.checked }; disegnaRicavati(); };
+  $("mRicavati").querySelectorAll("button[data-sost]").forEach(b => b.onclick = () => {
+    const t = $("mTesto"); t.value = t.value.split(b.dataset.sost).join(b.dataset.con); disegnaRicavati();
+  });
 }
 
 /* --- apertura e chiusura --- */
 function istantanea(){ return JSON.stringify([$("mData").value, $("mTesto").value, $("mAppr").value, $("mColl").value, [...document.querySelectorAll("#mAmbiti input")].map(x => x.checked),
-  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS ? [...MS.sotto].sort((a, b) => a - b) : [], MS && MS.modo === "nuova" ? MS.dove : "", apriFascicolo(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
+  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS ? [...MS.sotto].sort((a, b) => a - b) : [], $("mVer").checked, $("mVerNota").value, MS && MS.modo === "nuova" ? MS.dove : "", apriFascicolo(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
 function apriMaschera(modo, id){
   if (occupato()) return;
   MS = { modo, apriFasc: { k: null, si: false }, immagini: [] };
+  esciPieno("maschera"); nascondiSugg();
+  { const v = modo === "modifica" ? uno("select nota from verifiche where scheda_id = ?", [id]) : null;
+    $("mVer").checked = !!v; $("mVerNota").value = v ? v[0] || "" : ""; $("mVerNota").hidden = !v; }
   $("mErrImg").textContent = "";
   const box = $("mAmbiti"); box.innerHTML = ORD.map(a => `<label style="--c:var(--a-${a})"><input type="checkbox" value="${a}"> ${esc(AMB[a])}</label>`).join("");
   MS.sotto = new Set(modo === "modifica" ? (db.exec(`select sottoambito_id from schede_sottoambiti where scheda_id = ${+id}`)[0]?.values || []).map(x => x[0]) : []);
@@ -2168,6 +2329,7 @@ function apriMaschera(modo, id){
   $("mManoBox").hidden = !$("mMano").checked;
   disegnaRicavati();
   disegnaSotto("mAmbiti", "mSotto", MS.sotto, true);
+  contaAppr();
   disegnaImmaginiMaschera();
   MS.inizio = istantanea();
   $("maschera").showModal();
@@ -2179,7 +2341,7 @@ function chiudiMaschera(chiedi){
   clearTimeout(tL); clearTimeout(tR); $("maschera").close(); MS = null;
 }
 $("mForm").addEventListener("submit", ev => ev.preventDefault());
-$("maschera").addEventListener("cancel", ev => { ev.preventDefault(); chiudiMaschera(true); });
+$("maschera").addEventListener("cancel", ev => { ev.preventDefault(); if (nascondiSugg() || esciPieno("maschera")) return; chiudiMaschera(true); });
 $("mAnnulla").onclick = () => chiudiMaschera(true);
 $("mApplica").onclick = () => applica();
 $("maschera").addEventListener("keydown", ev => { if (ev.key === "Enter" && (ev.ctrlKey || ev.metaKey)){ ev.preventDefault(); applica(); } });
@@ -2281,6 +2443,10 @@ function applica(){
     ambiti.forEach(a => db.run("insert into schede_ambiti values (?, ?)", [id, a]));
     db.run("delete from schede_sottoambiti where scheda_id = ?", [id]);   // solo i sotto-ambiti degli ambiti spuntati
     [...MS.sotto].filter(x => SUB.has(x) && ambiti.includes(SUB.get(x).ambito)).forEach(x => db.run("insert into schede_sottoambiti values (?, ?)", [id, x]));
+    if ($("mVer").checked){   // da verificare: si conserva la data della prima segnalazione
+      const prima = uno("select segnata from verifiche where scheda_id = ?", [id]);
+      db.run("insert or replace into verifiche values (?, ?, ?)", [id, $("mVerNota").value.trim() || null, prima ? prima[0] : ora]);
+    } else db.run("delete from verifiche where scheda_id = ?", [id]);
     const vecchiNomi = (db.exec(`select nome_id from schede_nomi where scheda_id = ${id}`)[0]?.values || []).map(x => x[0]);
     db.run("delete from schede_nomi where scheda_id = ?", [id]);
     for (const n of MS.nomi){
@@ -2311,7 +2477,7 @@ function applica(){
   }
   MODIFICATE.set(id, MS.modo === "nuova" || MODIFICATE.get(id) === "nuova" ? "nuova" : "modificata");
   const modo = MS.modo, daAppunto = !!MS.appunto;
-  $("maschera").close(); MS = null;
+  $("maschera").close(); MS = null; esciPieno("maschera");
   ricostruisci(soloId);
   if (sposta){   // la linea del tempo va al periodo della nuova posizione
     const q = POS[id], z = percorsoData(Y[q], M[q], D[q]);
@@ -2778,7 +2944,7 @@ $("bFine").onclick = () => {
   S.limite = Math.max(300, prima + 20);
   aggiornaStatoMod(); tutto();
   const el = document.querySelector(`article[data-id="${ID[k]}"]`);
-  if (el){ el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); }
+  if (el){ if ($("elenco").classList.contains("compatta")) el.classList.add("aperta"); el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); }
   notaVai(`Fine del presente: l'ultima scheda prima del futuro${passa(k) ? "" : " (esclusa dai filtri attivi)"}.`);
 };
 
@@ -2792,7 +2958,7 @@ function mostraScheda(id, msg){
   if (k >= S.limite && k < S.limite + 300) S.limite = k + 20;   // la scheda era a video: al massimo si allunga di poco l'elenco
   tutto();
   const el = document.querySelector(`article[data-id="${id}"]`);
-  if (el){ el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); avvisoBreve(msg); }
+  if (el){ if ($("elenco").classList.contains("compatta")) el.classList.add("aperta"); el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); avvisoBreve(msg); }
   else avvisoBreve(`${msg} La scheda è più avanti nell'elenco: restringi il periodo dalla linea del tempo per vederla.`);
 }
 
@@ -2805,16 +2971,17 @@ function mostraScheda(id, msg){
    dell'archivio che li contiene. Le correzioni si confrontano campo per campo con la versione da cui sono partite.
    ===================================================================== */
 const FORMATO_APPUNTI = "cronologia-appunti";
-const CAMPI_APP = ["data", "ambiti", "sottoambiti", "testo", "approfondimento", "collegamento"];
-const NOME_CAMPO = { data: "data", ambiti: "ambito", sottoambiti: "sotto-ambiti", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento" };
+const CAMPI_APP = ["data", "ambiti", "sottoambiti", "testo", "approfondimento", "collegamento", "verifica"];
+const NOME_CAMPO = { data: "data", ambiti: "ambito", sottoambiti: "sotto-ambiti", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento", verifica: "da verificare" };
 const corto = (t, n) => { t = String(t || ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
 const nuovoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
-const pulito = (v, f) => f === "ambiti" ? [...(v || [])].sort().join(",") : f === "sottoambiti" ? [...(v || [])].sort((a, b) => a - b).join(",") : String(v ?? "").replace(/\s+$/, "").trim();
+const pulito = (v, f) => f === "verifica" ? (v === null || v === undefined ? "" : "V:" + String(v).trim()) : f === "ambiti" ? [...(v || [])].sort().join(",") : f === "sottoambiti" ? [...(v || [])].sort((a, b) => a - b).join(",") : String(v ?? "").replace(/\s+$/, "").trim();
 const uguale = (a, b, f) => pulito(a, f) === pulito(b, f);
 function campiScheda(id){
   const o = datiScheda(id);
   const sotto = (db.exec(`select sottoambito_id from schede_sottoambiti where scheda_id = ${+id} order by sottoambito_id`)[0]?.values || []).map(x => x[0]);
-  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), sottoambiti: sotto, testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "" };
+  const v = uno("select nota from verifiche where scheda_id = ?", [id]);
+  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), sottoambiti: sotto, testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "", verifica: v ? v[0] || "" : null };
 }
 function voceAppunto(a, comandi, stato){
   return `<div class="c-voce"><div>
@@ -2838,7 +3005,8 @@ $("telAppunti").onclick = mostraAppunti;
 let AN = null;   // appunto aperto nella maschera del telefono
 const leggiAnnota = () => ({ data: $("aData").value.trim(), ambiti: [...document.querySelectorAll("#aAmbiti input:checked")].map(x => x.value).sort(),
   sottoambiti: AN ? [...AN.sotto].filter(x => SUB.has(x) && document.querySelector(`#aAmbiti input[value="${SUB.get(x).ambito}"]:checked`)).sort((a, b) => a - b) : [],
-  testo: $("aTesto").value.replace(/\s+$/, ""), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim() });
+  testo: $("aTesto").value.replace(/\s+$/, ""), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim(),
+  verifica: $("aVer").checked ? $("aVerNota").value.trim() : null });
 function apriAnnota(tipo, id, esistente){
   if (esistente) AN = { id: esistente.id, tipo: esistente.tipo, creato: esistente.creato, rif: esistente.rif, originale: esistente.originale, esportato: esistente.esportato };
   else {
@@ -2851,6 +3019,8 @@ function apriAnnota(tipo, id, esistente){
   $("aAmbiti").innerHTML = ORD.map(a => `<label style="--c:var(--a-${a})"><input type="checkbox" value="${a}"${c.ambiti.includes(a) ? " checked" : ""}> ${esc(AMB[a])}</label>`).join("");
   AN.sotto = new Set(c.sottoambiti || []); disegnaSotto("aAmbiti", "aSotto", AN.sotto, false);
   $("aData").value = c.data; $("aTesto").value = c.testo; $("aAppr").value = c.approfondimento || ""; $("aColl").value = c.collegamento || "";
+  $("aVer").checked = c.verifica !== null && c.verifica !== undefined; $("aVerNota").value = c.verifica || ""; $("aVerNota").hidden = !$("aVer").checked;
+  esciPieno("annota"); nascondiSugg();
   $("aErrore").textContent = "";
   AN.inizio = JSON.stringify(leggiAnnota());
   $("annota").showModal();
@@ -2879,7 +3049,7 @@ async function conservaAnnota(){
   avvisoBreve("Appunto conservato sul telefono.", { testo: "Vedi gli appunti", fn: mostraAppunti });
 }
 $("aForm").addEventListener("submit", ev => ev.preventDefault());
-$("annota").addEventListener("cancel", ev => { ev.preventDefault(); chiudiAnnota(true); });
+$("annota").addEventListener("cancel", ev => { ev.preventDefault(); if (nascondiSugg() || esciPieno("annota")) return; chiudiAnnota(true); });
 $("aAnnulla").onclick = () => chiudiAnnota(true);
 $("aConserva").onclick = () => conservaAnnota();
 function disegnaAppuntiTel(){
@@ -2961,6 +3131,7 @@ function riempiMaschera(c){
   $("mData").value = c.data; $("mTesto").value = c.testo; $("mAppr").value = c.approfondimento || ""; $("mColl").value = c.collegamento || "";
   document.querySelectorAll("#mAmbiti input").forEach(x => { x.checked = c.ambiti.includes(x.value); });
   if (c.sottoambiti) MS.sotto = new Set(c.sottoambiti.filter(x => SUB.has(x)));
+  if (c.verifica !== undefined){ $("mVer").checked = c.verifica !== null; $("mVerNota").value = c.verifica || ""; $("mVerNota").hidden = c.verifica === null; }
   disegnaLettura(); disegnaRicavati(); disegnaSotto("mAmbiti", "mSotto", MS.sotto, true);
 }
 function apriAppuntoPc(a){
@@ -2988,7 +3159,7 @@ function apriAppuntoPc(a){
     riempiMaschera(val);
     let h = `Correzione annotata sul telefono il ${dataOra(a.creato)}${cambiati.length ? `: cambia ${cambiati.map(f => NOME_CAMPO[f]).join(", ")}` : ""}. Controlla e premi Applica.`;
     if (conflitti.length) h += `<span class="conflitto"><b>Attenzione:</b> dopo la copia portata sul telefono ${conflitti.length === 1 ? "questo campo è cambiato" : "questi campi sono cambiati"} anche sul computer. Nella maschera c'è la versione del telefono; quella del computer era:`
-      + conflitti.map(f => `\n<b>${NOME_CAMPO[f]}</b>: ${esc(f === "ambiti" ? pc[f].map(x => AMB[x]).join(", ") : f === "sottoambiti" ? pc[f].map(nomeSotto).join(", ") || "(nessuno)" : pc[f] || "(vuoto)")}`).join("") + `</span>`;
+      + conflitti.map(f => `\n<b>${NOME_CAMPO[f]}</b>: ${esc(f === "ambiti" ? pc[f].map(x => AMB[x]).join(", ") : f === "sottoambiti" ? pc[f].map(nomeSotto).join(", ") || "(nessuno)" : f === "verifica" ? (pc[f] === null ? "(non da verificare)" : "da verificare" + (pc[f] ? ": " + pc[f] : "")) : pc[f] || "(vuoto)")}`).join("") + `</span>`;
     $("mOrigine").innerHTML = h;
   }
   MS.appunto = a; MS.inizio = istantanea();
@@ -3218,6 +3389,192 @@ $("gElenco").addEventListener("click", ev => {
     dopoAmbiti(`«${nome}» è ora un sotto-ambito di ${AMB[P]}${ids.length ? ` (${sch(ids.length)})` : ""}.`, true);
   }
 });
+
+/* =====================================================================
+   Maschera: suggerimenti dei nomi, "da verificare", approfondimento a tutto schermo (21 ottobre 2026, decisione 2.35)
+   ===================================================================== */
+/* --- indice dei nomi per i suggerimenti: si rifà quando cambia l'indice (NOMI_VER) --- */
+let IN = { ver: -1, lista: [], esiste: new Set() };
+function indiceNomi(){
+  if (IN.ver === NOMI_VER) return IN;
+  const lista = [];
+  for (let id = 1; id < NOMI.length; id++) if (NOMI[id]) lista.push({ nome: NOMI[id], k: senzaAccenti(NOMI[id]).toLowerCase(), c: NCONT[id] || 0 });
+  lista.sort((a, b) => b.c - a.c || a.nome.localeCompare(b.nome, "it"));
+  IN = { ver: NOMI_VER, lista, esiste: new Set(lista.map(x => x.nome)) };
+  return IN;
+}
+const nomeNuovo = n => !indiceNomi().esiste.has(n);
+const chiaveCompatta = t => senzaAccenti(t).toLowerCase().replace(/[^a-z0-9]/g, "");
+function distanzaUno(a, b){   // vero se a e b differiscono al massimo per un carattere (aggiunto, tolto o cambiato)
+  if (a === b) return true;
+  const la = a.length, lb = b.length; if (Math.abs(la - lb) > 1) return false;
+  let i = 0, j = 0, diff = 0;
+  while (i < la && j < lb){
+    if (a[i] === b[j]){ i++; j++; continue; }
+    if (++diff > 1) return false;
+    if (la > lb) i++; else if (lb > la) j++; else { i++; j++; }
+  }
+  return diff + (la - i) + (lb - j) <= 1;
+}
+function nomiSimili(n){   // stesso nome con spazi, trattini, apostrofi o accenti diversi, oppure un carattere di differenza
+  const k = chiaveCompatta(n); if (k.length < 3) return [];
+  const out = [];
+  for (const x of indiceNomi().lista){
+    if (x.nome === n) continue;
+    const kx = chiaveCompatta(x.nome);
+    if (kx === k || (k.length >= 5 && kx[0] === k[0] && distanzaUno(kx, k))){ out.push(x.nome); if (out.length >= 3) break; }
+  }
+  return out;
+}
+/* --- suggerimenti mentre si scrive un nome in maiuscolo --- */
+const CAMPI_SUGG = ["mTesto", "mAppr", "aTesto", "aAppr"];
+let SUGG = null;   // { campo, inizio, fine, voci }
+function prefissoNome(t, pos){   // parole in maiuscolo appena prima del cursore (es. "AL JU")
+  const m = /(\p{Lu}[\p{Lu}'’\-.]*(?:\s\p{Lu}[\p{Lu}'’\-.]*)*)$/u.exec(t.slice(0, pos));
+  if (!m) return null;
+  const p = m[1]; if (p.replace(/[^\p{Lu}]/gu, "").length < 2) return null;
+  return { testo: p, inizio: pos - p.length };
+}
+function trovaNomi(pref){
+  const L = indiceNomi().lista, k = senzaAccenti(pref).toLowerCase();
+  let v = L.filter(x => x.k.startsWith(k) && x.k !== k).slice(0, 8);
+  if (!v.length && /\s/.test(pref)){   // più parole senza risultati: si prova con l'ultima
+    const u = pref.split(/\s+/).pop(); if (u.length >= 2) return { voci: L.filter(x => x.k.startsWith(senzaAccenti(u).toLowerCase()) && x.nome !== u).slice(0, 8), testo: u };
+  }
+  return { voci: v, testo: pref };
+}
+function nascondiSugg(){ if (!SUGG) return false; $(SUGG.campo + "Sugg").hidden = true; SUGG = null; return true; }
+function aggiornaSugg(id){
+  const el = $(id), box = $(id + "Sugg");
+  if (el.selectionStart !== el.selectionEnd){ nascondiSugg(); return; }
+  const pr = prefissoNome(el.value, el.selectionStart);
+  if (!pr){ nascondiSugg(); return; }
+  const r = trovaNomi(pr.testo);
+  if (!r.voci.length){ nascondiSugg(); return; }
+  const fine = el.selectionStart;
+  SUGG = { campo: id, inizio: fine - r.testo.length, fine, voci: r.voci.map(x => x.nome) };
+  box.innerHTML = `<span class="t">Nomi già presenti:</span>` + r.voci.map((x, k) => `<button type="button" data-k="${k}" tabindex="-1">${esc(x.nome)}<span class="n">${fmt(x.c)}</span></button>`).join("") + `<span class="t">· Tab per il primo, Esc per chiudere</span>`;
+  box.hidden = false;
+}
+function scegliSugg(k){
+  if (!SUGG) return;
+  const el = $(SUGG.campo), n = SUGG.voci[k], dopo = el.value.slice(SUGG.fine);
+  el.value = el.value.slice(0, SUGG.inizio) + n + dopo;
+  const pos = SUGG.inizio + n.length; el.setSelectionRange(pos, pos); el.focus();
+  nascondiSugg();
+  el.dispatchEvent(new Event("input", { bubbles: true }));
+}
+let tSugg;
+CAMPI_SUGG.forEach(id => {
+  const el = $(id), box = $(id + "Sugg");
+  el.addEventListener("input", () => { clearTimeout(tSugg); tSugg = setTimeout(() => aggiornaSugg(id), 120); contaAppr(); });
+  el.addEventListener("click", () => aggiornaSugg(id));
+  el.addEventListener("keydown", ev => {
+    if (!SUGG || SUGG.campo !== id) return;
+    if (ev.key === "Tab" && !ev.shiftKey){ ev.preventDefault(); scegliSugg(0); }
+    else if (ev.key === "Escape"){ ev.preventDefault(); ev.stopPropagation(); nascondiSugg(); }
+  });
+  el.addEventListener("blur", () => setTimeout(() => { if (SUGG && SUGG.campo === id && document.activeElement !== el) nascondiSugg(); }, 150));
+  box.addEventListener("mousedown", ev => ev.preventDefault());   // il clic sul nome non toglie il cursore dal campo
+  box.addEventListener("click", ev => { const b = ev.target.closest("button[data-k]"); if (b) scegliSugg(+b.dataset.k); });
+});
+/* --- da verificare --- */
+$("mVer").addEventListener("change", () => { $("mVerNota").hidden = !$("mVer").checked; if ($("mVer").checked) $("mVerNota").focus(); });
+$("aVer").addEventListener("change", () => { $("aVerNota").hidden = !$("aVer").checked; if ($("aVer").checked) $("aVerNota").focus(); });
+$("soloVer").addEventListener("change", ev => { S.soloVer = ev.target.checked; S.solo = null; S.limite = 300; tutto(); });
+/* --- approfondimento a tutto schermo --- */
+function contaAppr(){
+  for (const id of ["mAppr", "aAppr"]){ const v = $(id).value, p = v.trim() ? v.trim().split(/\s+/).length : 0; $(id + "Conta").textContent = v.length ? `${fmt(p)} ${p === 1 ? "parola" : "parole"}, ${fmt(v.length)} caratteri` : ""; }
+}
+function esciPieno(dlg){
+  const d = $(dlg); if (!d.classList.contains("pieno")) return false;
+  d.classList.remove("pieno"); d.querySelectorAll(".campo-pieno").forEach(c => c.classList.remove("campo-pieno"));
+  d.querySelectorAll("button[data-pieno]").forEach(b => b.textContent = "A tutto schermo");
+  return true;
+}
+document.querySelectorAll("button[data-pieno]").forEach(b => b.onclick = () => {
+  const d = b.closest("dialog"), ta = $(b.dataset.pieno);
+  if (esciPieno(d.id)){ ta.focus(); return; }
+  d.classList.add("pieno"); ta.closest(".campo").classList.add("campo-pieno"); b.textContent = "Torna alla maschera";
+  contaAppr(); ta.focus();
+});
+
+/* =====================================================================
+   Grandezza del testo e stampa della selezione (21 ottobre 2026, decisione 2.36)
+   ===================================================================== */
+const SCALE = [0.85, 0.92, 1, 1.1, 1.2, 1.32, 1.45, 1.6];
+function scalaTesto(k){
+  k = Math.max(0, Math.min(SCALE.length - 1, k));
+  $("elenco").style.setProperty("--scala", SCALE[k]); $("elenco").dataset.scala = k;
+  $("testoPerc").textContent = Math.round(SCALE[k] * 100) + "%";
+  $("bTestoMeno").disabled = k === 0; $("bTestoPiu").disabled = k === SCALE.length - 1;
+  try { localStorage.setItem("cronologia-testo", String(k)); } catch(e){}
+}
+$("bTestoMeno").onclick = () => scalaTesto(+$("elenco").dataset.scala - 1);
+$("bTestoPiu").onclick = () => scalaTesto(+$("elenco").dataset.scala + 1);
+{ let k = 2; try { const v = localStorage.getItem("cronologia-testo"); if (v !== null && SCALE[+v]) k = +v; } catch(e){} scalaTesto(k); }
+
+const MAX_STAMPA = 5000;
+const coloreStampa = a => COLORE[a] || ORIGINALE[a] || "#5C6670";   // sempre i colori chiari, anche con lo schermo scuro
+function selezioneStampa(){ const c = cima(), o = []; for (let i = 0; i < N; i++) if (passa(i) && dentro(i, c)) o.push(i); return o; }
+function titoloStampa(){
+  const p = [];
+  if (S.fil) p.push(`Fascicolo ${FNOME[S.fil]}`);
+  if (S.nome) p.push(NOMI[S.nome]);
+  if (S.sotto && gruppiSotto().has(S.sotto)) p.push(gruppiSotto().get(S.sotto).nome);
+  if (S.q) p.push(`Ricerca «${S.q}»`);
+  if (S.soloVer) p.push("Schede da verificare");
+  if (S.zoom.length) p.push($("dove").textContent); else if (!p.length) p.push("Tutte le epoche");
+  return "Cronologia universale — " + p.join(" · ");
+}
+function descriviFiltri(){
+  const f = [];
+  const na = ORD.filter((a, k) => S.amb & (1 << k));
+  if (na.length < ORD.length) f.push("ambiti: " + na.map(a => AMB[a]).join(", "));
+  if (S.solo !== null) f.push("una sola scheda");
+  if (S.riga) f.push(`riga ${S.riga} del foglio`);
+  return f;
+}
+$("bStampa").onclick = () => {
+  if (!N) return;
+  const n = selezioneStampa().length;
+  $("sErrore").textContent = ""; $("sTit").value = titoloStampa();
+  $("sSpiega").textContent = `Si stampano le schede mostrate nell'elenco: ${sch(n)}${descriviFiltri().length ? " (" + descriviFiltri().join("; ") + ")" : ""}. Per stampare meno, restringi prima il periodo dalla linea del tempo o scegli un fascicolo, un nome o una ricerca.`;
+  $("sStampa").disabled = n > MAX_STAMPA || !n;
+  if (n > MAX_STAMPA) $("sErrore").textContent = `La selezione ha ${sch(n)}: troppe per una stampa. Restringila fino a ${fmt(MAX_STAMPA)} schede.`;
+  $("dStampa").showModal();
+};
+$("sAnnulla").onclick = () => $("dStampa").close();
+function preparaStampa(){
+  const sel = selezioneStampa(), conAppr = $("sAppr").checked, conRiga = $("sRiga").checked;
+  const T = new Map();
+  for (let k = 0; k < sel.length; k += 800){
+    const ids = sel.slice(k, k + 800).map(i => ID[i]).join(",");
+    (db.exec(`select s.id, s.testo, s.approfondimento, s.data_scritta, s.colonna_origine, v.nota, v.scheda_id from schede s left join verifiche v on v.scheda_id = s.id where s.id in (${ids})`)[0]?.values || []).forEach(x => T.set(x[0], x));
+  }
+  const ora = new Date();
+  let h = `<h1>${esc($("sTit").value.trim() || titoloStampa())}</h1><p class="s-sotto">${sch(sel.length)}${descriviFiltri().length ? " · " + esc(descriviFiltri().join("; ")) : ""} · stampato il ${ora.toLocaleDateString("it-IT")} alle ${ora.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })}</p>`;
+  let chiave = null;
+  for (const i of sel){
+    const [id, testo, appr, scritta, col, nota, ver] = T.get(ID[i]);
+    const { et, nota: prec } = etichetta(i, scritta);
+    const testa = `${esc(et)}${prec ? `<span class="p">${esc(prec)}</span>` : ""}`;
+    if (testa !== chiave){ h += `<h2>${testa}</h2>`; chiave = testa; }
+    const a = ORD.find((x, k) => AMBM[i] & (1 << k)) || "it";
+    const amb = ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => { const sub = []; for (let q = SOFF[i]; q < SOFF[i + 1]; q++){ const y = SUB.get(SIDS[q]); if (y && y.ambito === x) sub.push(y.nome); } return AMB[x] + (sub.length ? " › " + sub.join(", ") : ""); }).join(" · ");
+    h += `<div class="s-scheda" style="--c:${coloreStampa(a)}"><div class="s-meta">${esc(amb)}${FAS[i] ? ` <span class="g">· Fascicolo: ${esc(FNOME[FAS[i]])}</span>` : ""}${conRiga && RIGA[i] ? ` <span class="g">· riga ${RIGA[i]}, colonna ${esc(col)}</span>` : ""}</div>`
+      + `<p class="s-testo">${esc(testo)}</p>${ver ? `<div class="s-ver">Da verificare${nota ? ": " + esc(nota) : ""}</div>` : ""}${conAppr && appr ? `<div class="s-appr">${esc(appr)}</div>` : ""}</div>`;
+  }
+  $("stampa").innerHTML = h;
+  return sel.length;
+}
+$("sStampa").onclick = () => {
+  try { preparaStampa(); } catch(e){ $("sErrore").textContent = "Stampa non preparata: " + (e.message || e); return; }
+  $("dStampa").close();
+  document.body.classList.add("stampando");
+  setTimeout(() => window.print(), 60);
+};
+window.addEventListener("afterprint", () => { if (document.body.classList.contains("stampando")){ document.body.classList.remove("stampando"); $("stampa").innerHTML = ""; } });
 </script>
 </body>
 </html>
