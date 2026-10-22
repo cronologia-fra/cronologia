@@ -316,8 +316,10 @@ dialog#maschera.pieno,dialog#annota.pieno{width:100vw;height:100vh;max-width:non
 dialog.pieno .m-corpo{display:flex;flex-direction:column}
 dialog.pieno .m-corpo>*:not(.campo-pieno){display:none}
 dialog.pieno .campo-pieno{flex:1;display:flex;flex-direction:column;margin:0}
-dialog.pieno .campo-pieno textarea{flex:1;font-size:17px;line-height:1.75;resize:none;max-width:90ch;width:100%;align-self:center}
-dialog.pieno .campo-pieno .etichetta-riga{max-width:90ch;width:100%;align-self:center}
+dialog.pieno .campo-pieno textarea{flex:1;font-size:17px;line-height:1.75;resize:none;max-width:min(1500px,94vw);width:100%;align-self:center}
+dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;align-self:center}
+.grassetto-b{font-size:13px!important}
+.grassetto-b b{font-family:var(--serif);font-size:14px;margin-right:2px}
 .scheda .bollo.ver{background:var(--ci)}
 .scheda .ver-nota{font-size:13px;color:var(--ci);margin-top:5px}
 .imm-nota{color:var(--tenue);font-size:13px;margin-top:8px}
@@ -352,7 +354,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:90ch;width:100%;align-self:c
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF (8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo (9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -462,7 +464,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:90ch;width:100%;align-self:c
         <div class="ricavati" id="mRicavati"></div>
       </div>
       <div class="campo">
-        <div class="etichetta-riga"><label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera pieno-b" data-pieno="mAppr">A tutto schermo</button><span class="conta" id="mApprConta"></span></div>
+        <div class="etichetta-riga"><label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="mAppr" title="Grassetto: seleziona le parole e premi (o Ctrl+B)"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="mAppr">A tutto schermo</button><span class="conta" id="mApprConta"></span></div>
         <textarea id="mAppr" rows="6" lang="it"></textarea>
         <div class="sugg-nomi" id="mApprSugg" hidden></div>
       </div>
@@ -527,7 +529,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:90ch;width:100%;align-self:c
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
       <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
-      <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><textarea id="aAppr" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
+      <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="aAppr" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><textarea id="aAppr" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
       <div class="campo"><label class="spunta" style="margin-top:0;font-weight:600"><input type="checkbox" id="aVer"> Da verificare</label><input id="aVerNota" type="text" maxlength="300" autocomplete="off" placeholder="Cosa c'è da verificare (facoltativo)" hidden style="margin-top:6px"></div>
       <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
     </div>
@@ -1332,7 +1334,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; aggiornamento 9.";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; aggiornamento 10.";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1803,7 +1805,7 @@ function disegnaElenco(){
       ${VN.get(id) ? `<div class="ver-nota">Da verificare: ${esc(VN.get(id))}</div>` : ""}
       ${rif}
       ${coll ? `<div class="coll">Collegamento: <a href="${esc(coll)}" target="_blank" rel="noopener">${esc(coll)}</a></div>` : ""}
-      ${appr ? `<details class="appr"${apriAppr ? " open" : ""}><summary>Approfondimento</summary><p class="testo">${conNomi(appr, nomi)}</p></details>` : ""}
+      ${appr ? `<details class="appr"${apriAppr ? " open" : ""}><summary>Approfondimento</summary><p class="testo">${grassettoHtml(conNomi(appr, nomi))}</p></details>` : ""}
       ${IM.has(id) && TELEFONO ? `<p class="imm-nota">${IM.get(id).length === 1 ? "1 immagine allegata" : IM.get(id).length + " immagini allegate"}: si vedono sul computer.</p>` : ""}
       ${IM.has(id) && !TELEFONO ? `<div class="immagini">${IM.get(id).map(([f, d], k) => `<figure><button class="mini" type="button" data-sch="${id}" data-k="${k}" aria-label="Ingrandisci l'immagine${d ? ": " + esc(d) : ""}"><img data-file="${esc(f)}" alt="${esc(d || "")}"></button>${d ? `<figcaption>${esc(d)}</figcaption>` : ""}</figure>`).join("")}</div>` : ""}
       ${TELEFONO ? `<div class="azioni"><button data-ann="nuovo" data-id="${id}">Annota un fatto nuovo qui</button><button data-ann="correzione" data-id="${id}">Annota una correzione</button></div>` : SCELTA && SCELTA.id !== id ? `<div class="azioni"><button class="collega" data-collega="${id}">Collega qui</button></div>` : ""}
@@ -3563,7 +3565,7 @@ function preparaStampa(){
     const a = ORD.find((x, k) => AMBM[i] & (1 << k)) || "it";
     const amb = ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => { const sub = []; for (let q = SOFF[i]; q < SOFF[i + 1]; q++){ const y = SUB.get(SIDS[q]); if (y && y.ambito === x) sub.push(y.nome); } return AMB[x] + (sub.length ? " › " + sub.join(", ") : ""); }).join(" · ");
     h += `<div class="s-scheda" style="--c:${coloreStampa(a)}"><div class="s-meta">${esc(amb)}${FAS[i] ? ` <span class="g">· Fascicolo: ${esc(FNOME[FAS[i]])}</span>` : ""}${conRiga && RIGA[i] ? ` <span class="g">· riga ${RIGA[i]}, colonna ${esc(col)}</span>` : ""}</div>`
-      + `<p class="s-testo">${esc(testo)}</p>${ver ? `<div class="s-ver">Da verificare${nota ? ": " + esc(nota) : ""}</div>` : ""}${conAppr && appr ? `<div class="s-appr">${esc(appr)}</div>` : ""}</div>`;
+      + `<p class="s-testo">${esc(testo)}</p>${ver ? `<div class="s-ver">Da verificare${nota ? ": " + esc(nota) : ""}</div>` : ""}${conAppr && appr ? `<div class="s-appr">${grassettoHtml(esc(appr))}</div>` : ""}</div>`;
   }
   $("stampa").innerHTML = h;
   return sel.length;
@@ -3575,6 +3577,27 @@ $("sStampa").onclick = () => {
   setTimeout(() => window.print(), 60);
 };
 window.addEventListener("afterprint", () => { if (document.body.classList.contains("stampando")){ document.body.classList.remove("stampando"); $("stampa").innerHTML = ""; } });
+
+/* =====================================================================
+   Grassetto nell'approfondimento (22 ottobre 2026, decisione 2.37)
+   Nel campo si scrive **parola**: nella scheda, nella stampa e sul telefono compare in grassetto. Il testo nell'archivio
+   resta semplice (con gli asterischi), quindi ricerca, appunti ed esportazione in Excel non cambiano.
+   ===================================================================== */
+const grassettoHtml = h => h.replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, "<strong>$1</strong>");
+function grassetto(id){
+  const el = $(id); let a = el.selectionStart, b = el.selectionEnd; const v = el.value;
+  while (a < b && /\s/.test(v[a])) a++; while (b > a && /\s/.test(v[b - 1])) b--;   // gli spazi restano fuori dal grassetto
+  if (v.slice(a - 2, a) === "**" && v.slice(b, b + 2) === "**" && b > a){   // già in grassetto: si toglie
+    el.value = v.slice(0, a - 2) + v.slice(a, b) + v.slice(b + 2); el.setSelectionRange(a - 2, b - 2);
+  } else if (a === b){   // niente selezionato: due coppie di asterischi, il cursore in mezzo
+    el.value = v.slice(0, a) + "****" + v.slice(a); el.setSelectionRange(a + 2, a + 2);
+  } else {
+    el.value = v.slice(0, a) + "**" + v.slice(a, b) + "**" + v.slice(b); el.setSelectionRange(a + 2, b + 2);
+  }
+  el.focus(); el.dispatchEvent(new Event("input", { bubbles: true }));
+}
+document.querySelectorAll("button[data-grassetto]").forEach(b => { b.addEventListener("mousedown", ev => ev.preventDefault()); b.onclick = () => grassetto(b.dataset.grassetto); });
+["mAppr", "aAppr"].forEach(id => $(id).addEventListener("keydown", ev => { if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "b"){ ev.preventDefault(); grassetto(id); } }));
 </script>
 </body>
 </html>
