@@ -179,6 +179,13 @@ button.nome:hover{color:var(--mo);border-bottom-color:var(--mo)}
 .rif.confermato{color:var(--inchiostro)}
 #bandaScelta{position:sticky;top:0;z-index:5;margin:0 0 12px;padding:10px 14px;background:var(--inchiostro);color:var(--carta);border-radius:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px}
 #bandaScelta button{background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:3px 10px}
+button.data-link{background:none;border:0;padding:0;font:inherit;color:var(--mo);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px;cursor:pointer}
+button.data-link:hover{text-decoration-thickness:2px}
+#bandaRitorno{position:sticky;top:var(--alto-fissa,0px);z-index:5;margin:0 0 12px;padding:8px 12px;background:var(--carta);border:1px solid var(--riga);border-left:4px solid var(--mo);border-radius:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13.5px}
+#bandaRitorno .t{flex:1 1 260px}
+#bandaRitorno button{background:none;border:1px solid var(--mo);color:var(--mo);border-radius:4px;padding:3px 10px;font-size:13.5px}
+#bandaRitorno button.chiudi{border:0;padding:0 4px;color:var(--tenue);font-size:18px;line-height:1}
+.scheda.collegata{box-shadow:0 0 0 3px var(--evid)}
 .scheda .azioni button.collega{color:var(--carta);background:var(--it);border-radius:4px;padding:2px 10px;text-decoration:none;font-weight:600}
 .coll{margin-top:6px;font-size:13px;word-break:break-all}
 .coll a{color:var(--mo)}
@@ -250,9 +257,9 @@ dialog#vista::backdrop{background:rgba(0,0,0,.75)}
 .m-agg .secondario{margin:0;padding:6px 12px}
 #mImmaginiBox.sopra{outline:2px dashed var(--mo);outline-offset:4px;border-radius:6px}
 #avvisoBreve button{margin-left:12px;background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:2px 10px;font-size:13px}
-dialog#cestino,dialog#appunti,dialog#gAmbiti,dialog#dStampa{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
-dialog#cestino[open],dialog#appunti[open],dialog#gAmbiti[open],dialog#dStampa[open]{display:flex;flex-direction:column}
-dialog#cestino::backdrop,dialog#appunti::backdrop,dialog#gAmbiti::backdrop,dialog#dStampa::backdrop{background:rgba(10,16,22,.55)}
+dialog#cestino,dialog#appunti,dialog#gAmbiti,dialog#dStampa,dialog#dChiavetta{width:min(820px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:1px solid var(--riga);border-radius:10px;background:var(--carta);color:var(--inchiostro);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+dialog#cestino[open],dialog#appunti[open],dialog#gAmbiti[open],dialog#dStampa[open],dialog#dChiavetta[open]{display:flex;flex-direction:column}
+dialog#cestino::backdrop,dialog#appunti::backdrop,dialog#gAmbiti::backdrop,dialog#dStampa::backdrop,dialog#dChiavetta::backdrop{background:rgba(10,16,22,.55)}
 .c-elenco{overflow:auto;flex:1;padding:8px 22px}
 .c-voce{border-bottom:1px solid var(--riga);padding:10px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px;align-items:start}
 .c-voce .d{font-weight:600;font-size:13.5px}
@@ -324,6 +331,10 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;
 .scheda .ver-nota{font-size:13px;color:var(--ci);margin-top:5px}
 .imm-nota{color:var(--tenue);font-size:13px;margin-top:8px}
 #telInfo{color:var(--inchiostro)}
+#bChiavetta.vecchia{color:var(--ci);border-color:var(--ci)}
+#kStato{margin:0;font-size:14px;line-height:1.6}
+#kStato b{font-weight:600}
+body.telefono #bChiavetta{display:none!important}
 
 @media (max-width:900px){
   .corpo{grid-template-columns:1fr}
@@ -354,7 +365,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo (9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento (16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -362,7 +373,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;
   <h1>Cronologia universale</h1>
   <p id="statoGen"></p>
   <p class="aiuto" id="telStato" hidden><span id="telAppBox" hidden><button id="telAppunti" class="azzera" type="button" style="font-size:13px;font-weight:600"></button> · </span><button id="telAggiorna" class="azzera" type="button" style="font-size:13px">Carica una copia più recente</button> · <button id="telTogli2" class="azzera" type="button" style="font-size:13px">Togli la copia dal telefono</button></p>
-  <div id="barra"><span id="barraTesto"></span><button id="soloMod" type="button" class="azzera" hidden></button><button id="bRif" type="button" class="azzera" hidden></button><button id="bCestino" type="button" class="azzera" hidden></button><button id="bAppunti" type="button" class="secondario">Importa appunti</button><button id="bExcel" type="button" class="secondario">Esporta in Excel</button><button id="bProva" type="button" class="secondario" hidden>Crea la copia di prova</button><button id="bSalva" type="button" class="primario" hidden>Salva</button><span id="barraErrore" role="alert"></span></div>
+  <div id="barra"><span id="barraTesto"></span><button id="soloMod" type="button" class="azzera" hidden></button><button id="bRif" type="button" class="azzera" hidden></button><button id="bOrdAmb" type="button" class="azzera" hidden></button><button id="bNomi" type="button" class="azzera" hidden></button><button id="bCestino" type="button" class="azzera" hidden></button><button id="bAppunti" type="button" class="secondario">Importa appunti</button><button id="bExcel" type="button" class="secondario">Esporta in Excel</button><button id="bChiavetta" type="button" class="secondario">Copia su chiavetta</button><button id="bProva" type="button" class="secondario" hidden>Crea la copia di prova</button><button id="bSalva" type="button" class="primario" hidden>Salva</button><span id="barraErrore" role="alert"></span></div>
 </header>
 <div class="fissa" id="fissa">
   <div class="cerca">
@@ -419,6 +430,7 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;
   </details>
   <main>
     <div id="bandaScelta" hidden><span id="bandaTesto"></span><button type="button" id="bandaAnnulla">Annulla</button></div>
+    <div id="bandaRitorno" hidden><span class="t" id="ritTesto"></span><button type="button" id="ritTorna">Torna alla scheda di partenza</button><button type="button" class="chiudi" id="ritChiudi" title="Chiudi" aria-label="Chiudi">×</button></div>
     <div class="stato" id="stato"></div>
     <div id="elenco"></div>
   </main>
@@ -565,6 +577,18 @@ dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;
     <span class="m-nota">Nella finestra di stampa di Chrome, alla voce «Destinazione», scegli «Salva come PDF» per avere il file.</span>
     <button type="button" class="secondario" id="sAnnulla">Annulla</button>
     <button type="button" class="primario" id="sStampa">Stampa</button>
+  </div>
+</dialog>
+<dialog id="dChiavetta" aria-labelledby="kTitolo">
+  <div class="m-testa"><h2 id="kTitolo">Copia su chiavetta</h2>
+    <p>Copia l'archivio e le immagini su una chiavetta USB o su un disco esterno, da tenere lontano dal computer: protegge dal guasto o dal furto del computer, che le copie della cartella Copie non coprono. Sulla chiavetta il programma crea la cartella «Cronologia (copia)», che si apre come quella di sempre.</p></div>
+  <div class="m-corpo"><p id="kStato"></p></div>
+  <div class="m-piede">
+    <span class="m-errore" id="kErrore" role="alert"></span>
+    <span class="m-nota" id="kNota" role="status"></span>
+    <button type="button" class="secondario" id="kScegli">Scegli la chiavetta</button>
+    <button type="button" class="secondario" id="kChiudi">Chiudi</button>
+    <button type="button" class="primario" id="kCopia">Fai la copia</button>
   </div>
 </dialog>
 <div id="stampa" hidden></div>
@@ -805,7 +829,7 @@ function meseIn(s){
 }
 
 function leggiTesto(s0){
-  let s = s0.replace(/ /g, ' ').replace(/ /g, ' ').replace(/–/g, '-').replace(/—/g, '-');
+  let s = s0.replace(/\u00a0/g, ' ').replace(/\u2009/g, ' ').replace(/–/g, '-').replace(/—/g, '-');
   s = s.replace(/\s+/g, ' ').trim();
   let sl = s.toLowerCase();
   const ac = /\ba\.?\s?c\.?\b|\d\s?ac\b|di ac\b/.test(sl);
@@ -869,6 +893,20 @@ function leggiTesto(s0){
   if (m){
     const g = Number(m[1].match(/\d+/)[0]);
     return R({ y1: Number(m[3]), m: Number(m[2]), d: g, prec: 'intervallo', metodo: 'gg/mm/aaaa', anomalia: 'Refuso probabile', nota: `Forma irregolare: letta come ${g}/${Number(m[2])}/${m[3]}` });
+  }
+
+  // ---- date numeriche precedute da parole ("Dopo il 16/03/1978", "Dal 16/03 al 09/05/1978"): si leggono come la stessa
+  //      scritta con il mese in lettere (aggiornamento 16, 18 novembre 2026); "Circa", "Intorno al" e "Tra il" restano come prima ----
+  m = /^([a-zà-ù' ]*[a-zà-ù'])\s*(\d.*)$/.exec(sl);
+  if (m && !/^(circa|intorno al|attorno al|tra il|ac)$/.test(m[1].trim())){
+    let valida = true;
+    const resto = m[2].replace(/(?<!\d)(\d{1,2})\s?\/\s?(\d{1,2})(?:\s?\/\s?(\d{1,4}))?(?![\d\/])/g, (x, g, mm, a) => {
+      const gn = Number(g), mn = Number(mm);
+      if (!(mn >= 1 && mn <= 12) || !(gn >= 1 && gn <= 31)){ valida = false; return x; }
+      return `${gn} ${MESI[mn - 1]}${a ? ' ' + Number(a) : ''}`;
+    });
+    if (!valida) return leggiTesto(m[2]);   // giorno o mese impossibile: come la data senza le parole ("Data impossibile")
+    if (resto !== m[2] && /^[\d a-zà-ù'.,-]*$/.test(resto)) return leggiTesto(m[1] + ' ' + resto);
   }
 
   // ---- date numeriche gg/mm/aaaa (anche con intervalli di giorni) ----
@@ -1103,7 +1141,8 @@ if (typeof module !== 'undefined') module.exports = LeggiData;
 </script>
 <script>
 /* Cronologia universale - dati ricavati dal testo di una scheda (fase 3): fascicolo e indice dei nomi.
-   Trasporto fedele di prefisso(), chiave() ed estrai_nomi() di converti.py (versione del 7 ottobre 2026).
+   Trasporto fedele di prefisso(), chiave() ed estrai_nomi() di converti.py (versione del 7 ottobre 2026; regola dei nomi
+   dopo l'apostrofo aggiornata in entrambi il 1° novembre 2026, decisione 2.39).
    Ogni modifica alle regole va fatta in entrambi i file e verificata con prova_testo.js, che confronta
    i risultati con l'archivio su tutte le schede. Uso:
      RicavaTesto.prefisso(testo)        -> titolo prima dei due punti, o null
@@ -1115,7 +1154,9 @@ const RicavaTesto = (() => {
 const W = "\\p{L}\\p{N}_";                           // \w di Python (Unicode)
 const MAI = "A-ZÀÁÂÄÈÉÊËÌÍÎÏÒÓÔÖÙÚÛÜÇÑ";
 const TOK = `[${MAI}0-9][${MAI}0-9]*(?:['’\\-\\.][${MAI}0-9]+)*'?`;
-const SEQ = new RegExp(`(?<![${W}'’])(${TOK}(?:[ ]+${TOK})*)(?![${W}])`, "gu");
+const MIN = "a-zàáâäèéêëìíîïòóôöùúûüçñ";
+// dal 1° novembre 2026 un nome può seguire un apostrofo preceduto da una minuscola (dell'ETA, l'ONU, all'FBI): prima era scartato
+const SEQ = new RegExp(`(?:(?<![${W}'’])|(?<=[${MIN}]['’]))(${TOK}(?:[ ]+${TOK})*)(?![${W}])`, "gu");
 const PARTICELLE = new Set(["DI","DE","DEL","DELLA","DELLE","DEI","DEGLI","DELLO","DA","DAL","DALLA","DALLE","LA","LE","LO","IL","I","GLI",
   "AL","ALLA","EL","D'","E","A","IN","CON","SU","PER","UN","UNA","O","NEL","NELLA","VON","VAN","DER","BIN","IBN","ABU","BEN","ET"]);
 const TESTA = new Set(["E","A","O","I","IN","CON","SU","PER"]);
@@ -1200,6 +1241,7 @@ const PRECISIONI = ["giorno","intervallo","mese","anno","periodo","alternativa",
 
 let SQL, db, N = 0;
 let ID, Y, Y2, M, D, GF, AMBM, FAS, PREC, RIGA, ORDINE, NOFF, NIDS, POS, STAG;   // STAG: data scritta con una stagione (il mese letto è solo indicativo)
+let VM, VG;   // mese e giorno per l'ordine: come M e D, ma "Fine dicembre", "Fine anno", "Inizio mese" hanno un giorno immaginario (decisione 2.40)
 let NOMI = [], NCONT = [], FNOME = [], FCONT = [];
 let SOFF = new Int32Array(1), SIDS = new Int32Array(0);   // sotto-ambiti per scheda (come i nomi)
 let VERIFICARE = new Set();   // schede segnate "da verificare" (fuori dal cestino)
@@ -1213,7 +1255,9 @@ const PASSAGGIO_FATTO = true;    // decisione 2.5: passaggio all'archivio fatto 
 const ELIMINAZIONI = new Map();   // id -> "cestino" | "ripristino" | "definitiva" (operazioni sul cestino non ancora salvate)
 const SCARTI = new Set();   // appunti dal telefono scartati, non ancora salvati
 const AMBITI_MOD = new Set();   // modifiche ad ambiti e sotto-ambiti non ancora salvate
-const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size + AMBITI_MOD.size;
+const RIORDINO = new Set();   // schede spostate dal riordino per ambito dentro la data, non ancora salvate (decisione 2.38)
+const NOMI_AGG = new Set();   // schede con i nomi ricalcolati con la regola nuova, non ancora salvate (decisione 2.39)
+const daSalvare = () => MODIFICATE.size + ELIMINAZIONI.size + SCARTI.size + AMBITI_MOD.size + RIORDINO.size + NOMI_AGG.size;
 let NCESTINO = 0;
 let CART = null, NOMEFILE = null, MODIFICATO_IL = 0, ULTIMO = "", salvando = false;   // cartella e file aperti, data del file all'apertura
 const puoSalvare = () => !!CART && (NOMEFILE === PROVA || PASSAGGIO_FATTO);
@@ -1334,7 +1378,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; aggiornamento 10.";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili (aggiornamento 17 del 19 novembre 2026).";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1392,6 +1436,7 @@ async function togliDalTelefono(){
 }
 (async () => {
   if (TELEFONO) return avviaTelefono();
+  setTimeout(caricaChiavetta, 0);
   const h = await prendi("cartella").catch(() => null);
   if (h){ $("riapri").hidden = false; $("riapri").textContent = `Apri l'archivio (cartella ${h.name})`; $("riapri").onclick = () => apri(() => daCartella(h)); $("scegli").textContent = "Scegli un'altra cartella"; }
   $("apriProva").hidden = !h || PASSAGGIO_FATTO;   // dopo il passaggio la copia di prova non serve più
@@ -1407,6 +1452,8 @@ window.addEventListener("beforeunload", ev => { if (daSalvare() || IMG_NUOVE.siz
 function carica(dove, file){
   $("statoGen").dataset.dove = dove || "";
   if (!N) costruisciArray();
+  contaOrdineAmbiti();
+  contaNomiDaAggiornare();
   aggiornaStatoMod();
   disegnaLegenda();
 }
@@ -1415,19 +1462,22 @@ function disegnaLegenda(){ $("legenda").innerHTML = ORD.map(a => `<span style="-
 function costruisciArray(){
   const r = db.exec(`select s.id, s.anno, s.anno_fine, s.mese, s.giorno, s.giorno_fine, s.precisione, s.fascicolo_id, s.riga_origine, s.ordine,
       (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id),
-      (lower(s.data_scritta) like '%inverno%' or lower(s.data_scritta) like '%primavera%' or lower(s.data_scritta) like '%estate%' or lower(s.data_scritta) like '%autunno%')
+      (lower(s.data_scritta) like '%inverno%' or lower(s.data_scritta) like '%primavera%' or lower(s.data_scritta) like '%estate%' or lower(s.data_scritta) like '%autunno%'),
+      case when s.giorno is null then s.data_scritta end
     from schede s where not exists (select 1 from cestino c where c.scheda_id = s.id) order by s.ordine`)[0]?.values || [];
   N = r.length;
   NCESTINO = db.exec("select count(*) from cestino")[0].values[0][0];
   DAVERIFICARE = new Set((db.exec(`select scheda_id from riferimenti r where stato in ${STATI_DA_VERIFICARE} and not exists (select 1 from cestino c where c.scheda_id = r.scheda_id)`)[0]?.values || []).map(x => x[0]));
   ID = new Int32Array(N); Y = new Float64Array(N); Y2 = new Float64Array(N); M = new Uint8Array(N); D = new Uint8Array(N); GF = new Uint8Array(N);
   AMBM = new Uint32Array(N); FAS = new Int32Array(N); PREC = new Uint8Array(N); RIGA = new Int32Array(N); ORDINE = new Float64Array(N); STAG = new Uint8Array(N);
+  VM = new Float64Array(N); VG = new Float64Array(N);
   let maxId = 0;
   r.forEach((x, i) => {
     ID[i] = x[0]; Y[i] = x[1] === null ? NaN : x[1]; Y2[i] = x[2] === null ? NaN : x[2]; M[i] = x[3] || 0; D[i] = x[4] || 0; GF[i] = x[5] || 0;
     PREC[i] = Math.max(0, PRECISIONI.indexOf(x[6])); FAS[i] = x[7] || 0; RIGA[i] = x[8] || 0; ORDINE[i] = x[9];
     let m = 0; String(x[10] || "").split(",").forEach(a => { const k = ORD.indexOf(a); if (k >= 0) m |= 1 << k; }); AMBM[i] = m;
     STAG[i] = x[11] ? 1 : 0;
+    [VM[i], VG[i]] = partePeriodo(x[12], M[i], D[i], x[6]);
     if (x[0] > maxId) maxId = x[0];
   });
   maxId = Math.max(maxId, db.exec("select coalesce(max(id), 0) from schede")[0].values[0][0]);   // anche le schede nel cestino hanno un posto (vuoto)
@@ -1819,7 +1869,9 @@ function disegnaElenco(){
     b.textContent = `Mostra altre ${fmt(Math.min(300, lista.length - S.limite))} schede (ne restano ${fmt(lista.length - S.limite)})`;
     b.onclick = () => { S.limite += 300; disegnaElenco(); }; el.appendChild(b);
   }
+  collegaDate(el);
   if (re) evidenzia(el, re);
+  if (RITORNO && RITORNO.evid) el.querySelectorAll(`article[data-id="${RITORNO.evid}"]`).forEach(a => a.classList.add("collegata"));
 }
 function evidenzia(root, re){
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest(".testo") ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
@@ -1855,6 +1907,8 @@ $("elenco").addEventListener("click", ev => {
   if (an){ apriAnnota(an.dataset.ann, +an.dataset.id); return; }
   const mi = ev.target.closest("button.mini");
   if (mi){ apriVista(+mi.dataset.sch, +mi.dataset.k); return; }
+  const dl = ev.target.closest("button.data-link");
+  if (dl){ seguiData(+dl.dataset.y, +dl.dataset.m, +dl.dataset.d, +dl.closest("article.scheda").dataset.id, dl.textContent); return; }
   const rz = ev.target.closest("button[data-rif]"), co = ev.target.closest("button[data-collega]"), sr = ev.target.closest("button[data-riga]");
   if (rz){ azioneRiferimento(+rz.dataset.id, rz.dataset.rif); return; }
   if (co){ collegaQui(+co.dataset.collega); return; }
@@ -1913,8 +1967,10 @@ function aggiornaStatoMod(){
   if (ces) parti.push(ces === 1 ? "1 scheda spostata nel cestino" : `${fmt(ces)} schede spostate nel cestino`);
   if (rip) parti.push(rip === 1 ? "1 scheda ripristinata" : `${fmt(rip)} schede ripristinate`);
   if (def) parti.push(def === 1 ? "1 scheda eliminata definitivamente" : `${fmt(def)} schede eliminate definitivamente`);
-  const ns = n - SCARTI.size - AMBITI_MOD.size;
+  const ns = n - SCARTI.size - AMBITI_MOD.size - RIORDINO.size - NOMI_AGG.size;
   let cosa = ns ? `${parti.join(" e ")} non ancora ${ns === 1 ? "salvata" : "salvate"}` : "";
+  if (NOMI_AGG.size) cosa += (cosa ? "; " : "") + (NOMI_AGG.size === 1 ? "1 scheda con i nomi aggiornati non ancora salvata" : `${fmt(NOMI_AGG.size)} schede con i nomi aggiornati non ancora salvate`);
+  if (RIORDINO.size) cosa += (cosa ? "; " : "") + (RIORDINO.size === 1 ? "1 scheda riordinata per ambito non ancora salvata" : `${fmt(RIORDINO.size)} schede riordinate per ambito non ancora salvate`);
   if (AMBITI_MOD.size) cosa += (cosa ? "; " : "") + (AMBITI_MOD.size === 1 ? "1 modifica agli ambiti non ancora salvata" : `${fmt(AMBITI_MOD.size)} modifiche agli ambiti non ancora salvate`);
   if (SCARTI.size) cosa += (cosa ? "; " : "") + (SCARTI.size === 1 ? "1 appunto scartato non ancora salvato" : `${fmt(SCARTI.size)} appunti scartati non ancora salvati`);
   let t, cl;
@@ -1934,6 +1990,9 @@ function aggiornaStatoMod(){
   $("bCestino").hidden = !NCESTINO; $("bCestino").textContent = `Cestino (${fmt(NCESTINO)})`;
   $("bRif").hidden = !DAVERIFICARE.size && !S.soloRif;
   $("bRif").textContent = S.soloRif ? "Mostra tutte le schede" : `Date relative da verificare (${fmt(DAVERIFICARE.size)})`;
+  $("bNomi").hidden = TELEFONO || !NOMI_DA.length; $("bNomi").textContent = `Nomi da aggiornare: ${NOMI_DA.length === 1 ? "1 scheda" : fmt(NOMI_DA.length) + " schede"}`;
+  aggiornaBottoneChiavetta();
+  $("bOrdAmb").hidden = TELEFONO || !ORD_AMB.gruppi; $("bOrdAmb").textContent = `Da ordinare per ambito: ${ORD_AMB.gruppi === 1 ? "1 data" : fmt(ORD_AMB.gruppi) + " date"}`;
   $("soloMod").hidden = !MODIFICATE.size; $("soloMod").textContent = S.soloMod ? "Mostra tutte le schede" : "Mostra solo le modificate";
   $("bSalva").hidden = !puoSalvare(); $("bSalva").disabled = !n || salvando;
   $("bProva").hidden = !(CART && NOMEFILE === ARCHIVIO && !PASSAGGIO_FATTO); $("bProva").disabled = salvando;
@@ -2011,7 +2070,7 @@ async function eseguiSalvataggio(nome, dopo){
   await new Promise(r => setTimeout(r, 30));   // lascia comparire l'avviso prima del lavoro
   try {
     const { out, n } = preparaFile();
-    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI), salvatiS = new Set(SCARTI), salvatiA = new Set(AMBITI_MOD);   // modifiche contenute nel file che si scrive
+    const salvate = new Map(MODIFICATE), salvateE = new Map(ELIMINAZIONI), salvatiS = new Set(SCARTI), salvatiA = new Set(AMBITI_MOD), salvatiR = new Set(RIORDINO), salvatiN = new Set(NOMI_AGG);   // modifiche contenute nel file che si scrive
     const scritte = await scriviImmagini();   // prima le immagini: l'archivio non deve mai indicare un file che non c'è
     const r = await scriviFile(nome, out);
     scritte.forEach(f => IMG_NUOVE.delete(f));
@@ -2019,7 +2078,7 @@ async function eseguiSalvataggio(nome, dopo){
     MODIFICATO_IL = r.file.lastModified; NOMEFILE = nome;
     for (const [id, v] of salvate) if (MODIFICATE.get(id) === v) MODIFICATE.delete(id);
     for (const [id, v] of salvateE) if (ELIMINAZIONI.get(id) === v) ELIMINAZIONI.delete(id);
-    salvatiS.forEach(x => SCARTI.delete(x)); salvatiA.forEach(x => AMBITI_MOD.delete(x));
+    salvatiS.forEach(x => SCARTI.delete(x)); salvatiA.forEach(x => AMBITI_MOD.delete(x)); salvatiR.forEach(x => RIORDINO.delete(x)); salvatiN.forEach(x => NOMI_AGG.delete(x));
     if (!MODIFICATE.size) S.soloMod = false;
     const d = new Date(); ULTIMO = d.toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
     if (dopo) dopo();
@@ -2166,11 +2225,39 @@ function sequenza(d){
    Le date relative non contano; le stagioni contano solo per l'anno. Il punto giusto è quello con meno contrasti, così una scheda fuori posto altrove non
    sposta la proposta; a parità, il più vicino al punto attuale. Se il punto attuale ha già il minimo, non si propone niente. */
 const STAGIONE = /inverno|primavera|estate|autunno/i;
-function puntoGiusto(d, self, attuale, stagione){
-  const k = d.anno, m = stagione ? 0 : d.mese || 0, g = stagione ? 0 : d.giorno || 0;
+/* --- parte del mese o dell'anno (16 novembre 2026, decisione 2.40) ---
+   "Fine dicembre", "Fine anno", "Fine 1978" non hanno un giorno preciso, ma la parola dice dove stanno: per l'ordine valgono
+   come un giorno immaginario. Inizio: prima di tutti i giorni del mese (0,5); metà: dopo il 15 (15,5); fine: dopo tutti (31,5).
+   Parte dell'anno: "Fine anno" e "Fine 1978" dopo tutto dicembre, "Inizio anno" prima di tutto gennaio, "Metà anno" fra giugno
+   e luglio; "Primi mesi", "Ultimi mesi": all'inizio del mese letto. La data registrata non cambia: serve solo al punto giusto.
+   Dal 16 novembre (segnalazione dell'utente su gennaio 1979): il mese scritto da solo ("Gennaio", "Gennaio 1979") va prima dei
+   giorni del mese e l'anno scritto da solo ("1979", "587 AC") prima dei mesi, come nel foglio (2.413 mesi da soli su 2.501 stanno
+   prima dei giorni, 838 anni da soli su 871 prima dei mesi). */
+const MESE_SOLO = /^\s*(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)\s*(?:(?:del\s+)?\d{1,4}\s*(?:a\.?\s?c\.?)?)?\s*$/i;
+const ANNO_SOLO = /^\s*\d{1,3}(?:\.?\d{3})?\s*(?:a\.?\s?c\.?)?\s*$/i;
+const PARTE_RE = [["fine", /\b(fine|ultim[aoie]|seconda metà|seconda quindicina)(?![\p{L}])/u], ["inizio", /\b(inizio|inizi|primi|primissimi|prima settimana|prima decade|prima quindicina|prima metà)(?![\p{L}])/u], ["meta", /(^|[^\p{L}])metà(?![\p{L}])/u]];
+function partePeriodo(ds, mese, giorno, prec){
+  mese = mese || 0;
+  if (giorno) return [mese, giorno];
+  const t = String(ds || "").toLowerCase();
+  if (!t || STAGIONE.test(t) || prec === "relativa" || prec === "futuro") return [mese, 0];
+  let parte = null, pos = Infinity;
+  for (const [p, re] of PARTE_RE){ const m = re.exec(t); if (m && m.index < pos){ pos = m.index; parte = p; } }
+  if (!parte){
+    if (mese && MESE_SOLO.test(t)) return [mese, 0.1];   // il mese da solo: prima dei giorni (e prima di "Inizio mese")
+    if (!mese && prec === "anno" && ANNO_SOLO.test(t)) return [0.5, 0];   // l'anno da solo: prima dei mesi
+    return [mese, 0];
+  }
+  if (/(^|[^\p{L}])mesi(?![\p{L}])/u.test(t)) return [mese || 1, 0.5];
+  if (/(^|[^\p{L}])anno(?![\p{L}])/u.test(t) || (!mese && prec === "anno")) return parte === "fine" ? [12, 31.5] : parte === "inizio" ? [1, 0.5] : [6, 31.5];
+  if (mese) return [mese, parte === "fine" ? 31.5 : parte === "inizio" ? 0.5 : 15.5];
+  return [0, 0];
+}
+function puntoGiusto(d, self, attuale, stagione, scritta){
+  const k = d.anno, [vm, vg] = partePeriodo(scritta, d.mese, d.giorno, d.precisione), m = stagione ? 0 : vm, g = stagione ? 0 : vg;
   // le stagioni contano solo per l'anno: "Inverno" è letto come gennaio ma nel foglio sta spesso a fine anno (21 ottobre 2026)
-  const cmp = i => { if (Y[i] !== k) return Y[i] < k ? -1 : 1; const mi = STAG[i] ? 0 : M[i];
-    return !m || !mi || mi === m && (!g || !D[i]) ? 0 : mi !== m ? (mi < m ? -1 : 1) : D[i] < g ? -1 : D[i] > g ? 1 : 0; };
+  const cmp = i => { if (Y[i] !== k) return Y[i] < k ? -1 : 1; const mi = STAG[i] ? 0 : VM[i], gi = STAG[i] ? 0 : VG[i];
+    return !m || !mi || mi === m && (!g || !gi) ? 0 : mi !== m ? (mi < m ? -1 : 1) : gi < g ? -1 : gi > g ? 1 : 0; };
   const REL = PRECISIONI.indexOf("relativa"), conta = i => i !== self && !Number.isNaN(Y[i]) && PREC[i] !== REL;
   let c = 0;
   for (let i = 0; i < N; i++) if (conta(i) && cmp(i) < 0) c++;
@@ -2189,7 +2276,7 @@ function proposta(d){   // null: niente da proporre; { fermo: true }: già al po
   // "Aprile", "Fine anno": l'anno viene dalla posizione; la proposta resta dentro quell'anno (e la data registrata conserva il suo anno, punto 2.21.2)
   const self = MS.modo === "modifica" ? POS[MS.id] : -1;
   const attuale = MS.modo === "modifica" ? self : (MS.dove === "dopo" ? POS[MS.rif] + 1 : POS[MS.rif]);
-  const t = puntoGiusto(d, self, attuale, STAGIONE.test($("mData").value));
+  const t = puntoGiusto(d, self, attuale, STAGIONE.test($("mData").value), $("mData").value);
   if (t === null || (MS.modo === "modifica" && (t === self || t === self + 1))) return { fermo: true };
   let a = t - 1; if (a === self) a--;
   let b = t; if (b === self) b++;
@@ -2478,25 +2565,175 @@ function applica(){
     return err("La modifica non è stata applicata: " + (e.message || e));
   }
   MODIFICATE.set(id, MS.modo === "nuova" || MODIFICATE.get(id) === "nuova" ? "nuova" : "modificata");
+  RIORDINO.delete(id); NOMI_AGG.delete(id); NOMI_DA = NOMI_DA.filter(x => x.id !== id);   // la maschera ricava già i nomi con la regola nuova
   const modo = MS.modo, daAppunto = !!MS.appunto;
   $("maschera").close(); MS = null; esciPieno("maschera");
   ricostruisci(soloId);
+  const riord = riordinaGruppo(POS[id]);   // dentro la stessa data: Italia, Mondo, Altro… (decisione 2.38)
+  if (riord.spostate) ricostruisci(soloId);
   if (sposta){   // la linea del tempo va al periodo della nuova posizione
     const q = POS[id], z = percorsoData(Y[q], M[q], D[q]);
     while (z.length && !contaIn(z[z.length - 1])) z.pop();
     S.zoom = z; S.limite = 300;
   }
   const rin = rinumerate ? ` (rinumerate ${rinumerate} schede vicine)` : "";
-  mostraScheda(id, modo === "nuova" ? `Scheda nuova inserita${sposta ? " nel punto giusto della sequenza" : ""}${rin}.` : `Modifica applicata${sposta ? ": scheda spostata nel punto giusto della sequenza" : ""}${rin}.`);
+  const amb = riord.mossa ? " Messa al posto del suo ambito fra le schede della stessa data." : "";
+  mostraScheda(id, (modo === "nuova" ? `Scheda nuova inserita${sposta ? " nel punto giusto della sequenza" : ""}${rin}.` : `Modifica applicata${sposta ? ": scheda spostata nel punto giusto della sequenza" : ""}${rin}.`) + amb);
   if (daAppunto){
     const resto = [...APP_PC.values()].filter(a => !statoApp(a.id)).length;
     if (resto) avvisoBreve(`Appunto applicato. ${resto === 1 ? "Ne resta 1" : `Ne restano ${resto}`} da sistemare.`, { testo: "Apri gli appunti", fn: mostraAppunti });
     else avvisoBreve("Appunto applicato: non ne restano altri da sistemare. Ricorda di salvare.");
   }
 }
+/* =====================================================================
+   Ordine per ambito dentro la stessa data (aggiornamento 11, 1° novembre 2026, decisione 2.38)
+   Fra le schede consecutive con la stessa data scritta l'ordine è: Italia, Mondo, Altro (colonna D), Economia, Criminalità
+   Italia, Criminalità mondo. Fra schede dello stesso ambito resta l'ordine di prima; una scheda con più ambiti va al posto
+   del primo di questi. Se nel gruppo almeno un fatto indica un'ora ("alle 17", "ore 9.30", "17:56") il giorno resta com'è:
+   l'ordine segue gli orari (solo per le date con il giorno; per le date di solo mese o anno vale l'ordine per ambito). Il riordino cambia davvero l'ordine nell'archivio (scelta dell'utente): le schede del gruppo si
+   scambiano fra loro i numeri d'ordine, le altre non si toccano (nemmeno quelle nel cestino).
+   ===================================================================== */
+const RANGO_AMB = { it: 0, mo: 1, ri: 2, ec: 3, ci: 4, cm: 5 };
+const ORA_RE = /\b(?:alle\s+(?:ore\s+)?|ore\s+)(?:[01]?\d|2[0-4])(?:[:.,][0-5]\d)?\b|\b(?:[01]?\d|2[0-3]):[0-5]\d\b/i;
+const haOra = t => ORA_RE.test(String(t || ""));
+// l'eccezione vale per i giorni (data con il giorno): nelle date di solo mese o anno un'ora non decide l'ordine
+function conOraNelGiorno([s, e], T){ if (!D[s]) return false; for (let i = s; i < e; i++) if (haOra(T.get(ID[i]))) return true; return false; }
+const normData = s => String(s || "").trim().replace(/\s+/g, " ").toLowerCase();
+let ORD_AMB = { gruppi: 0, schede: 0, conOra: 0 };
+function rangoAmb(i){ let r = 99; for (let k = 0; k < ORD.length; k++) if (AMBM[i] >> k & 1) r = Math.min(r, RANGO_AMB[ORD[k]] ?? 6 + k); return r; }
+// gruppi [s, e) di schede consecutive con la stessa data scritta (e lo stesso anno registrato) da riordinare
+function gruppiDaOrdinare(dataDi, da, a){
+  const fuori = [];
+  let s = da;
+  while (s < a){
+    const k = normData(dataDi(s)), y = Y[s];
+    let e = s + 1;
+    while (e < N && normData(dataDi(e)) === k && Object.is(Y[e], y)) e++;
+    if (e - s > 1){ let ok = true; for (let i = s + 1; i < e && ok; i++) if (rangoAmb(i) < rangoAmb(i - 1)) ok = false; if (!ok) fuori.push([s, e]); }
+    s = e;
+  }
+  return fuori;
+}
+function testiDi(gruppi){
+  const ids = gruppi.flatMap(([s, e]) => Array.from({ length: e - s }, (_, k) => ID[s + k]));
+  const T = new Map();
+  for (let k = 0; k < ids.length; k += 5000) (db.exec(`select id, testo from schede where id in (${ids.slice(k, k + 5000).join(",")})`)[0]?.values || []).forEach(x => T.set(x[0], x[1]));
+  return T;
+}
+function analisiOrdine(){
+  const DS = new Map(db.exec("select id, data_scritta from schede")[0]?.values || []);
+  const gr = gruppiDaOrdinare(i => DS.get(ID[i]), 0, N), T = testiDi(gr);
+  const da = [], conOra = [];
+  for (const g of gr) (conOraNelGiorno(g, T) ? conOra : da).push(g);
+  return { da, conOra };
+}
+function contaOrdineAmbiti(){
+  if (TELEFONO || !db || !N){ ORD_AMB = { gruppi: 0, schede: 0, conOra: 0 }; return; }
+  const { da, conOra } = analisiOrdine();
+  ORD_AMB = { gruppi: da.length, schede: da.reduce((t, [s, e]) => t + e - s, 0), conOra: conOra.length };
+}
+// riordina i gruppi indicati; restituisce gli id delle schede che hanno cambiato posto
+function riordina(gruppi){
+  const mosse = [];
+  db.run("BEGIN");
+  try {
+    for (const [s, e] of gruppi){
+      const pos = Array.from({ length: e - s }, (_, k) => s + k);
+      const nuovo = pos.slice().sort((p, q) => rangoAmb(p) - rangoAmb(q) || p - q);
+      if (nuovo.every((p, k) => p === pos[k])) continue;
+      nuovo.forEach(p => db.run("update schede set ordine = ? where id = ?", [-ID[p], ID[p]]));   // valori provvisori, per l'unicità
+      nuovo.forEach((p, k) => { db.run("update schede set ordine = ? where id = ?", [ORDINE[pos[k]], ID[p]]); if (p !== pos[k]) mosse.push(ID[p]); });
+    }
+    db.run("COMMIT");
+  } catch(e){ try { db.run("ROLLBACK"); } catch(_){} throw e; }
+  mosse.forEach(id => { if (!MODIFICATE.has(id)) RIORDINO.add(id); });
+  return mosse;
+}
+// dopo Applica: solo il gruppo della scheda (se non ha orari)
+function riordinaGruppo(p){
+  if (TELEFONO || p === undefined || p < 0) return { spostate: 0, mossa: false };
+  const id = ID[p], cache = new Map();
+  const dataDi = i => { const x = ID[i]; if (!cache.has(x)) cache.set(x, uno("select data_scritta from schede where id = ?", [x])[0]); return cache.get(x); };
+  const k = normData(dataDi(p));
+  let s = p; while (s > 0 && normData(dataDi(s - 1)) === k && Object.is(Y[s - 1], Y[p])) s--;
+  const gr = gruppiDaOrdinare(dataDi, s, p + 1).filter(([a, b]) => a <= p && p < b);
+  if (!gr.length) return { spostate: 0, mossa: false };
+  const T = testiDi(gr);
+  if (conOraNelGiorno(gr[0], T)) return { spostate: 0, mossa: false };
+  const mosse = riordina(gr);
+  return { spostate: mosse.length, mossa: mosse.includes(id) };
+}
+$("bOrdAmb").onclick = () => {
+  if (occupato()) return;
+  const { da, conOra } = analisiOrdine();
+  if (!da.length){ contaOrdineAmbiti(); aggiornaStatoMod(); return; }
+  const sc = da.reduce((t, [s, e]) => t + e - s, 0);
+  if (!confirm(`Riordino ${fmt(da.length)} date (${fmt(sc)} schede): fra le schede con la stessa data l'ordine diventa Italia, Mondo, ${AMB.ri || "Altro"}, Economia, Criminalità Italia, Criminalità mondo.` +
+    (conOra.length ? ` Le ${fmt(conOra.length)} date con l'ora nei fatti restano come sono.` : "") + ` La modifica si scrive nel file con Salva (la versione di prima resta nella cartella ${CARTELLA_COPIE}). Continuare?`)) return;
+  const soloId = S.solo !== null ? ID[S.solo] : null;
+  let mosse;
+  try { mosse = riordina(da); } catch(e){ avvisoBreve("Riordino non riuscito: " + (e.message || e)); return; }
+  ricostruisci(soloId); tutto();
+  avvisoBreve(`Riordinate ${fmt(da.length)} date: ${fmt(mosse.length)} schede hanno cambiato posto. Ricorda di salvare.`);
+};
+
+/* =====================================================================
+   Nomi dopo l'apostrofo (aggiornamento 12, 1° novembre 2026, decisione 2.39)
+   La regola dei nomi scartava una parola in maiuscolo subito dopo un apostrofo: "dell'ETA", "l'ONU", "all'FBI" non entravano
+   nell'indice. Dal 1° novembre il nome si riconosce se l'apostrofo segue una minuscola (ricava_testo.js e converti.py).
+   Le schede inserite o modificate dalla maschera usano già la regola nuova; per le altre il pulsante "Nomi da aggiornare"
+   ricalcola una volta i nomi di tutte le schede (fatto, data e ordine non cambiano). Fatto e salvato, il metadato
+   regola_nomi = 2 evita di ripetere il controllo a ogni apertura.
+   ===================================================================== */
+let NOMI_DA = [];
+function analisiNomi(){
+  const att = new Map();
+  (db.exec("select sn.scheda_id, n.nome from schede_nomi sn join nomi n on n.id = sn.nome_id")[0]?.values || []).forEach(([s, n]) => { if (!att.has(s)) att.set(s, new Set()); att.get(s).add(n); });
+  const out = [];
+  for (const [id, testo, fid] of db.exec("select id, testo, fascicolo_id from schede")[0]?.values || []){
+    const nuovi = RicavaTesto.nomi(testo || "", !!fid), vecchi = att.get(id) || new Set();
+    if (nuovi.length !== vecchi.size || nuovi.some(x => !vecchi.has(x))) out.push({ id, nuovi, vecchi: [...vecchi] });
+  }
+  return out;
+}
+function contaNomiDaAggiornare(){
+  NOMI_DA = [];
+  if (TELEFONO || !db) return;
+  if ((uno("select valore from metadati where chiave = 'regola_nomi'") || [])[0] === "2") return;
+  NOMI_DA = analisiNomi();
+}
+$("bNomi").onclick = () => {
+  if (occupato()) return;
+  const da = analisiNomi();
+  if (!da.length){ NOMI_DA = []; aggiornaStatoMod(); return; }
+  const prima = new Set((db.exec("select nome from nomi")[0]?.values || []).map(x => x[0]));
+  const nuoviNomi = new Set(); da.forEach(x => x.nuovi.forEach(n => { if (!prima.has(n)) nuoviNomi.add(n); }));
+  if (!confirm(`Aggiorno i nomi di ${fmt(da.length)} schede con la regola nuova (nomi dopo l'apostrofo: dell'ETA, l'ONU, all'FBI…). Entrano nell'indice ${fmt(nuoviNomi.size)} nomi che prima non c'erano. Fatto, data e ordine delle schede non cambiano. La modifica si scrive nel file con Salva (la versione di prima resta nella cartella ${CARTELLA_COPIE}). Continuare?`)) return;
+  const soloId = S.solo !== null ? ID[S.solo] : null;
+  db.run("BEGIN");
+  try {
+    for (const { id, nuovi } of da){
+      db.run("delete from schede_nomi where scheda_id = ?", [id]);
+      for (const n of nuovi){
+        let r = uno("select id from nomi where nome = ?", [n]);
+        if (!r){ db.run("insert into nomi(nome) values (?)", [n]); r = uno("select last_insert_rowid()"); }
+        db.run("insert into schede_nomi values (?, ?)", [id, r[0]]);
+      }
+    }
+    db.run("delete from nomi where not exists (select 1 from schede_nomi sn where sn.nome_id = nomi.id)");
+    db.run("insert or replace into metadati values ('regola_nomi', '2')");
+    db.run("COMMIT");
+  } catch(e){ try { db.run("ROLLBACK"); } catch(_){} avvisoBreve("Aggiornamento dei nomi non riuscito: " + (e.message || e)); return; }
+  da.forEach(x => { if (!MODIFICATE.has(x.id)) NOMI_AGG.add(x.id); });
+  NOMI_DA = [];
+  ricostruisci(soloId); tutto();
+  avvisoBreve(`Nomi aggiornati in ${fmt(da.length)} schede; ${fmt(nuoviNomi.size)} nomi nuovi nell'indice. Ricorda di salvare.`);
+};
+
 /* Dopo ogni modifica: tabelle in memoria, ricerca attiva, scheda scelta, barra. */
 function ricostruisci(soloId){
   costruisciArray();
+  contaOrdineAmbiti();
   if (S.q){ try { S.ric = cerca(S.q); } catch(_){ S.ric = null; } }
   if (soloId !== null && soloId !== undefined) S.solo = POS[soloId] >= 0 ? POS[soloId] : null;
   aggiornaStatoMod();
@@ -2588,19 +2825,41 @@ const serialeExcel = v => (Date.UTC(v.y, v.m - 1, v.d) - Date.UTC(1899, 11, 30))
 function costruisciFoglio(){
   const intest = Object.fromEntries(db.exec("select codice, intestazione_excel from ambiti")[0].values);
   const r = db.exec(`select s.id, s.data_scritta, s.data_metodo, s.anno, s.riga_origine, s.colonna_origine, s.testo, s.approfondimento, s.collegamento,
-      (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id)
+      (select group_concat(ambito) from schede_ambiti a where a.scheda_id = s.id), s.giorno
     from schede s where not exists (select 1 from cestino c where c.scheda_id = s.id) order by s.ordine`)[0]?.values || [];
-  // 1. righe: schede consecutive con la stessa data e la stessa riga d'origine (o inserite nel programma), una per colonna
-  const righe = []; let cur = null, piuAmbiti = 0, esclusi = 0;
-  for (const [id, ds, met, anno, riga, colo, testo, appr, coll, amb] of r){
+  // 1. righe. Schede consecutive con la stessa data: se sono nell'ordine delle colonne (ordine per ambito, decisione 2.38)
+  //    si mettono nel minor numero di righe, la prima di ogni colonna nella prima riga, la seconda nella seconda…, come nel
+  //    foglio originale (riconvertendo, il pulsante dell'ordine per ambito ricostruisce la sequenza); altrimenti, e sempre nei
+  //    giorni con l'ora, una riga nuova a ogni cambio di riga d'origine o di colonna già occupata: la sequenza resta esatta.
+  const righe = []; let piuAmbiti = 0, esclusi = 0;
+  const voci = [];
+  for (const [id, ds, met, anno, riga, colo, testo, appr, coll, amb, giorno] of r){
     const ambiti = String(amb || "").split(",").filter(a => COLONNA[a]);   // gli ambiti aggiunti non hanno una colonna (decisione 2.32)
     if (!ambiti.length){ esclusi++; continue; }
     if (ambiti.length > 1) piuAmbiti++;
     const col = colo && ambiti.some(a => COLONNA[a] === colo) ? colo : COLONNA[Object.keys(COLONNA).find(a => ambiti.includes(a))];
-    const v = valoreData(ds, met), k = chiaveData(v);
-    if (!(cur && cur.k === k && !cur.celle[col] && (cur.riga === null || riga === null || cur.riga === riga))){ cur = { k, v, riga: riga ?? null, anno, celle: {} }; righe.push(cur); }
-    if (cur.riga === null) cur.riga = riga ?? null;
-    cur.celle[col] = { testo, appr, coll };
+    const v = valoreData(ds, met);
+    voci.push({ k: chiaveData(v), v, anno, riga: riga ?? null, col, ora: !!giorno && haOra(testo), cella: { testo, appr, coll } });
+  }
+  for (let s = 0; s < voci.length;){
+    let e = s + 1; while (e < voci.length && voci[e].k === voci[s].k) e++;
+    const run = voci.slice(s, e), inOrdine = !run.some(x => x.ora) && run.every((x, j) => !j || x.col >= run[j - 1].col);
+    if (inOrdine){
+      const mie = [];
+      for (const x of run){
+        let rg = mie.find(y => !y.celle[x.col]);
+        if (!rg){ rg = { k: x.k, v: x.v, riga: x.riga, anno: x.anno, celle: {} }; mie.push(rg); righe.push(rg); }
+        rg.celle[x.col] = x.cella;
+      }
+    } else {
+      let cur = null;
+      for (const x of run){
+        if (!(cur && !cur.celle[x.col] && (cur.riga === null || x.riga === null || cur.riga === x.riga))){ cur = { k: x.k, v: x.v, riga: x.riga, anno: x.anno, celle: {} }; righe.push(cur); }
+        if (cur.riga === null) cur.riga = x.riga;
+        cur.celle[x.col] = x.cella;
+      }
+    }
+    s = e;
   }
   // 2. lettura delle date come la farebbe la conversione; riga con il solo anno dove l'anno ereditato sarebbe diverso
   const lim = x => x !== null && Math.abs(x) > 9e18 ? null : x;
@@ -2948,6 +3207,91 @@ $("bFine").onclick = () => {
   const el = document.querySelector(`article[data-id="${ID[k]}"]`);
   if (el){ if ($("elenco").classList.contains("compatta")) el.classList.add("aperta"); el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 2500); }
   notaVai(`Fine del presente: l'ultima scheda prima del futuro${passa(k) ? "" : " (esclusa dai filtri attivi)"}.`);
+};
+
+/* =====================================================================
+   Date cliccabili nel fatto e nell'approfondimento (aggiornamento 17, 19 novembre 2026, decisione 2.43)
+   «20 luglio 2025», «1° maggio 1945», «20 luglio del 2025», «15 marzo 44 a.C.» e «20/07/2025» diventano collegamenti: il clic
+   porta a quel giorno nella linea del tempo (con tutti i filtri tolti), mette in evidenza la scheda di quel giorno che ha più
+   nomi in comune con la scheda di partenza (i nomi rari contano di più) e mostra una banda per tornare indietro. Le date senza
+   anno («il 20 luglio») non si collegano. Un anno di una o tre cifre senza a.C. si collega solo se è vicino all'anno della scheda
+   (entro 500 anni): «26 maggio 189» in una scheda del 1993 è un refuso, non l'anno 189.
+   ===================================================================== */
+const AC_RE = "\\s*a\\.?\\s?c\\.?(?![\\p{L}])";
+const DATA_LINK = new RegExp(`(?<![\\p{L}\\p{N}/.,])(\\d{1,2})(?:°|º)?\\s+(${MESI.join("|")})\\s+(?:del\\s+)?(\\d{3,4}|\\d{1,4}(?=${AC_RE}))(${AC_RE})?(?!\\s*(?:mila|milion|miliard)|[.,]?\\d)` +
+  `|(?<![\\p{N}/])(\\d{1,2})\\/(\\d{1,2})\\/(\\d{4})(${AC_RE})?(?![\\p{N}/])`, "giu");
+function dataNelTesto(m, yScheda){   // { y, m, d } oppure null
+  const ac = !!(m[4] || m[8]), g = +(m[1] || m[5]), me = m[2] ? MESI.indexOf(m[2].toLowerCase()) + 1 : +m[6], a = +(m[3] || m[7]);
+  const y = ac ? -a : a;
+  if (!(me >= 1 && me <= 12) || !(g >= 1 && g <= giorniDelMese(me, y))) return null;
+  if (!ac && a < 1000 && !(Math.abs(y - yScheda) <= 500)) return null;
+  return { y, m: me, d: g };
+}
+function collegaDate(root){
+  root.querySelectorAll("article.scheda").forEach(art => {
+    const p = POS[+art.dataset.id]; if (!(p >= 0)) return;
+    const w = document.createTreeWalker(art, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest(".testo") && !n.parentElement.closest("button") ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
+    const nodi = []; while (w.nextNode()) nodi.push(w.currentNode);
+    for (const n of nodi){
+      const v = n.nodeValue; DATA_LINK.lastIndex = 0; if (!DATA_LINK.test(v)) continue; DATA_LINK.lastIndex = 0;
+      const f = document.createDocumentFragment(); let k = 0, m, fatte = 0;
+      while ((m = DATA_LINK.exec(v))){
+        const x = dataNelTesto(m, Y[p]); if (!x) continue;
+        f.append(v.slice(k, m.index));
+        const b = document.createElement("button"); b.type = "button"; b.className = "data-link"; b.textContent = m[0];
+        b.dataset.y = x.y; b.dataset.m = x.m; b.dataset.d = x.d; b.title = "Vai alle schede di questo giorno";
+        f.append(b); k = m.index + m[0].length; fatte++;
+      }
+      if (!fatte) continue;
+      f.append(v.slice(k)); n.replaceWith(f);
+    }
+  });
+}
+let RITORNO = null;   // { stato da ripristinare, scheda di partenza, scheda messa in evidenza }
+function sceltaCollegata(da, y, m, d){   // fra le schede del giorno, quella con più nomi in comune con la scheda di partenza
+  const p = POS[da]; if (!(p >= 0)) return null;
+  const miei = new Set(NIDS.subarray(NOFF[p], NOFF[p + 1]));
+  let best = null, punti = 0;
+  for (let i = 0; i < N; i++){
+    if (Y[i] !== y || M[i] !== m || D[i] !== d || ID[i] === da) continue;
+    let s = FAS[i] && FAS[i] === FAS[p] ? 1 : 0;
+    for (let k = NOFF[i]; k < NOFF[i + 1]; k++) if (miei.has(NIDS[k])) s += 1 / Math.max(1, Math.log2(1 + (NCONT[NIDS[k]] || 1)));
+    if (s > punti){ punti = s; best = i; }
+  }
+  return best;
+}
+function seguiData(y, m, d, da, scritta){
+  if (!N) return;
+  const stato = RITORNO ? RITORNO.stato : { zoom: [...S.zoom], q: S.q, amb: S.amb, sotto: S.sotto, fil: S.fil, nome: S.nome, solo: S.solo !== null ? ID[S.solo] : null,
+    soloMod: S.soloMod, soloRif: S.soloRif, soloVer: S.soloVer, riga: S.riga, limite: S.limite, y: window.scrollY };
+  const partenza = RITORNO ? RITORNO.da : da;
+  S.q = ""; S.ric = null; $("q").value = ""; S.solo = null; S.riga = 0; S.soloRif = false; S.soloMod = false; S.soloVer = false;
+  S.sotto = ""; S.fil = 0; S.nome = 0; S.amb = (1 << ORD.length) - 1; S.limite = 300;
+  const z = percorsoData(y, m, d), voluto = z.length;
+  while (z.length && !contaIn(z[z.length - 1])) z.pop();
+  S.zoom = z;
+  const t = sceltaCollegata(da, y, m, d);
+  RITORNO = { stato, da: partenza, evid: t !== null ? ID[t] : null };
+  const quando = `${d} ${MESI[m - 1]} ${formatoAnno(y)}`;
+  const comune = t !== null ? [...NIDS.subarray(NOFF[t], NOFF[t + 1])].filter(n => [...NIDS.subarray(NOFF[POS[da]], NOFF[POS[da] + 1])].includes(n)).map(n => NOMI[n]).slice(0, 3) : [];
+  $("ritTesto").textContent = !z.length ? `Nessuna scheda per il ${quando}.` : z.length < voluto ? `Nessuna scheda per il ${quando}: ecco ${descriviLivello(z[z.length - 1])}.`
+    : `${quando[0].toUpperCase() + quando.slice(1)}: ${sch(contaIn(cima()))}.` + (t !== null ? ` In evidenza la scheda collegata${comune.length ? ` (${comune.join(", ")})` : ""}.` : " Nessuna ha nomi in comune con la scheda di partenza.");
+  $("bandaRitorno").hidden = false;
+  aggiornaStatoMod(); tutto(); notaVai("");
+  const el = t !== null ? document.querySelector(`article[data-id="${ID[t]}"]`) : null;
+  if (el){ if ($("elenco").classList.contains("compatta")) el.classList.add("aperta"); el.scrollIntoView({ block: "center" }); }
+  else document.querySelector(".densita").scrollIntoView({ block: "start" });
+}
+function chiudiRitorno(){ RITORNO = null; $("bandaRitorno").hidden = true; document.querySelectorAll("article.collegata").forEach(a => a.classList.remove("collegata")); }
+$("ritChiudi").onclick = chiudiRitorno;
+$("ritTorna").onclick = () => {
+  if (!RITORNO) return;
+  const v = RITORNO.stato, da = RITORNO.da; chiudiRitorno();
+  Object.assign(S, { zoom: v.zoom, amb: v.amb, sotto: v.sotto, fil: v.fil, nome: v.nome, soloMod: v.soloMod, soloRif: v.soloRif, soloVer: v.soloVer, riga: v.riga, limite: v.limite });
+  S.q = v.q; $("q").value = v.q; S.ric = v.q && indicePronto ? cerca(v.q) : null;
+  S.solo = v.solo !== null && POS[v.solo] >= 0 ? POS[v.solo] : null;
+  aggiornaStatoMod();
+  if (POS[da] >= 0) mostraScheda(da, "Tornato alla scheda di partenza."); else { tutto(); window.scrollTo({ top: v.y }); }
 };
 
 /* Ridisegna e porta in vista la scheda; se i filtri attivi la escludono, lo dice. */
@@ -3598,6 +3942,118 @@ function grassetto(id){
 }
 document.querySelectorAll("button[data-grassetto]").forEach(b => { b.addEventListener("mousedown", ev => ev.preventDefault()); b.onclick = () => grassetto(b.dataset.grassetto); });
 ["mAppr", "aAppr"].forEach(id => $(id).addEventListener("keydown", ev => { if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "b"){ ev.preventDefault(); grassetto(id); } }));
+/* =====================================================================
+   Copia su chiavetta (aggiornamento 14, 16 novembre 2026, decisione 2.41)
+   L'archivio e le immagini si copiano su una chiavetta USB o un disco esterno, nella cartella «Cronologia (copia)»: la stessa
+   struttura della cartella dell'archivio (cronologia.sqlite e Immagini), quindi si apre con il programma come quella di sempre.
+   Si copia il file salvato (se ci sono modifiche in sospeso, prima si salva); la copia precedente sulla chiavetta va in
+   «Precedenti» (ultime 5); il file copiato si rilegge e si confronta con l'originale (impronta SHA-256). Le immagini si
+   aggiungono (quelle già presenti con lo stesso peso non si riscrivono, nessuna si cancella). La chiavetta scelta e la data
+   dell'ultima copia restano nella memoria di Chrome di questo computer: oltre 30 giorni il pulsante diventa rosso.
+   ===================================================================== */
+const CARTELLA_CHIAVETTA = "Cronologia (copia)", PRECEDENTI = "Precedenti", PRECEDENTI_DA_TENERE = 5, GIORNI_AVVISO_CHIAVETTA = 30;
+let KH = null, KINFO = null, copiando = false;
+async function caricaChiavetta(){
+  KH = await prendi("chiavetta").catch(() => null) || null;
+  KINFO = await prendi("chiavetta-ultima").catch(() => null) || null;
+  aggiornaBottoneChiavetta();
+}
+const giorniDa = t => Math.floor((Date.now() - t) / 86400000);
+function aggiornaBottoneChiavetta(){
+  const b = $("bChiavetta"); if (!b) return;
+  b.hidden = TELEFONO;
+  const g = KINFO ? giorniDa(KINFO.quando) : null;
+  b.textContent = g === null ? "Copia su chiavetta: mai fatta" : g === 0 ? "Copia su chiavetta (ultima: oggi)" : `Copia su chiavetta (ultima: ${g === 1 ? "ieri" : g + " giorni fa"})`;
+  b.classList.toggle("vecchia", g === null || g > GIORNI_AVVISO_CHIAVETTA);
+  b.title = g !== null && g > GIORNI_AVVISO_CHIAVETTA ? `L'ultima copia su chiavetta ha ${g} giorni: conviene rifarla.` : "";
+}
+function disegnaChiavetta(){
+  const mb = n => (n / 1048576).toFixed(1).replace(".", ",") + " MB";
+  $("kStato").innerHTML = (KH ? `Chiavetta (o cartella) scelta: <b>${esc(KH.name)}</b>.` : `Nessuna chiavetta scelta: inseriscila e premi «Scegli la chiavetta».`) + "<br>" +
+    (KINFO ? `Ultima copia: <b>${esc(dataOra(KINFO.quando))}</b> su «${esc(KINFO.cartella)}», ${sch(KINFO.schede)}, archivio di ${mb(KINFO.byte)}, ${KINFO.immagini === 1 ? "1 immagine" : fmt(KINFO.immagini) + " immagini"}.` : "Nessuna copia su chiavetta fatta finora da questo computer.")
+    + `<br><span class="tenue" style="color:var(--tenue)">Per usare la copia su un altro computer: copia la cartella «${CARTELLA_CHIAVETTA}» nei Documenti, rinominala «Cronologia» e aprila con «Scegli la cartella dell'archivio».</span>`;
+  $("kCopia").disabled = !KH || copiando; $("kScegli").disabled = copiando;
+  $("kScegli").textContent = KH ? "Scegli un'altra chiavetta" : "Scegli la chiavetta";
+}
+$("bChiavetta").onclick = () => { if (occupato()) return; $("kErrore").textContent = ""; $("kNota").textContent = ""; disegnaChiavetta(); $("dChiavetta").showModal(); };
+$("kChiudi").onclick = () => { if (!copiando) $("dChiavetta").close(); };
+$("dChiavetta").addEventListener("cancel", ev => { if (copiando) ev.preventDefault(); });
+$("kScegli").onclick = async () => {
+  $("kErrore").textContent = "";
+  let h;
+  try { h = await window.showDirectoryPicker({ id: "chiavetta", mode: "readwrite" }); } catch(e){ if (e.name !== "AbortError") $("kErrore").textContent = "Scelta non riuscita: " + (e.message || e); return; }
+  if (CART && (await h.isSameEntry(CART).catch(() => false))){ $("kErrore").textContent = "Questa è la cartella dell'archivio: scegli la chiavetta (o una cartella su di essa)."; return; }
+  KH = h; await metti("chiavetta", h).catch(() => {});
+  disegnaChiavetta(); $("kNota").textContent = `Scelta «${h.name}». Ora premi «Fai la copia».`;
+};
+async function copiaFile(dir, nome, sorgente){   // scrive e restituisce il file scritto; se non riesce, un file nuovo lasciato a metà si toglie
+  const esisteva = await dir.getFileHandle(nome).then(() => true, () => false);
+  const fh = await dir.getFileHandle(nome, { create: true });
+  const w = await fh.createWritable();
+  try { await w.write(sorgente); await w.close(); }
+  catch(e){ await w.abort().catch(() => {}); if (!esisteva) await dir.removeEntry(nome).catch(() => {}); throw e; }
+  return fh.getFile();
+}
+async function eseguiCopiaChiavetta(){
+  if (copiando || !KH) return;
+  $("kErrore").textContent = ""; $("kNota").textContent = "";
+  if (!puoSalvare()){ $("kErrore").textContent = "L'archivio è stato aperto scegliendo il file: per fare la copia aprilo dalla sua cartella."; return; }
+  if (daSalvare()){
+    if (!confirm("Ci sono modifiche non ancora salvate. Le salvo prima di fare la copia? (Annulla: si copia l'ultima versione salvata.)")){ $("kNota").textContent = "Si copia l'ultima versione salvata, senza le modifiche in sospeso."; }
+    else { await salva(); if (daSalvare()){ $("kErrore").textContent = "Il salvataggio non è riuscito: copia non fatta."; return; } }
+  }
+  copiando = true; disegnaChiavetta(); $("kNota").textContent = "Copia in corso…";
+  let fase = "permesso di scrittura";
+  try {
+    let p = await KH.queryPermission({ mode: "readwrite" });
+    if (p !== "granted") p = await KH.requestPermission({ mode: "readwrite" });
+    if (p !== "granted") throw new Error("Chrome non ha concesso il permesso di scrivere sulla chiavetta: premi di nuovo e scegli Consenti.");
+    let dest;
+    try { dest = await KH.getDirectoryHandle(CARTELLA_CHIAVETTA, { create: true }); }
+    catch(e){ throw new Error(`La chiavetta «${KH.name}» non risponde (${e.name === "NotFoundError" ? "non è inserita o è cambiata" : e.message}): inseriscila e riprova, oppure sceglila di nuovo.`); }
+    // 1. archivio: la versione precedente sulla chiavetta va in Precedenti
+    fase = "lettura dell'archivio";
+    const sorgente = await (await CART.getFileHandle(NOMEFILE)).getFile();
+    let vecchio = null; try { vecchio = await (await dest.getFileHandle(ARCHIVIO)).getFile(); } catch(e){}
+    if (vecchio){
+      fase = "spostamento della copia precedente in " + PRECEDENTI;
+      const prec = await dest.getDirectoryHandle(PRECEDENTI, { create: true });
+      const d = new Date(vecchio.lastModified), z = x => String(x).padStart(2, "0");
+      let nome = `cronologia ${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())} ${z(d.getHours())}.${z(d.getMinutes())}.${z(d.getSeconds())}.sqlite`;
+      for (let k = 2; await prec.getFileHandle(nome).then(() => true, () => false); k++) nome = nome.replace(/( \(\d+\))?\.sqlite$/, ` (${k}).sqlite`);
+      const c = await copiaFile(prec, nome, vecchio);
+      if (c.size !== vecchio.size) throw new Error("La copia precedente sulla chiavetta non si è spostata per intero: copia annullata, la chiavetta è come prima.");
+      const el = []; for await (const [n, h] of prec.entries()) if (h.kind === "file" && n.endsWith(".sqlite")) el.push([n, (await h.getFile()).lastModified]);
+      el.sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
+      for (const [n] of el.slice(0, Math.max(0, el.length - PRECEDENTI_DA_TENERE))) await prec.removeEntry(n);
+    }
+    fase = "scrittura dell'archivio sulla chiavetta";
+    const scritto = await copiaFile(dest, ARCHIVIO, sorgente);
+    fase = "verifica della copia";
+    const [a, b] = [await impronta(await sorgente.arrayBuffer()), await impronta(await scritto.arrayBuffer())];
+    if (scritto.size !== sorgente.size || a !== b) throw new Error("Il file copiato sulla chiavetta non coincide con l'archivio: rifai la copia (la versione precedente è in Precedenti).");
+    // 2. immagini (con la sottocartella Eliminate, che le copie in Precedenti possono usare): si aggiungono quelle mancanti o cambiate
+    fase = "copia delle immagini";
+    let tot = 0, nuove = 0, src = null;
+    try { src = await CART.getDirectoryHandle(CARTELLA_IMMAGINI); } catch(e){}
+    const copiaCartella = async (da, a) => {
+      for await (const [n, h] of da.entries()){
+        if (h.kind === "directory"){ await copiaCartella(h, await a.getDirectoryHandle(n, { create: true })); continue; }
+        tot++;
+        const f = await h.getFile();
+        let c = null; try { c = await (await a.getFileHandle(n)).getFile(); } catch(e){}
+        if (!c || c.size !== f.size){ const w = await copiaFile(a, n, f); if (w.size !== f.size) throw new Error(`Immagine ${n} non copiata per intero.`); nuove++; }
+      }
+    };
+    if (src) await copiaCartella(src, await dest.getDirectoryHandle(CARTELLA_IMMAGINI, { create: true }));
+    KINFO = { quando: Date.now(), schede: N, byte: sorgente.size, immagini: tot, cartella: KH.name };
+    await metti("chiavetta-ultima", KINFO).catch(() => {});
+    $("kNota").textContent = `Copia fatta su «${KH.name}», cartella «${CARTELLA_CHIAVETTA}»: archivio verificato (identico all'originale)${tot ? `, ${tot === 1 ? "1 immagine" : fmt(tot) + " immagini"} (${nuove === 1 ? "1 nuova" : fmt(nuove) + " nuove"})` : ""}.${vecchio ? ` La copia precedente è in ${PRECEDENTI}.` : ""} Ora puoi togliere la chiavetta.`;
+  } catch(e){
+    $("kNota").textContent = ""; $("kErrore").textContent = `Copia non riuscita (${fase}): ` + (e.message || e) + (/non risponde|permesso|non coincide|annullata/.test(e.message || "") ? "" : " Riprova: la copia già sulla chiavetta non è stata toccata.");
+  } finally { copiando = false; disegnaChiavetta(); aggiornaBottoneChiavetta(); }
+}
+$("kCopia").onclick = eseguiCopiaChiavetta;
 </script>
 </body>
 </html>
