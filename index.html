@@ -179,6 +179,14 @@ button.nome:hover{color:var(--mo);border-bottom-color:var(--mo)}
 .rif.confermato{color:var(--inchiostro)}
 #bandaScelta{position:sticky;top:0;z-index:5;margin:0 0 12px;padding:10px 14px;background:var(--inchiostro);color:var(--carta);border-radius:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px}
 #bandaScelta button{background:none;border:1px solid currentColor;color:inherit;border-radius:4px;padding:3px 10px}
+.fasc-riga{display:flex;gap:10px;align-items:center}
+.fasc-riga input{flex:1}
+.fasc-riga button{white-space:nowrap}
+.fasc-nota{margin-top:6px;font-size:13px;line-height:1.5;color:var(--tenue)}
+.fasc-nota:empty{display:none}
+.fasc-nota b{color:var(--inchiostro)}
+.fasc-nota .avv{color:var(--ec)}
+.fasc-nota button{background:none;border:0;padding:0;color:var(--mo);text-decoration:underline;font-size:13px}
 button.data-link{background:none;border:0;padding:0;font:inherit;color:var(--mo);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px;cursor:pointer}
 button.data-link:hover{text-decoration-thickness:2px}
 #bandaRitorno{position:sticky;top:var(--alto-fissa,0px);z-index:5;margin:0 0 12px;padding:8px 12px;background:var(--carta);border:1px solid var(--riga);border-left:4px solid var(--mo);border-radius:6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13.5px}
@@ -365,7 +373,7 @@ body.telefono #bChiavetta{display:none!important}
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento (16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo (17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -476,6 +484,12 @@ body.telefono #bChiavetta{display:none!important}
         <div class="ricavati" id="mRicavati"></div>
       </div>
       <div class="campo">
+        <label for="mFasc">Fascicolo <span class="facolt">(scrivi parte del nome e scegli; vuoto: nessun fascicolo)</span></label>
+        <div class="fasc-riga"><input id="mFasc" type="text" maxlength="100" autocomplete="off" spellcheck="false" placeholder="es. Guerra in Iran"><button type="button" class="azzera" data-nofasc="mFasc">Nessun fascicolo</button></div>
+        <div class="sugg-nomi" id="mFascSugg" hidden></div>
+        <div class="fasc-nota" id="mFascNota"></div>
+      </div>
+      <div class="campo">
         <div class="etichetta-riga"><label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="mAppr" title="Grassetto: seleziona le parole e premi (o Ctrl+B)"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="mAppr">A tutto schermo</button><span class="conta" id="mApprConta"></span></div>
         <textarea id="mAppr" rows="6" lang="it"></textarea>
         <div class="sugg-nomi" id="mApprSugg" hidden></div>
@@ -541,6 +555,9 @@ body.telefono #bChiavetta{display:none!important}
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
       <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
+      <div class="campo"><label for="aFasc">Fascicolo <span class="facolt">(facoltativo)</span></label>
+        <div class="fasc-riga"><input id="aFasc" type="text" maxlength="100" autocomplete="off" spellcheck="false" placeholder="es. Guerra in Iran"><button type="button" class="azzera" data-nofasc="aFasc">Nessuno</button></div>
+        <div class="sugg-nomi" id="aFascSugg" hidden></div><div class="fasc-nota" id="aFascNota"></div></div>
       <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="aAppr" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><textarea id="aAppr" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
       <div class="campo"><label class="spunta" style="margin-top:0;font-weight:600"><input type="checkbox" id="aVer"> Da verificare</label><input id="aVerNota" type="text" maxlength="300" autocomplete="off" placeholder="Cosa c'è da verificare (facoltativo)" hidden style="margin-top:6px"></div>
       <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
@@ -1378,7 +1395,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili (aggiornamento 17 del 19 novembre 2026).";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti (aggiornamento 18 del 20 novembre 2026).";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -2353,28 +2370,79 @@ function fascicoloDi(testo){
   if (!k) return {};
   const f = uno("select id, nome from fascicoli where chiave = ?", [k]);
   if (f) return { p, k, id: f[0], nome: f[1] };
-  return { p, k, nome: p, nuovo: true };   // titolo nuovo: il fascicolo si apre solo se l'utente spunta la casella (decisione dell'8 ottobre 2026)
+  return { p, k, nome: p, nuovo: true };   // titolo nuovo: diventa fascicolo solo se l'utente lo sceglie nella casella
 }
-const apriFascicolo = () => !!(MS && MS.fasc && MS.fasc.nuovo && MS.apriFasc.k === MS.fasc.k && MS.apriFasc.si);
+/* --- casella del fascicolo (aggiornamento 18, 20 novembre 2026, decisione 2.44) ---
+   Decide sempre la casella. Il titolo scritto nel fatto (prima dei due punti) la riempie solo quando lo si scrive o lo si
+   cambia, e solo se è un fascicolo esistente; correggere il resto del testo non la tocca. Nella casella si può scegliere un
+   fascicolo esistente o scriverne uno nuovo (creato con Applica, dopo una conferma). Vale anche negli appunti del telefono. */
+function fascicoloScelto(v){   // {} vuoto; { id, nome } esistente; { nuovo, nome, k } nuovo; { errore }
+  const nome = String(v || "").replace(/\s+/g, " ").trim();
+  if (!nome) return {};
+  if (nome.length > 100) return { errore: "Il nome del fascicolo è troppo lungo (al massimo 100 caratteri)." };
+  const k = RicavaTesto.chiave(nome);
+  if (!k) return { errore: "Il nome del fascicolo deve contenere lettere o cifre." };
+  const f = uno("select id, nome from fascicoli where chiave = ?", [k]);
+  return f ? { id: f[0], nome: f[1], k } : { nuovo: true, nome, k };
+}
+function titoloInCasella(stato, testo, campo){   // il titolo scritto o cambiato riempie la casella, se è un fascicolo esistente
+  const f = fascicoloDi(testo), k = f.k || null;
+  if (k !== stato.titoloK){ stato.titoloK = k; if (f.id) $(campo).value = f.nome; }
+  return f;
+}
+function notaFascicolo(campo, f){   // f: fascicolo del titolo nel testo
+  const s = fascicoloScelto($(campo).value), box = $(campo + "Nota");
+  let h = "";
+  if (s.errore) h = `<span class="avv">${esc(s.errore)}</span>`;
+  else if (s.id) h = `Fascicolo <b>${esc(s.nome)}</b> (esistente, ${sch(FCONT[s.id] || 0)}).`;
+  else if (s.nuovo) h = `<span class="avv">Fascicolo nuovo «${esc(s.nome)}»: ${TELEFONO ? "sarà creato quando applichi l'appunto sul computer" : "sarà creato con Applica, dopo una conferma"}.</span>`;
+  else h = "Nessun fascicolo.";
+  if (f.k && f.k !== s.k){
+    if (f.id) h += ` <span class="avv">Il titolo nel fatto indica il fascicolo «${esc(f.nome)}»: vale la casella.</span> <button type="button" data-usafasc="${esc(f.nome)}">Usa «${esc(f.nome)}»</button>`;
+    else h += ` Il titolo «${esc(f.p)}» non è un fascicolo: <button type="button" data-usafasc="${esc(f.p)}">aprilo come fascicolo nuovo</button>`;
+  }
+  box.innerHTML = h;
+  return s;
+}
+function suggFascicoli(campo){
+  const el = $(campo), box = $(campo + "Sugg"), q = senzaAccenti(el.value.trim()).toLowerCase();
+  if (q.length < 2 || document.activeElement !== el){ box.hidden = true; return; }
+  const v = [];
+  for (let id = 1; id < FNOME.length; id++){ const n = FNOME[id]; if (n && senzaAccenti(n).toLowerCase().includes(q) && n !== el.value.trim()) v.push([n, FCONT[id] || 0]); }
+  v.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "it"));
+  if (!v.length){ box.hidden = true; return; }
+  box.innerHTML = `<span class="t">Fascicoli:</span>` + v.slice(0, 8).map(([n, c]) => `<button type="button" data-fasc="${esc(n)}" tabindex="-1">${esc(n)}<span class="n">${fmt(c)}</span></button>`).join("");
+  box.hidden = false;
+}
+["mFasc", "aFasc"].forEach(campo => {
+  const el = $(campo), box = $(campo + "Sugg");
+  const aggiorna = () => { if (campo === "mFasc") disegnaRicavati(); else notaFascicolo("aFasc", fascicoloDi($("aTesto").value)); };
+  el.addEventListener("input", () => { suggFascicoli(campo); aggiorna(); });
+  el.addEventListener("focus", () => suggFascicoli(campo));
+  el.addEventListener("blur", () => setTimeout(() => { if (document.activeElement !== el) box.hidden = true; }, 150));
+  el.addEventListener("keydown", ev => {
+    if (box.hidden) return;
+    if (ev.key === "Tab" && !ev.shiftKey){ const b = box.querySelector("button[data-fasc]"); if (b){ ev.preventDefault(); el.value = b.dataset.fasc; box.hidden = true; aggiorna(); } }
+    else if (ev.key === "Escape"){ ev.preventDefault(); ev.stopPropagation(); box.hidden = true; }
+  });
+  box.addEventListener("mousedown", ev => ev.preventDefault());
+  box.addEventListener("click", ev => { const b = ev.target.closest("button[data-fasc]"); if (b){ el.value = b.dataset.fasc; box.hidden = true; aggiorna(); } });
+  $(campo + "Nota").addEventListener("click", ev => { const b = ev.target.closest("button[data-usafasc]"); if (b){ el.value = b.dataset.usafasc; aggiorna(); } });
+  document.querySelector(`button[data-nofasc="${campo}"]`).onclick = () => { el.value = ""; box.hidden = true; aggiorna(); };
+});
 function disegnaRicavati(){
   if (!MS) return;
   const t = $("mTesto").value;
-  const f = fascicoloDi(t);
-  MS.fasc = f;
-  if (f.nuovo && MS.apriFasc.k !== f.k) MS.apriFasc = { k: f.k, si: false };   // titolo cambiato: la casella riparte senza spunta
-  const nomi = RicavaTesto.nomi(t, !!(f.id || apriFascicolo()));
+  const f = titoloInCasella(MS, t, "mFasc");
+  MS.fasc = notaFascicolo("mFasc", f);
+  const nomi = RicavaTesto.nomi(t, !!(f.k && MS.fasc.k === f.k));   // il titolo resta fuori dai nomi solo se è il fascicolo della scheda
   MS.nomi = nomi;
-  let h;
-  if (f.id) h = `Fascicolo: <b>${esc(f.nome)}</b> <span class="tenue">(esistente, ${sch(FCONT[f.id] || 0)})</span>`;
-  else if (f.nuovo) h = `<label class="spunta" style="margin:0"><input type="checkbox" id="mApriFasc"${apriFascicolo() ? " checked" : ""}> Apri il fascicolo <b>«${esc(f.nome)}»</b></label> <span class="tenue">(titolo nuovo: senza spunta resta solo nel testo)</span>`;
-  else h = `<span class="tenue">Nessun fascicolo (si apre scrivendo un titolo seguito dai due punti all'inizio del fatto).</span>`;
-  h += `<br>Nomi: ${nomi.length ? nomi.map(n => `<span class="nm${nomeNuovo(n) ? " nuovo" : ""}"${nomeNuovo(n) ? ' title="Nome nuovo: non è ancora nell\'indice"' : ""}>${esc(n)}</span>`).join("") : `<span class="tenue">nessuno (si riconoscono le parole in maiuscolo)</span>`}`;
+  let h = `Nomi: ${nomi.length ? nomi.map(n => `<span class="nm${nomeNuovo(n) ? " nuovo" : ""}"${nomeNuovo(n) ? ' title="Nome nuovo: non è ancora nell\'indice"' : ""}>${esc(n)}</span>`).join("") : `<span class="tenue">nessuno (si riconoscono le parole in maiuscolo)</span>`}`;
   for (const n of nomi.filter(nomeNuovo)){
     const sim = nomiSimili(n);
     if (sim.length) h += `<br><span class="simile">«${esc(n)}» è un nome nuovo; nell'indice c'è ${sim.map(x => `<button type="button" data-sost="${esc(n)}" data-con="${esc(x)}" title="Sostituisci nel fatto">${esc(x)}</button>`).join(" o ")}: stesso nome scritto diversamente?</span>`;
   }
   $("mRicavati").innerHTML = h;
-  const c = $("mApriFasc"); if (c) c.onchange = () => { MS.apriFasc = { k: MS.fasc.k, si: c.checked }; disegnaRicavati(); };
   $("mRicavati").querySelectorAll("button[data-sost]").forEach(b => b.onclick = () => {
     const t = $("mTesto"); t.value = t.value.split(b.dataset.sost).join(b.dataset.con); disegnaRicavati();
   });
@@ -2382,10 +2450,10 @@ function disegnaRicavati(){
 
 /* --- apertura e chiusura --- */
 function istantanea(){ return JSON.stringify([$("mData").value, $("mTesto").value, $("mAppr").value, $("mColl").value, [...document.querySelectorAll("#mAmbiti input")].map(x => x.checked),
-  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS ? [...MS.sotto].sort((a, b) => a - b) : [], $("mVer").checked, $("mVerNota").value, MS && MS.modo === "nuova" ? MS.dove : "", apriFascicolo(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
+  $("mMano").checked, $("mMano").checked ? valoriMano() : null, MS ? [...MS.sotto].sort((a, b) => a - b) : [], $("mVer").checked, $("mVerNota").value, MS && MS.modo === "nuova" ? MS.dove : "", $("mFasc").value.trim(), MS ? MS.immagini.map(x => [x.file, x.didascalia]) : []]); }
 function apriMaschera(modo, id){
   if (occupato()) return;
-  MS = { modo, apriFasc: { k: null, si: false }, immagini: [] };
+  MS = { modo, titoloK: null, immagini: [] };
   esciPieno("maschera"); nascondiSugg();
   { const v = modo === "modifica" ? uno("select nota from verifiche where scheda_id = ?", [id]) : null;
     $("mVer").checked = !!v; $("mVerNota").value = v ? v[0] || "" : ""; $("mVerNota").hidden = !v; }
@@ -2400,6 +2468,7 @@ function apriMaschera(modo, id){
     $("mData").value = o.data_scritta; $("mTesto").value = o.testo; $("mAppr").value = o.appr || ""; $("mColl").value = o.coll || "";
     box.querySelectorAll("input").forEach(x => x.checked = o.ambiti.includes(x.value));
     $("mMano").checked = o.data.metodo === "corretta a mano";
+    $("mFasc").value = o.fascicolo ? (uno("select nome from fascicoli where id = ?", [o.fascicolo]) || [""])[0] : ""; MS.titoloK = fascicoloDi(o.testo).k || null;
     MS.immagini = (db.exec(`select file, didascalia, larghezza, altezza, byte from immagini where scheda_id = ${+id} order by posizione`)[0]?.values || []).map(([file, didascalia, w, h, byte]) => ({ file, didascalia: didascalia || "", w, h, byte }));
   } else {
     const r = datiScheda(id); MS.rif = id; MS.rifDati = r; MS.dove = "dopo";
@@ -2409,8 +2478,9 @@ function apriMaschera(modo, id){
     $("mRif").textContent = `${r.data_scritta} — ${r.testo.length > 160 ? r.testo.slice(0, 159) + "…" : r.testo}`;
     $("mData").value = r.data_scritta; $("mTesto").value = ""; $("mAppr").value = ""; $("mColl").value = "";
     box.querySelectorAll("input").forEach(x => x.checked = x.value === (r.ambiti[0] || "it"));
-    $("mMano").checked = false;
+    $("mMano").checked = false; $("mFasc").value = "";
   }
+  $("mFascSugg").hidden = true;
   $("mErrore").textContent = "";
   $("mNota").textContent = puoSalvare() ? "Applica porta la modifica nell'archivio in memoria; sul file la scrive Salva." : (PASSAGGIO_FATTO ? "Archivio aperto scegliendo il file: la modifica resta in memoria; per salvare apri l'archivio dalla cartella." : "Archivio vero: la modifica resta in memoria (fino al passaggio si salva solo sulla copia di prova).");
   disegnaLettura();
@@ -2483,6 +2553,8 @@ function applica(){
   if (!testo) return err("Scrivi il fatto.");
   if (!ambiti.length) return err("Scegli almeno un ambito.");
   clearTimeout(tL); clearTimeout(tR); disegnaLettura(); disegnaRicavati();
+  if (MS.fasc.errore) return err(MS.fasc.errore);
+  if (MS.fasc.nuovo && !confirm(`Creare il nuovo fascicolo «${MS.fasc.nome}»? Controlla che non esista già con un nome scritto diversamente.`)) return err("Fascicolo nuovo non confermato: correggi o svuota la casella del fascicolo.");
   const L = MS.lettura;
   let d = L.d;
   if (!$("mMano").checked && !L.registrata && giornoImpossibile(d)) return err(giornoImpossibile(d) + " Correggi la data o usa la correzione a mano.");
@@ -2506,9 +2578,9 @@ function applica(){
       vecchio = uno("select testo, approfondimento, fascicolo_id from schede where id = ?", [id]);
       db.run("delete from ricerca where docid = ?", [id]);   // FTS4 a contenuto esterno: legge il testo vecchio dalle schede, quindi va fatto prima dell'aggiornamento
     }
-    let fid = null;
+    let fid = null;   // decide la casella del fascicolo (decisione 2.44)
     if (MS.fasc.id) fid = MS.fasc.id;
-    else if (apriFascicolo()){ db.run("insert into fascicoli(nome, chiave) values(?, ?)", [MS.fasc.nome, MS.fasc.k]); fid = uno("select last_insert_rowid()")[0]; }
+    else if (MS.fasc.nuovo){ db.run("insert into fascicoli(nome, chiave) values(?, ?)", [MS.fasc.nome, MS.fasc.k]); fid = uno("select last_insert_rowid()")[0]; }
     if (MS.modo === "modifica"){
       db.run("update schede set data_scritta = ?, fascicolo_id = ?, testo = ?, approfondimento = ?, collegamento = ?, modificata = ? where id = ?", [ds, fid, testo, appr, coll, ora, id]);
       if (dataCambiata) db.run("update schede set anno = ?, anno_fine = ?, mese = ?, giorno = ?, giorno_fine = ?, precisione = ?, data_metodo = ?, data_nota = ?, data_anomalia = ? where id = ?",
@@ -3317,17 +3389,18 @@ function mostraScheda(id, msg){
    dell'archivio che li contiene. Le correzioni si confrontano campo per campo con la versione da cui sono partite.
    ===================================================================== */
 const FORMATO_APPUNTI = "cronologia-appunti";
-const CAMPI_APP = ["data", "ambiti", "sottoambiti", "testo", "approfondimento", "collegamento", "verifica"];
-const NOME_CAMPO = { data: "data", ambiti: "ambito", sottoambiti: "sotto-ambiti", testo: "fatto", approfondimento: "approfondimento", collegamento: "collegamento", verifica: "da verificare" };
+const CAMPI_APP = ["data", "ambiti", "sottoambiti", "testo", "fascicolo", "approfondimento", "collegamento", "verifica"];
+const NOME_CAMPO = { data: "data", ambiti: "ambito", sottoambiti: "sotto-ambiti", testo: "fatto", fascicolo: "fascicolo", approfondimento: "approfondimento", collegamento: "collegamento", verifica: "da verificare" };
 const corto = (t, n) => { t = String(t || ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
 const nuovoId = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
-const pulito = (v, f) => f === "verifica" ? (v === null || v === undefined ? "" : "V:" + String(v).trim()) : f === "ambiti" ? [...(v || [])].sort().join(",") : f === "sottoambiti" ? [...(v || [])].sort((a, b) => a - b).join(",") : String(v ?? "").replace(/\s+$/, "").trim();
+const pulito = (v, f) => f === "fascicolo" ? RicavaTesto.chiave(String(v ?? "").trim()) : f === "verifica" ? (v === null || v === undefined ? "" : "V:" + String(v).trim()) : f === "ambiti" ? [...(v || [])].sort().join(",") : f === "sottoambiti" ? [...(v || [])].sort((a, b) => a - b).join(",") : String(v ?? "").replace(/\s+$/, "").trim();
 const uguale = (a, b, f) => pulito(a, f) === pulito(b, f);
 function campiScheda(id){
   const o = datiScheda(id);
   const sotto = (db.exec(`select sottoambito_id from schede_sottoambiti where scheda_id = ${+id} order by sottoambito_id`)[0]?.values || []).map(x => x[0]);
   const v = uno("select nota from verifiche where scheda_id = ?", [id]);
-  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), sottoambiti: sotto, testo: o.testo, approfondimento: o.appr || "", collegamento: o.coll || "", verifica: v ? v[0] || "" : null };
+  const fas = o.fascicolo ? (uno("select nome from fascicoli where id = ?", [o.fascicolo]) || [""])[0] : "";
+  return { data: o.data_scritta, ambiti: [...o.ambiti].sort(), sottoambiti: sotto, testo: o.testo, fascicolo: fas, approfondimento: o.appr || "", collegamento: o.coll || "", verifica: v ? v[0] || "" : null };
 }
 function voceAppunto(a, comandi, stato){
   return `<div class="c-voce"><div>
@@ -3351,7 +3424,7 @@ $("telAppunti").onclick = mostraAppunti;
 let AN = null;   // appunto aperto nella maschera del telefono
 const leggiAnnota = () => ({ data: $("aData").value.trim(), ambiti: [...document.querySelectorAll("#aAmbiti input:checked")].map(x => x.value).sort(),
   sottoambiti: AN ? [...AN.sotto].filter(x => SUB.has(x) && document.querySelector(`#aAmbiti input[value="${SUB.get(x).ambito}"]:checked`)).sort((a, b) => a - b) : [],
-  testo: $("aTesto").value.replace(/\s+$/, ""), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim(),
+  testo: $("aTesto").value.replace(/\s+$/, ""), fascicolo: $("aFasc").value.replace(/\s+/g, " ").trim(), approfondimento: $("aAppr").value.replace(/\s+$/, ""), collegamento: $("aColl").value.trim(),
   verifica: $("aVer").checked ? $("aVerNota").value.trim() : null });
 function apriAnnota(tipo, id, esistente){
   if (esistente) AN = { id: esistente.id, tipo: esistente.tipo, creato: esistente.creato, rif: esistente.rif, originale: esistente.originale, esportato: esistente.esportato };
@@ -3366,6 +3439,9 @@ function apriAnnota(tipo, id, esistente){
   AN.sotto = new Set(c.sottoambiti || []); disegnaSotto("aAmbiti", "aSotto", AN.sotto, false);
   $("aData").value = c.data; $("aTesto").value = c.testo; $("aAppr").value = c.approfondimento || ""; $("aColl").value = c.collegamento || "";
   $("aVer").checked = c.verifica !== null && c.verifica !== undefined; $("aVerNota").value = c.verifica || ""; $("aVerNota").hidden = !$("aVer").checked;
+  // fascicolo: quello dell'appunto o della scheda; per un appunto conservato prima dell'aggiornamento 18 lo propone il titolo
+  $("aFasc").value = c.fascicolo || ""; $("aFascSugg").hidden = true; AN.titoloK = c.fascicolo !== undefined ? fascicoloDi(c.testo).k || null : null;
+  notaFascicolo("aFasc", titoloInCasella(AN, c.testo, "aFasc"));
   esciPieno("annota"); nascondiSugg();
   $("aErrore").textContent = "";
   AN.inizio = JSON.stringify(leggiAnnota());
@@ -3449,6 +3525,8 @@ async function importaAppunti(f){
   for (const a of d.appunti){
     if (!appuntoValido(a)){ illeggibili++; continue; }
     a.campi.ambiti = a.campi.ambiti.filter(x => ORD.includes(x));
+    if (a.campi.fascicolo !== undefined && typeof a.campi.fascicolo !== "string") delete a.campi.fascicolo;
+    if (a.originale && a.originale.fascicolo !== undefined && typeof a.originale.fascicolo !== "string") delete a.originale.fascicolo;
     if (Array.isArray(a.campi.sottoambiti)) a.campi.sottoambiti = a.campi.sottoambiti.filter(x => SUB.has(x));
     const c = APP_PC.get(a.id);
     if (!c || String(a.modificato || "") > String(c.modificato || "")) APP_PC.set(a.id, a);
@@ -3478,6 +3556,8 @@ function riempiMaschera(c){
   document.querySelectorAll("#mAmbiti input").forEach(x => { x.checked = c.ambiti.includes(x.value); });
   if (c.sottoambiti) MS.sotto = new Set(c.sottoambiti.filter(x => SUB.has(x)));
   if (c.verifica !== undefined){ $("mVer").checked = c.verifica !== null; $("mVerNota").value = c.verifica || ""; $("mVerNota").hidden = c.verifica === null; }
+  disegnaRicavati();   // il titolo del testo riempie la casella se è cambiato…
+  if (typeof c.fascicolo === "string"){ $("mFasc").value = c.fascicolo; MS.titoloK = fascicoloDi(c.testo).k || null; }   // …ma il fascicolo dell'appunto, se c'è, decide
   disegnaLettura(); disegnaRicavati(); disegnaSotto("mAmbiti", "mSotto", MS.sotto, true);
 }
 function apriAppuntoPc(a){
@@ -3614,6 +3694,7 @@ function disegnaSotto(idAmb, idSotto, scelti, nuovo){
   }).join("");
 }
 $("mAmbiti").addEventListener("change", () => { if (MS) disegnaSotto("mAmbiti", "mSotto", MS.sotto, true); });
+$("aTesto").addEventListener("input", () => { if (AN) notaFascicolo("aFasc", titoloInCasella(AN, $("aTesto").value, "aFasc")); });
 $("aAmbiti").addEventListener("change", () => { if (AN) disegnaSotto("aAmbiti", "aSotto", AN.sotto, false); });
 $("mSotto").addEventListener("change", ev => { const x = ev.target.closest("input[data-sotto]"); if (x && MS){ const id = +x.dataset.sotto; if (x.checked) MS.sotto.add(id); else MS.sotto.delete(id); } });
 $("aSotto").addEventListener("change", ev => { const x = ev.target.closest("input[data-sotto]"); if (x && AN){ const id = +x.dataset.sotto; if (x.checked) AN.sotto.add(id); else AN.sotto.delete(id); } });
