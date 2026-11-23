@@ -373,7 +373,7 @@ body.telefono #bChiavetta{display:none!important}
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo (17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 19 del 23 novembre: Antichità divisa in quattro epoche, «Tempo profondo» al posto di «Universo e Terra» (18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo; 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -1395,7 +1395,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti (aggiornamento 18 del 20 novembre 2026).";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti; Antichità in quattro epoche (aggiornamento 19 del 23 novembre 2026).";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1603,11 +1603,15 @@ function intervallo(a, bEscl){
   return `${a}–${b}`;
 }
 const EPOCHE = [
-  { et: "Universo e Terra", tit: "Universo e Terra, fino a 3 milioni di anni fa", y0: -Infinity, y1: -3e6, sub: "grand",
+  { et: "Tempo profondo", tit: "Tempo profondo, dal Big Bang a 3 milioni di anni fa", y0: -Infinity, y1: -3e6, sub: "grand",
     lim: [[-Infinity, -1e9, "oltre 1 mld", "oltre 1 miliardo AC"], [-1e9, -1e8, "100 mln–1 mld", "1 miliardo – 100 milioni AC"], [-1e8, -1e7, "10–100 mln", "100 – 10 milioni AC"], [-1e7, -3e6, "3–10 mln", "10 – 3 milioni AC"]] },
   { et: "Preistoria", tit: "Preistoria umana, 3 milioni – 3000 AC", y0: -3e6, y1: -3000, sub: "grand",
     lim: [[-3e6, -1e6, "1–3 mln", "3 – 1 milione AC"], [-1e6, -1e5, "100 mila–1 mln", "1 milione – 100.000 AC"], [-1e5, -1e4, "10–100 mila", "100.000 – 10.000 AC"], [-1e4, -3000, "3–10 mila", "10.000 – 3000 AC"]] },
-  { et: "Antichità", tit: "Antichità, 3000 AC – 476", y0: -3000, y1: 477, sub: "secoli" },
+  // l'Antichità divisa in quattro epoche (aggiornamento 19, 23 novembre 2026, decisione 2.45); nomi scelti dall'utente
+  { et: "Età del bronzo", tit: "Età del bronzo, 3000 – 1200 AC", y0: -3000, y1: -1200, sub: "secoli" },
+  { et: "Età del ferro", tit: "Età del ferro, 1200 – 500 AC", y0: -1200, y1: -500, sub: "secoli" },
+  { et: "Secoli V–I AC", tit: "Secoli V–I AC, 500 AC – anno 0", y0: -500, y1: 1, sub: "secoli" },
+  { et: "Secoli I–V", tit: "Secoli I–V, 1 – 476", y0: 1, y1: 477, sub: "secoli" },
   { et: "Medioevo", tit: "Medioevo, 477 – 1492", y0: 477, y1: 1493, sub: "secoli" },
   { et: "Età moderna", tit: "Età moderna, 1493 – 1799", y0: 1493, y1: 1800, sub: "secoli" },
   { et: "1800", tit: "1800 – 1899", y0: 1800, y1: 1900, sub: "decenni" },
@@ -1622,6 +1626,7 @@ function blocchi(n, passo, tipo){
   const out = [];
   for (let b = Math.floor(n.y0 / passo) * passo; b < n.y1; b += passo){
     const a = Math.max(b, n.y0), z = Math.min(b + passo, n.y1);
+    if (a === 0 && z === 1 && out.length){ const p = out[out.length - 1]; p.y1 = 1; p.tit = intervallo(p.y0, 1); continue; }   // l'anno zero (convenzionale) va con il secolo o il decennio che lo precede
     const lab = intervallo(a, z);
     out.push({ tipo, y0: a, y1: z, et: a < 0 ? `${fa(-a)} AC` : String(a), tit: lab });
   }
