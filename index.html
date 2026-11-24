@@ -222,6 +222,10 @@ dialog#maschera::backdrop,dialog#annota::backdrop{background:rgba(10,16,22,.55)}
 .facolt{font-weight:400;color:var(--tenue)}
 .m-corpo input[type=text],.m-corpo input[type=url],.m-corpo input[type=number],.m-corpo textarea,.m-corpo select{width:100%;padding:9px 11px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font:inherit}
 .m-corpo textarea{font-family:var(--serif);font-size:16px;line-height:1.55;resize:vertical}
+.m-corpo .editor{width:100%;padding:9px 11px;border:1px solid var(--riga);border-radius:6px;background:var(--bg);color:var(--inchiostro);font-family:var(--serif);font-size:16px;line-height:1.55;
+  min-height:calc(var(--righe,4) * 1.55em + 20px);max-height:60vh;overflow:auto;resize:vertical;white-space:pre-wrap;overflow-wrap:break-word;cursor:text}
+.m-corpo .editor:focus{outline:none;border-color:var(--mo);box-shadow:0 0 0 1px var(--mo)}
+.m-corpo .editor b,.m-corpo .editor strong{font-weight:700}
 #mData,#aData{font-size:16px;font-weight:600}
 .lettura{margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:6px;font-size:13.5px;line-height:1.55}
 .lettura .titolo{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--tenue);font-weight:600}
@@ -331,7 +335,8 @@ dialog#maschera.pieno,dialog#annota.pieno{width:100vw;height:100vh;max-width:non
 dialog.pieno .m-corpo{display:flex;flex-direction:column}
 dialog.pieno .m-corpo>*:not(.campo-pieno){display:none}
 dialog.pieno .campo-pieno{flex:1;display:flex;flex-direction:column;margin:0}
-dialog.pieno .campo-pieno textarea{flex:1;font-size:17px;line-height:1.75;resize:none;max-width:min(1500px,94vw);width:100%;align-self:center}
+dialog.pieno .campo-pieno .editor{max-height:none;min-height:0}
+dialog.pieno .campo-pieno textarea,dialog.pieno .campo-pieno .editor{flex:1;font-size:17px;line-height:1.75;resize:none;max-width:min(1500px,94vw);width:100%;align-self:center}
 dialog.pieno .campo-pieno .etichetta-riga{max-width:min(1500px,94vw);width:100%;align-self:center}
 .grassetto-b{font-size:13px!important}
 .grassetto-b b{font-family:var(--serif);font-size:14px;margin-right:2px}
@@ -373,7 +378,7 @@ body.telefono #bChiavetta{display:none!important}
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 20 del 24 novembre: grassetto anche nel fatto (19 del 23 novembre: Antichità divisa in quattro epoche, «Tempo profondo» al posto di «Universo e Terra»; 18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo; 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 22 del 24 novembre: «Vai alla data» nel tempo profondo porta alla scheda più vicina (21 dello stesso giorno: il grassetto si vede nelle caselle, senza asterischi; 20 dello stesso giorno: grassetto anche nel fatto; 19 del 23 novembre: Antichità divisa in quattro epoche, «Tempo profondo» al posto di «Universo e Terra»; 18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo; 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -479,7 +484,7 @@ body.telefono #bChiavetta{display:none!important}
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="mAmbiti"></div><div class="m-sotto" id="mSotto"></div></fieldset>
       <div class="campo">
         <div class="etichetta-riga"><label for="mTesto">Fatto</label><button type="button" class="azzera grassetto-b" data-grassetto="mTesto" title="Grassetto: seleziona le parole e premi (o Ctrl+B)"><b>G</b>grassetto</button></div>
-        <textarea id="mTesto" rows="4" lang="it"></textarea>
+        <div id="mTesto" class="editor" contenteditable="true" role="textbox" aria-multiline="true" lang="it" spellcheck="true" style="--righe:4"></div>
         <div class="sugg-nomi" id="mTestoSugg" hidden></div>
         <div class="ricavati" id="mRicavati"></div>
       </div>
@@ -491,7 +496,7 @@ body.telefono #bChiavetta{display:none!important}
       </div>
       <div class="campo">
         <div class="etichetta-riga"><label for="mAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="mAppr" title="Grassetto: seleziona le parole e premi (o Ctrl+B)"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="mAppr">A tutto schermo</button><span class="conta" id="mApprConta"></span></div>
-        <textarea id="mAppr" rows="6" lang="it"></textarea>
+        <div id="mAppr" class="editor" contenteditable="true" role="textbox" aria-multiline="true" lang="it" spellcheck="true" style="--righe:6"></div>
         <div class="sugg-nomi" id="mApprSugg" hidden></div>
       </div>
       <div class="campo">
@@ -554,11 +559,11 @@ body.telefono #bChiavetta{display:none!important}
     <div class="m-corpo">
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
-      <div class="campo"><div class="etichetta-riga"><label for="aTesto">Fatto</label><button type="button" class="azzera grassetto-b" data-grassetto="aTesto" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button></div><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
+      <div class="campo"><div class="etichetta-riga"><label for="aTesto">Fatto</label><button type="button" class="azzera grassetto-b" data-grassetto="aTesto" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button></div><div id="aTesto" class="editor" contenteditable="true" role="textbox" aria-multiline="true" lang="it" spellcheck="true" style="--righe:5"></div><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
       <div class="campo"><label for="aFasc">Fascicolo <span class="facolt">(facoltativo)</span></label>
         <div class="fasc-riga"><input id="aFasc" type="text" maxlength="100" autocomplete="off" spellcheck="false" placeholder="es. Guerra in Iran"><button type="button" class="azzera" data-nofasc="aFasc">Nessuno</button></div>
         <div class="sugg-nomi" id="aFascSugg" hidden></div><div class="fasc-nota" id="aFascNota"></div></div>
-      <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="aAppr" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><textarea id="aAppr" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
+      <div class="campo"><div class="etichetta-riga"><label for="aAppr">Approfondimento <span class="facolt">(facoltativo)</span></label><button type="button" class="azzera grassetto-b" data-grassetto="aAppr" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button><button type="button" class="azzera pieno-b" data-pieno="aAppr">A tutto schermo</button><span class="conta" id="aApprConta"></span></div><div id="aAppr" class="editor" contenteditable="true" role="textbox" aria-multiline="true" lang="it" spellcheck="true" style="--righe:5"></div><div class="sugg-nomi" id="aApprSugg" hidden></div></div>
       <div class="campo"><label class="spunta" style="margin-top:0;font-weight:600"><input type="checkbox" id="aVer"> Da verificare</label><input id="aVerNota" type="text" maxlength="300" autocomplete="off" placeholder="Cosa c'è da verificare (facoltativo)" hidden style="margin-top:6px"></div>
       <div class="campo"><label for="aColl">Collegamento <span class="facolt">(facoltativo, indirizzo di una pagina)</span></label><input id="aColl" type="url" autocomplete="off" spellcheck="false"></div>
     </div>
@@ -1395,7 +1400,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti; Antichità in quattro epoche; grassetto anche nel fatto (aggiornamento 20 del 24 novembre 2026).";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti; Antichità in quattro epoche; grassetto anche nel fatto, visibile nelle caselle; «Vai alla data» nel tempo profondo (aggiornamento 22 del 24 novembre 2026).";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -3247,12 +3252,32 @@ function vaiAllaData(testo){
   if (giorno && giorno > giorniDelMese(mese, p.y1)){ notaVai(`Il ${giorno} ${MESI[mese - 1]} ${formatoAnno(p.y1)} non esiste.`, true); return; }
   S.q = ""; S.ric = null; $("q").value = ""; S.solo = null; S.riga = 0; S.soloRif = false; S.soloMod = false; S.limite = 300;
   const z = percorsoData(p.y1, mese, giorno);
-  const chiesto = giorno ? `${giorno} ${MESI[mese - 1]} ${formatoAnno(p.y1)}` : mese ? `${MESI[mese - 1]} ${formatoAnno(p.y1)}` : formatoAnno(p.y1);
+  const chiesto = p.prec === "futuro" ? `«${testo}»` : giorno ? `${giorno} ${MESI[mese - 1]} ${formatoAnno(p.y1)}` : mese ? `${MESI[mese - 1]} ${formatoAnno(p.y1)}` : formatoAnno(p.y1);   // il futuro come scritto: l'anno interno non si mostra (decisione 2.8)
   // se il giorno (o il mese) non ha schede si risale al mese, poi all'anno, fino a un livello che ne ha
   const voluto = z.length; while (z.length && !contaIn(z[z.length - 1])) z.pop();
   S.zoom = z; aggiornaStatoMod(); tutto();
   const n = contaIn(cima());
   const filtri = S.fil || S.nome || S.amb !== (1 << ORD.length) - 1 ? " con i filtri attivi" : "";
+  // tempo profondo, preistoria, futuro: la linea del tempo si ferma a gruppi larghi (es. «oltre 1 miliardo AC»); si porta in vista
+  // la scheda con la data più vicina a quella cercata (aggiornamento 22, 24 novembre 2026, decisione 2.48)
+  const fondo = z.length ? z[z.length - 1] : null;
+  if (fondo && fondo.tipo === "grand"){
+    const lista = []; for (let i = 0; i < N; i++) if (passa(i) && dentro(i, fondo)) lista.push(i);
+    // distanza fra la data cercata e quella della scheda, estremo con estremo («4.3-4.1 miliardi» trova proprio «4.3-4.1», non «4.561-4»)
+    const qa = Math.min(p.y1, p.y2 ?? p.y1), qb = Math.max(p.y1, p.y2 ?? p.y1);
+    let best = -1, dist = Infinity;
+    for (const i of lista){
+      const a = Y[i], b = Number.isNaN(Y2[i]) ? Y[i] : Y2[i], d = Math.abs(Math.min(a, b) - qa) + Math.abs(Math.max(a, b) - qb);
+      if (d < dist){ dist = d; best = i; }
+    }
+    if (best >= 0){
+      S.limite = Math.max(300, lista.indexOf(best) + 20); tutto();
+      notaVai(`${chiesto[0].toUpperCase() + chiesto.slice(1)}: le schede di quel periodo sono raggruppate in «${fondo.tit}» (${sch(n)}${filtri}). In evidenza la più vicina alla data cercata.`);
+      const el = document.querySelector(`article[data-id="${ID[best]}"]`);
+      if (el){ if ($("elenco").classList.contains("compatta")) el.classList.add("aperta"); el.scrollIntoView({ block: "center" }); el.classList.add("evidenziata"); setTimeout(() => el.classList.remove("evidenziata"), 4000); }
+      return;
+    }
+  }
   if (!z.length) notaVai(`Nessuna scheda${filtri} per ${chiesto}.`, true);
   else if (z.length < voluto) notaVai(`Nessuna scheda${filtri} per ${chiesto}: ecco ${descriviLivello(z[z.length - 1])} (${sch(n)}).`);
   else notaVai(`${chiesto[0].toUpperCase() + chiesto.slice(1)}: ${sch(n)}${filtri}.`);
@@ -3876,25 +3901,30 @@ function trovaNomi(pref){
   return { voci: v, testo: pref };
 }
 function nascondiSugg(){ if (!SUGG) return false; $(SUGG.campo + "Sugg").hidden = true; SUGG = null; return true; }
+function testoPrimaDelCursore(el){   // testo (senza asterischi) dall'inizio della casella al cursore; null se c'è una selezione
+  const s = getSelection();
+  if (!s.rangeCount || !s.isCollapsed || !el.contains(s.anchorNode)) return null;
+  const r = document.createRange(); r.selectNodeContents(el); r.setEnd(s.anchorNode, s.anchorOffset);
+  return r.toString();
+}
 function aggiornaSugg(id){
   const el = $(id), box = $(id + "Sugg");
-  if (el.selectionStart !== el.selectionEnd){ nascondiSugg(); return; }
-  const pr = prefissoNome(el.value, el.selectionStart);
+  const prima = testoPrimaDelCursore(el);
+  if (prima === null){ nascondiSugg(); return; }
+  const pr = prefissoNome(prima, prima.length);
   if (!pr){ nascondiSugg(); return; }
   const r = trovaNomi(pr.testo);
   if (!r.voci.length){ nascondiSugg(); return; }
-  const fine = el.selectionStart;
-  SUGG = { campo: id, inizio: fine - r.testo.length, fine, voci: r.voci.map(x => x.nome) };
+  SUGG = { campo: id, quanti: r.testo.length, voci: r.voci.map(x => x.nome) };
   box.innerHTML = `<span class="t">Nomi già presenti:</span>` + r.voci.map((x, k) => `<button type="button" data-k="${k}" tabindex="-1">${esc(x.nome)}<span class="n">${fmt(x.c)}</span></button>`).join("") + `<span class="t">· Tab per il primo, Esc per chiudere</span>`;
   box.hidden = false;
 }
 function scegliSugg(k){
   if (!SUGG) return;
-  const el = $(SUGG.campo), n = SUGG.voci[k], dopo = el.value.slice(SUGG.fine);
-  el.value = el.value.slice(0, SUGG.inizio) + n + dopo;
-  const pos = SUGG.inizio + n.length; el.setSelectionRange(pos, pos); el.focus();
-  nascondiSugg();
-  el.dispatchEvent(new Event("input", { bubbles: true }));
+  const el = $(SUGG.campo), n = SUGG.voci[k], s = getSelection(), quanti = SUGG.quanti;
+  el.focus(); nascondiSugg();
+  for (let i = 0; i < quanti; i++) s.modify("extend", "backward", "character");   // le lettere già scritte del nome
+  document.execCommand("insertText", false, n);
 }
 let tSugg;
 CAMPI_SUGG.forEach(id => {
@@ -3916,7 +3946,7 @@ $("aVer").addEventListener("change", () => { $("aVerNota").hidden = !$("aVer").c
 $("soloVer").addEventListener("change", ev => { S.soloVer = ev.target.checked; S.solo = null; S.limite = 300; tutto(); });
 /* --- approfondimento a tutto schermo --- */
 function contaAppr(){
-  for (const id of ["mAppr", "aAppr"]){ const v = $(id).value, p = v.trim() ? v.trim().split(/\s+/).length : 0; $(id + "Conta").textContent = v.length ? `${fmt(p)} ${p === 1 ? "parola" : "parole"}, ${fmt(v.length)} caratteri` : ""; }
+  for (const id of ["mAppr", "aAppr"]){ const v = senzaGrassetto($(id).value), p = v.trim() ? v.trim().split(/\s+/).length : 0; $(id + "Conta").textContent = v.length ? `${fmt(p)} ${p === 1 ? "parola" : "parole"}, ${fmt(v.length)} caratteri` : ""; }
 }
 function esciPieno(dlg){
   const d = $(dlg); if (!d.classList.contains("pieno")) return false;
@@ -4015,17 +4045,90 @@ window.addEventListener("afterprint", () => { if (document.body.classList.contai
    ===================================================================== */
 const grassettoHtml = h => h.replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, "<strong>$1</strong>");
 const senzaGrassetto = s => String(s ?? "").replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, "$1");   // per gli estratti brevi del fatto (cestino, collegamenti, appunti): senza asterischi
-function grassetto(id){
-  const el = $(id); let a = el.selectionStart, b = el.selectionEnd; const v = el.value;
-  while (a < b && /\s/.test(v[a])) a++; while (b > a && /\s/.test(v[b - 1])) b--;   // gli spazi restano fuori dal grassetto
-  if (v.slice(a - 2, a) === "**" && v.slice(b, b + 2) === "**" && b > a){   // già in grassetto: si toglie
-    el.value = v.slice(0, a - 2) + v.slice(a, b) + v.slice(b + 2); el.setSelectionRange(a - 2, b - 2);
-  } else if (a === b){   // niente selezionato: due coppie di asterischi, il cursore in mezzo
-    el.value = v.slice(0, a) + "****" + v.slice(a); el.setSelectionRange(a + 2, a + 2);
-  } else {
-    el.value = v.slice(0, a) + "**" + v.slice(a, b) + "**" + v.slice(b); el.setSelectionRange(a + 2, b + 2);
+/* --- caselle del fatto e dell'approfondimento che mostrano il grassetto (aggiornamento 21, 24 novembre 2026, decisione 2.47) ---
+   Le quattro caselle (fatto e approfondimento, nella maschera e negli appunti) non sono più caselle di testo semplice ma caselle
+   «come Word»: il grassetto si vede, senza asterischi. Il valore letto e scritto dal programma (proprietà value) resta il testo
+   con gli asterischi, quindi archivio, ricerca, nomi, fascicolo, Excel e telefono non cambiano. Si accetta solo il grassetto:
+   incollando da una pagina web o da Word restano il testo e il grassetto, il resto (colori, caratteri, collegamenti) si toglie. */
+const EDITOR = ["mTesto", "mAppr", "aTesto", "aAppr"];
+function grassettoDi(n, radice){   // la parola è in grassetto? Decide l'indicazione più vicina (B, STRONG, titoli, stile font-weight)
+  for (let e = n.parentElement; e && e !== radice; e = e.parentElement){
+    const fw = e.style && e.style.fontWeight;
+    if (fw) return fw === "bold" || fw === "bolder" || +fw >= 600;
+    if (/^(B|STRONG|H[1-6])$/.test(e.tagName)) return true;
   }
-  el.focus(); el.dispatchEvent(new Event("input", { bubbles: true }));
+  return false;
+}
+function testoDaEditor(radice, html){   // contenuto della casella (o di un testo incollato) -> testo con **grassetto**
+  const seg = [];
+  const metti = (t, b) => { if (!t) return; const u = seg[seg.length - 1]; if (u && u[1] === b) u[0] += t; else seg.push([t, b]); };
+  const visita = n => { for (const c of n.childNodes){
+    if (c.nodeType === 3){
+      let v = c.nodeValue;   // nella casella il testo resta com'è (anche gli spazi non divisibili dell'archivio)
+      if (html){ v = v.replace(/\u00a0/g, " ").replace(/[ \t\r\n]+/g, " "); if (!v.trim() && (!seg.length || seg[seg.length - 1][0].endsWith("\n"))) continue; }   // spazi fra i paragrafi incollati
+      metti(v, grassettoDi(c, radice));
+    }
+    else if (c.nodeName === "BR") metti("\n", false);
+    else if (c.nodeType === 1 && !/^(SCRIPT|STYLE|HEAD|TITLE|META)$/.test(c.nodeName)){
+      const blocco = /^(DIV|P|LI|H[1-6]|TR|BLOCKQUOTE|PRE|UL|OL|TABLE)$/.test(c.nodeName);
+      if (blocco && seg.length && !seg[seg.length - 1][0].endsWith("\n")) metti("\n", false);
+      visita(c);
+      if (blocco && html) metti("\n", false);
+    }
+  } };
+  visita(radice);
+  let out = "";
+  for (const [t, b] of seg){
+    if (!b){ out += t; continue; }
+    t.split("\n").forEach((riga, k) => { if (k) out += "\n"; const m = /^(\s*)([\s\S]*?)(\s*)$/.exec(riga); out += m[1] + (m[2] ? "**" + m[2] + "**" : "") + m[3]; });   // gli spazi restano fuori
+  }
+  if (html) out = out.replace(/[ \t]*\n[ \t]*/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  return out;
+}
+const htmlDaTesto = v => grassettoHtml(esc(String(v ?? ""))).replace(/\n/g, "<br>");
+function nodiTesto(el){ const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), l = []; let n; while ((n = w.nextNode())) l.push(n); return l; }
+function posizioneTesto(el, k){   // k-esimo carattere del testo visibile -> [nodo, posizione]
+  const l = nodiTesto(el);
+  for (const n of l){ if (k <= n.nodeValue.length) return [n, k]; k -= n.nodeValue.length; }
+  return l.length ? [l[l.length - 1], l[l.length - 1].nodeValue.length] : [el, el.childNodes.length];
+}
+function selezionaTesto(el, a, b){   // seleziona dal carattere a al carattere b del testo visibile (senza asterischi)
+  const r = document.createRange(), [na, oa] = posizioneTesto(el, a), [nb, ob] = posizioneTesto(el, b);
+  r.setStart(na, oa); r.setEnd(nb, ob); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+function selezioneTesto(el){   // [inizio, fine] della selezione nel testo visibile, o null
+  const s = getSelection(); if (!s.rangeCount || !el.contains(s.anchorNode)) return null;
+  const r = s.getRangeAt(0), m = n => { const q = document.createRange(); q.selectNodeContents(el); q.setEnd(n.c, n.o); return q.toString().length; };
+  return [m({ c: r.startContainer, o: r.startOffset }), m({ c: r.endContainer, o: r.endOffset })];
+}
+EDITOR.forEach(id => {
+  const el = $(id);
+  Object.defineProperty(el, "value", { configurable: true, get(){ return testoDaEditor(el, false); }, set(v){ el.innerHTML = htmlDaTesto(v); } });
+  el.setSelectionRange = (a, b) => { el.focus(); selezionaTesto(el, a, b); };
+  el.addEventListener("keydown", ev => {
+    if (ev.key === "Enter" && !ev.ctrlKey && !ev.metaKey && !ev.altKey && !ev.isComposing){ ev.preventDefault(); document.execCommand("insertLineBreak"); }
+    else if ((ev.ctrlKey || ev.metaKey) && ["i", "u"].includes(ev.key.toLowerCase())) ev.preventDefault();   // solo il grassetto
+  });
+  el.addEventListener("paste", ev => {
+    const cd = ev.clipboardData; if (!cd) return;
+    ev.preventDefault();   // le immagini incollate le prende la maschera (sezione Immagini); il testo si inserisce pulito
+    if ([...(cd.files || [])].some(f => f.type.startsWith("image/"))) return;
+    const html = cd.getData("text/html"), piano = cd.getData("text/plain");
+    const testo = html ? testoDaEditor(new DOMParser().parseFromString(html, "text/html").body, true) : piano;
+    if (testo) document.execCommand("insertHTML", false, htmlDaTesto(testo));
+  });
+  el.addEventListener("drop", ev => { const t = ev.dataTransfer && ev.dataTransfer.getData("text/plain"); if (t){ ev.preventDefault(); el.focus(); document.execCommand("insertText", false, t); } });
+});
+document.querySelectorAll("label[for]").forEach(l => { const e = $(l.htmlFor); if (e && e.classList.contains("editor")) l.addEventListener("click", () => e.focus()); });
+function grassetto(id){   // pulsante G e Ctrl+B: mette o toglie il grassetto alle parole selezionate (gli spazi agli estremi restano fuori)
+  const el = $(id); el.focus();
+  const sel = selezioneTesto(el);
+  if (sel && sel[1] > sel[0]){
+    const t = nodiTesto(el).map(n => n.nodeValue).join("");   // stesso conteggio di selezioneTesto
+    let [a, b] = sel; while (a < b && /\s/.test(t[a])) a++; while (b > a && /\s/.test(t[b - 1])) b--;
+    if (b > a) selezionaTesto(el, a, b);
+  }
+  document.execCommand("bold");
 }
 document.querySelectorAll("button[data-grassetto]").forEach(b => { b.addEventListener("mousedown", ev => ev.preventDefault()); b.onclick = () => grassetto(b.dataset.grassetto); });
 ["mAppr", "aAppr", "mTesto", "aTesto"].forEach(id => $(id).addEventListener("keydown", ev => { if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "b"){ ev.preventDefault(); grassetto(id); } }));
