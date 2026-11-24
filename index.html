@@ -373,7 +373,7 @@ body.telefono #bChiavetta{display:none!important}
   <p class="aiuto" id="pcAlt" style="margin-top:6px">In alternativa puoi <button id="sceglifile" class="azzera" style="font-size:13px">scegliere direttamente il file</button>: funziona allo stesso modo, ma il programma non ricorda dove si trova.</p>
   <input id="filealt" type="file" accept=".sqlite" hidden>
   <div id="avviso" role="status"></div>
-  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 19 del 23 novembre: Antichità divisa in quattro epoche, «Tempo profondo» al posto di «Universo e Terra» (18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo; 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
+  <p class="aiuto" id="versione" style="margin-top:24px">Versione definitiva del 12 ottobre 2026, aggiornamento 20 del 24 novembre: grassetto anche nel fatto (19 del 23 novembre: Antichità divisa in quattro epoche, «Tempo profondo» al posto di «Universo e Terra»; 18 del 20 novembre: fascicolo scelto nella maschera anche senza il titolo nel testo; 17 del 19 novembre: date cliccabili nel fatto e nell'approfondimento; 16 del 18 novembre: date numeriche precedute da parole («Dopo il 16/03/1978»); 15 del 16 novembre: il mese da solo prima dei giorni, l'anno da solo prima dei mesi; 14 dello stesso giorno: copia su chiavetta; 13: «Fine dicembre», «Fine anno», «Inizio mese» al loro posto nel mese o nell'anno; 12 del 1° novembre: nomi dopo l'apostrofo; 11 dello stesso giorno: ordine per ambito dentro la stessa data; 10 del 22 ottobre: grassetto nell'approfondimento e tutto schermo più largo; 9 del 21 ottobre: grafica (icone, barra ferma, vista compatta, linea del tempo, grandezza del testo) e stampa o PDF; 8: nomi, «da verificare», tutto schermo; 7: stagioni; 6: sotto-ambiti per nome e colori; 5: sotto-ambiti; 3: spostamento quando cambia la data; 2: appunti dal telefono; 1: ricerca per data).</p>
 </section>
 
 <div class="contenitore" id="app" hidden>
@@ -478,7 +478,7 @@ body.telefono #bChiavetta{display:none!important}
       </div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="mAmbiti"></div><div class="m-sotto" id="mSotto"></div></fieldset>
       <div class="campo">
-        <label for="mTesto">Fatto</label>
+        <div class="etichetta-riga"><label for="mTesto">Fatto</label><button type="button" class="azzera grassetto-b" data-grassetto="mTesto" title="Grassetto: seleziona le parole e premi (o Ctrl+B)"><b>G</b>grassetto</button></div>
         <textarea id="mTesto" rows="4" lang="it"></textarea>
         <div class="sugg-nomi" id="mTestoSugg" hidden></div>
         <div class="ricavati" id="mRicavati"></div>
@@ -554,7 +554,7 @@ body.telefono #bChiavetta{display:none!important}
     <div class="m-corpo">
       <div class="campo"><label for="aData">Data, scritta come nel foglio</label><input id="aData" type="text" autocomplete="off" spellcheck="false"></div>
       <fieldset class="campo"><legend>Ambito</legend><div class="m-ambiti" id="aAmbiti"></div><div class="m-sotto" id="aSotto"></div></fieldset>
-      <div class="campo"><label for="aTesto">Fatto</label><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
+      <div class="campo"><div class="etichetta-riga"><label for="aTesto">Fatto</label><button type="button" class="azzera grassetto-b" data-grassetto="aTesto" title="Grassetto: seleziona le parole e premi"><b>G</b>grassetto</button></div><textarea id="aTesto" rows="5" lang="it"></textarea><div class="sugg-nomi" id="aTestoSugg" hidden></div></div>
       <div class="campo"><label for="aFasc">Fascicolo <span class="facolt">(facoltativo)</span></label>
         <div class="fasc-riga"><input id="aFasc" type="text" maxlength="100" autocomplete="off" spellcheck="false" placeholder="es. Guerra in Iran"><button type="button" class="azzera" data-nofasc="aFasc">Nessuno</button></div>
         <div class="sugg-nomi" id="aFascSugg" hidden></div><div class="fasc-nota" id="aFascNota"></div></div>
@@ -1395,7 +1395,7 @@ async function avviaTelefono(){
   document.body.classList.add("telefono");
   $("pcBox").hidden = true; $("pcAlt").hidden = true; $("telBox").hidden = false; $("telStato").hidden = false;
   $("aperturaTesto").textContent = "Versione per il telefono: consultazione e appunti. L'archivio si carica una volta: il programma ne conserva una copia sul telefono e la riapre da solo. Le modifiche si fanno sul computer: qui si annotano fatti nuovi e correzioni da applicare poi sul computer. Per vedere le modifiche carica di nuovo il file.";
-  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti; Antichità in quattro epoche (aggiornamento 19 del 23 novembre 2026).";
+  $("versione").textContent = "Versione per il telefono del 16 ottobre 2026: consultazione e appunti (fatti nuovi e correzioni da applicare sul computer); ambiti e sotto-ambiti letti dall'archivio, con i loro colori; schede da verificare; vista compatta, grandezza del testo e stampa; grassetto negli approfondimenti; date cliccabili; fascicolo negli appunti; Antichità in quattro epoche; grassetto anche nel fatto (aggiornamento 20 del 24 novembre 2026).";
   $("telCarica").onclick = $("telAggiorna").onclick = () => $("telFile").click();
   $("telFile").onchange = ev => { const f = ev.target.files[0]; ev.target.value = ""; if (f) caricaSulTelefono(f); };
   $("telApri").onclick = apriDalTelefono;
@@ -1873,7 +1873,7 @@ function disegnaElenco(){
     const mod = MODIFICATE.get(id);
     html += `<article class="scheda" data-id="${id}" style="--c:var(--a-${a})">
       <div class="meta"><span title="${RIGA[i] ? `Riga ${RIGA[i]}, colonna ${col} del foglio CRONO` : "Scheda inserita nel programma"}">${htmlAmbiti(i)}</span>${mod ? `<span class="bollo">${mod === "nuova" ? "NUOVA" : "MODIFICATA"}</span>` : ""}${VN.has(id) ? `<span class="bollo ver">DA VERIFICARE</span>` : ""}${TELEFONO && APP_TEL.some(x => x.rif.id === id) ? `<span class="bollo app">APPUNTO</span>` : ""}${FAS[i] ? `<span class="fil">Fascicolo: <button data-f="${FAS[i]}">${esc(FNOME[FAS[i]])}</button></span>` : ""}${TELEFONO ? `<span class="riga">${RIGA[i] ? `riga ${RIGA[i]}, colonna ${col}` : "inserita nel programma"}</span>` : `<span class="icone"><button type="button" data-mod="${id}" title="Modifica (o doppio clic sul testo)" aria-label="Modifica">${ICONA.mod}</button><button type="button" data-nuova="${id}" title="Nuova scheda qui" aria-label="Nuova scheda qui">${ICONA.nuova}</button><button type="button" class="del" data-elimina="${id}" title="Elimina (va nel cestino)" aria-label="Elimina">${ICONA.elimina}</button></span>`}</div>
-      <p class="testo">${conNomi(testo, nomi)}</p>
+      <p class="testo">${grassettoHtml(conNomi(testo, nomi))}</p>
       ${VN.get(id) ? `<div class="ver-nota">Da verificare: ${esc(VN.get(id))}</div>` : ""}
       ${rif}
       ${coll ? `<div class="coll">Collegamento: <a href="${esc(coll)}" target="_blank" rel="noopener">${esc(coll)}</a></div>` : ""}
@@ -2302,7 +2302,7 @@ function proposta(d){   // null: niente da proporre; { fermo: true }: già al po
   if (t === null || (MS.modo === "modifica" && (t === self || t === self + 1))) return { fermo: true };
   let a = t - 1; if (a === self) a--;
   let b = t; if (b === self) b++;
-  const v = i => { const r = uno("select data_scritta, testo from schede where id = ?", [ID[i]]); return `«${r[0]}» (${corto(r[1], 70)})`; };
+  const v = i => { const r = uno("select data_scritta, testo from schede where id = ?", [ID[i]]); return `«${r[0]}» (${corto(senzaGrassetto(r[1]), 70)})`; };
   return { t, a, descr: `Andrebbe ${a >= 0 ? "dopo " + v(a) : "in testa alla cronologia"}${b < N ? ", prima di " + v(b) : ""}.` };
 }
 function valoriMano(){
@@ -2369,7 +2369,7 @@ function disegnaLettura(){
 
 /* --- fascicolo e nomi ricavati dal testo --- */
 function fascicoloDi(testo){
-  const p = RicavaTesto.prefisso(testo);
+  const p0 = RicavaTesto.prefisso(testo), p = p0 && p0.replace(/\*/g, "").trim();   // «**Guerra in Iran**:» vale «Guerra in Iran»
   if (!p) return {};
   const k = RicavaTesto.chiave(p);
   if (!k) return {};
@@ -2480,7 +2480,7 @@ function apriMaschera(modo, id){
     $("mTitolo").textContent = "Nuova scheda";
     $("mOrigine").textContent = "La data è precompilata con quella della scheda di riferimento: cambiala se serve.";
     $("mPosBox").hidden = false; document.querySelector('input[name="mDove"][value="dopo"]').checked = true;
-    $("mRif").textContent = `${r.data_scritta} — ${r.testo.length > 160 ? r.testo.slice(0, 159) + "…" : r.testo}`;
+    $("mRif").textContent = `${r.data_scritta} — ${corto(senzaGrassetto(r.testo), 160)}`;
     $("mData").value = r.data_scritta; $("mTesto").value = ""; $("mAppr").value = ""; $("mColl").value = "";
     box.querySelectorAll("input").forEach(x => x.checked = x.value === (r.ambiti[0] || "it"));
     $("mMano").checked = false; $("mFasc").value = "";
@@ -2865,7 +2865,7 @@ function disegnaCestino(){
   const r = db.exec(`select s.id, s.data_scritta, s.testo, c.eliminata, s.riga_origine, s.colonna_origine from cestino c join schede s on s.id = c.scheda_id order by c.eliminata desc, s.ordine`)[0]?.values || [];
   $("cNota").textContent = r.length ? `${sch(r.length)} nel cestino. L'eliminazione definitiva si annulla solo dalle copie della cartella ${CARTELLA_COPIE}.` : "Il cestino è vuoto.";
   $("cSvuota").disabled = !r.length;
-  $("cElenco").innerHTML = r.length ? r.map(([id, ds, t, el, riga, col]) => `<div class="c-voce"><div><div class="d">${esc(ds)}</div><div class="t">${esc(t.length > 260 ? t.slice(0, 259) + "…" : t)}</div>
+  $("cElenco").innerHTML = r.length ? r.map(([id, ds, t, el, riga, col]) => `<div class="c-voce"><div><div class="d">${esc(ds)}</div><div class="t">${esc(corto(senzaGrassetto(t), 260))}</div>
       <div class="q">${riga ? `riga ${riga}, colonna ${col}` : "inserita nel programma"} · nel cestino dal ${esc(new Date(el).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" }))}</div></div>
       <div class="b"><button type="button" data-rip="${id}">Ripristina</button><button type="button" class="def" data-def="${id}">Elimina definitivamente</button></div></div>`).join("")
     : `<p class="spiega" style="padding:16px 0">Nessuna scheda nel cestino.</p>`;
@@ -3023,7 +3023,7 @@ function bloccoRiferimento(id, r, riga, scritta){
   let h = "";
   if (stato === "escluso") h = `Evento citato nella data: nessuno da collegare (deciso).`;
   else if (coll && !(POS[coll] >= 0)) h = `Evento citato nella data: ${dove}, ${esc(cData)} (scheda nel cestino).`;
-  else if (coll) h = `Evento citato nella data (${STATO_RIF_TESTO[stato] || stato}): <button data-vai="${coll}">${dove}, ${esc(cData)}: ${esc(cTesto.length > 110 ? cTesto.slice(0, 109) + "…" : cTesto)}</button>`;
+  else if (coll) h = `Evento citato nella data (${STATO_RIF_TESTO[stato] || stato}): <button data-vai="${coll}">${dove}, ${esc(cData)}: ${esc(corto(senzaGrassetto(cTesto), 110))}</button>`;
   else h = `Evento citato nella data: ${stato === "da collegare" ? "da collegare (data scritta o cambiata nel programma)" : "non trovato dalla ricerca automatica"}.`;
   const sg = verificare ? suggerimentoPer(riga, scritta) : null;
   if (sg) h += `<span class="sugg">Controllo manuale del 7 ottobre: ${esc(sg[3])}${sg[2] ? ` <button data-riga="${sg[2]}">Mostra la riga ${sg[2]}</button>` : ""}</span>`;
@@ -3410,8 +3410,8 @@ function campiScheda(id){
 function voceAppunto(a, comandi, stato){
   return `<div class="c-voce"><div>
     <div class="d">${a.tipo === "nuovo" ? "Fatto nuovo" : "Correzione"} · ${esc(a.campi.data)}${stato ? ` <span class="q">(${esc(stato)})</span>` : ""}</div>
-    <div class="t">${esc(corto(a.campi.testo, 300))}</div>
-    <div class="q">${a.tipo === "nuovo" ? "Dopo la scheda" : "Scheda"}: ${esc(a.rif.data)} — ${esc(corto(a.rif.testo, 110))}. Annotato il ${dataOra(a.creato)}${a.esportato ? `, esportato il ${dataOra(a.esportato)}` : ""}.</div>
+    <div class="t">${esc(corto(senzaGrassetto(a.campi.testo), 300))}</div>
+    <div class="q">${a.tipo === "nuovo" ? "Dopo la scheda" : "Scheda"}: ${esc(a.rif.data)} — ${esc(corto(senzaGrassetto(a.rif.testo), 110))}. Annotato il ${dataOra(a.creato)}${a.esportato ? `, esportato il ${dataOra(a.esportato)}` : ""}.</div>
   </div><div class="b">${comandi}</div></div>`;
 }
 function mostraAppunti(){
@@ -3439,7 +3439,7 @@ function apriAnnota(tipo, id, esistente){
   }
   const c = esistente ? esistente.campi : tipo === "correzione" ? AN.originale : { data: AN.rif.data, ambiti: [campiScheda(id).ambiti[0] || "it"], testo: "", approfondimento: "", collegamento: "" };
   $("aTitolo").textContent = AN.tipo === "nuovo" ? "Appunto: fatto nuovo" : "Appunto: correzione";
-  $("aRif").textContent = (AN.tipo === "nuovo" ? "Va subito dopo la scheda: " : "Scheda da correggere: ") + `${AN.rif.data} — ${corto(AN.rif.testo, 140)}`;
+  $("aRif").textContent = (AN.tipo === "nuovo" ? "Va subito dopo la scheda: " : "Scheda da correggere: ") + `${AN.rif.data} — ${corto(senzaGrassetto(AN.rif.testo), 140)}`;
   $("aAmbiti").innerHTML = ORD.map(a => `<label style="--c:var(--a-${a})"><input type="checkbox" value="${a}"${c.ambiti.includes(a) ? " checked" : ""}> ${esc(AMB[a])}</label>`).join("");
   AN.sotto = new Set(c.sottoambiti || []); disegnaSotto("aAmbiti", "aSotto", AN.sotto, false);
   $("aData").value = c.data; $("aTesto").value = c.testo; $("aAppr").value = c.approfondimento || ""; $("aColl").value = c.collegamento || "";
@@ -3995,7 +3995,7 @@ function preparaStampa(){
     const a = ORD.find((x, k) => AMBM[i] & (1 << k)) || "it";
     const amb = ORD.filter((x, k) => AMBM[i] & (1 << k)).map(x => { const sub = []; for (let q = SOFF[i]; q < SOFF[i + 1]; q++){ const y = SUB.get(SIDS[q]); if (y && y.ambito === x) sub.push(y.nome); } return AMB[x] + (sub.length ? " › " + sub.join(", ") : ""); }).join(" · ");
     h += `<div class="s-scheda" style="--c:${coloreStampa(a)}"><div class="s-meta">${esc(amb)}${FAS[i] ? ` <span class="g">· Fascicolo: ${esc(FNOME[FAS[i]])}</span>` : ""}${conRiga && RIGA[i] ? ` <span class="g">· riga ${RIGA[i]}, colonna ${esc(col)}</span>` : ""}</div>`
-      + `<p class="s-testo">${esc(testo)}</p>${ver ? `<div class="s-ver">Da verificare${nota ? ": " + esc(nota) : ""}</div>` : ""}${conAppr && appr ? `<div class="s-appr">${grassettoHtml(esc(appr))}</div>` : ""}</div>`;
+      + `<p class="s-testo">${grassettoHtml(esc(testo))}</p>${ver ? `<div class="s-ver">Da verificare${nota ? ": " + esc(nota) : ""}</div>` : ""}${conAppr && appr ? `<div class="s-appr">${grassettoHtml(esc(appr))}</div>` : ""}</div>`;
   }
   $("stampa").innerHTML = h;
   return sel.length;
@@ -4014,6 +4014,7 @@ window.addEventListener("afterprint", () => { if (document.body.classList.contai
    resta semplice (con gli asterischi), quindi ricerca, appunti ed esportazione in Excel non cambiano.
    ===================================================================== */
 const grassettoHtml = h => h.replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, "<strong>$1</strong>");
+const senzaGrassetto = s => String(s ?? "").replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, "$1");   // per gli estratti brevi del fatto (cestino, collegamenti, appunti): senza asterischi
 function grassetto(id){
   const el = $(id); let a = el.selectionStart, b = el.selectionEnd; const v = el.value;
   while (a < b && /\s/.test(v[a])) a++; while (b > a && /\s/.test(v[b - 1])) b--;   // gli spazi restano fuori dal grassetto
@@ -4027,7 +4028,7 @@ function grassetto(id){
   el.focus(); el.dispatchEvent(new Event("input", { bubbles: true }));
 }
 document.querySelectorAll("button[data-grassetto]").forEach(b => { b.addEventListener("mousedown", ev => ev.preventDefault()); b.onclick = () => grassetto(b.dataset.grassetto); });
-["mAppr", "aAppr"].forEach(id => $(id).addEventListener("keydown", ev => { if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "b"){ ev.preventDefault(); grassetto(id); } }));
+["mAppr", "aAppr", "mTesto", "aTesto"].forEach(id => $(id).addEventListener("keydown", ev => { if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === "b"){ ev.preventDefault(); grassetto(id); } }));
 /* =====================================================================
    Copia su chiavetta (aggiornamento 14, 16 novembre 2026, decisione 2.41)
    L'archivio e le immagini si copiano su una chiavetta USB o un disco esterno, nella cartella «Cronologia (copia)»: la stessa
